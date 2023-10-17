@@ -10,11 +10,30 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r initialise}
+library(readtext)
 library(quanteda)
+
+library(quanteda.textstats)
 ```
 
 ```{r}
+rt_pdf <- readtext("./Slideshows/*.pdf", docvarsfrom = "filenames")
+#rt_pdf <- readtext("./Slideshows/*.pdf", docvarsfrom = "filenames", dvsep = "-")
 
+slideshow_corpus = corpus(rt_pdf)
+summary(slideshow_corpus)
+
+slideshow_tokens = tokens(slideshow_corpus, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE)
+
+slideshow_tokens = tokens_remove(slideshow_tokens, stopwords("en"))
+
+slideshow_dfm = dfm(slideshow_tokens)
+
+textstat_lexdiv(slideshow_dfm)
+
+topfeatures(slideshow_dfm)
+
+#idea: find most similar slideshows, 'whihc IDS lecture is yours?'
 ```
 
 This is a test.

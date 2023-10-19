@@ -1,0 +1,93 @@
+---
+title: "Starting with Quanteda"
+author: "Aranxa M"
+date: "2023-10-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+
+
+```{r}
+## Install quanteda package
+
+# install.packages("quanteda") 
+
+library(quanteda)
+
+?quanteda
+
+
+```
+
+```{r}
+#### Mention authors from the Package (beginning or end)
+
+
+```
+
+
+
+```{r}
+# quanteda can segment texts easily by words, paragraphs, sentences, or even user-supplied delimiters and tags.
+
+# quanteda is principally designed to allow users a fast and convenient method to go from a corpus of texts to a selected matrix of documents by features, after defining what the documents and features.
+
+# The package makes it easy to redefine documents, for instance by splitting them into sentences or paragraphs, or by tags, as well as to group them into larger documents by document variables, or to subset them based on logical conditions or combinations of document variables.
+
+# Tools for working with dictionaries are one of quanteda's principal strengths, and the package includes several core functions for preparing and applying dictionaries to texts, for example for lexicon-based sentiment analysis.
+
+
+```
+
+
+```{r}
+
+### Infrastructure of Quanteda
+
+## The stringi package -> Text processing
+
+## The Matrix package -> for sparse matrix objects
+## Computationally intensive processing (e.g. for tokens) handled in parallelized C++. 
+
+
+```
+
+
+
+```{r}
+
+### Concepts:
+
+## dfm
+
+## tokenizing
+# functions for tokenizing texts and forming multiple
+# tokenized documents into a document-feature matrix are
+# both extremely fast and very simple to use
+
+## stemming
+
+## ngrams
+
+## Unicode
+
+## ICU libraries
+
+## NLP feature selection functions
+# -> such as removing stopwords and stemming in numerous languages
+# -> selecting words found in dictionaries
+# -> treating words as equivalent based on a user-defined "thesaurus"
+# -> and trimming and weighting features based on document frequency
+# ->feature frequency
+# -> related measures such as tf-idf.
+
+
+
+```
+

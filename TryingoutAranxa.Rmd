@@ -1,6 +1,6 @@
 ---
 title: "Starting with Quanteda"
-author: "Aranxa M"
+author: "Aranxa Marquez"
 date: "2023-10-09"
 output: html_document
 ---

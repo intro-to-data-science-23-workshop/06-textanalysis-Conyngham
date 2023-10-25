@@ -37,6 +37,3 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
-
-#Slideshow files: Testing for Killian
-Slideshows/	

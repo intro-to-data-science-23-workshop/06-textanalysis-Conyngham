@@ -33,11 +33,11 @@ First we load the core of the quantedata package. If any of the packages are not
 library(quanteda)
 ```
 
+The package is split in to modular packages so we also download a selection of those of interest to us in this tutorial.
+
 ```{r initialise2, warning=FALSE}
 library(quanteda.textstats)
 ```
-
-The package is split in to modular packages so we also download a selection of those of interest to us in this tutorial.
 
 Finally we load readtext which makes the process of importing texts easier, and also imports meta data. Specifically in our case, it allows us to read in pdfs as text files.
 
@@ -50,17 +50,30 @@ library(readtext)
 For the example in this tutorial we will load in a collection of slides from the Intro to Data Science Course by Simon Munzert. We use the readtext function as mentioned above.
 
 ```{r}
-rt_pdf <- readtext("./Slideshows/*.pdf", docvarsfrom = "filenames")
-#rt_pdf <- readtext("./Slideshows/*.pdf", docvarsfrom = "filenames", dvsep = "-")
+ids_presentations_df = readtext("./Slideshows/*.pdf", docvarsfrom = "filenames")
+#rt_pdf = readtext("./Slideshows/*.pdf", docvarsfrom = "filenames", dvsep = "-")
 ```
 
-We encourage you to add your own slideshow in pdf format. To do this, just insert the pdf file in the Input folder. For demonstration purposes we have included the slideshow you just saw, but we think that this demonstration will be more interesting and fun if you can add your own data.
+We encourage you to add your own slideshow in pdf format. To do this, just insert the pdf file in the Input folder and delete any other contents. For demonstration purposes we have included the slideshow you just one, but we think that this demonstration will be more interesting and fun if you can add your own data.
+
+We will then add the text and info on the presentation such as it's title to our presentations data frame. This is straightforward as readtext will give us the same variable names for both imports. We also add an indicator variable which tells us which presentation is the 'extra' one we added. This will be important later for some of the analysis we want to do.
 
 ```{r}
-rt_pdf <- readtext("./Slideshows/*.pdf", docvarsfrom = "filenames")
 
+your_presentation_df = readtext("./Import/*.pdf", docvarsfrom = "filenames")
+if (nrow(your_presentation_df) > 1) stop("More than one pdf in Import folder, please remove extras") 
+
+your_presentation_df$yourpresentation = c(TRUE)
+ids_presentations_df$yourpresentation = rep(FALSE,rep=nrow(ids_presentations_df))
+#These two lines create the variable your presentation and set it to true only for the presentation imported from the Import folder
+
+presentations_df = rbind(ids_presentations_df, your_presentation_df)
+print(presentations_df, n = 10)
 ```
 
+Here we can see the structure of our dataframe. Luckily for us, readtext automatically formats the dataframe as quantedata expects them, but for furute reference if you are constructing your own dataframes for analysis, the text for analysis for each row (which will be each unique text, presentation, section or any other unit of analysis) must be in a column called 'text'.
+
+We can now create our first Corpus - this is the object at the centre of the quanteda package.  
 
 ```{r}
 

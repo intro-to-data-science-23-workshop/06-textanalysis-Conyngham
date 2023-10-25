@@ -45,7 +45,7 @@ Finally we load readtext which makes the process of importing texts easier, and 
 library(readtext)
 ```
 
-#Loading and prepping our data - The Corpus
+# Loading and prepping our data - The Corpus
 
 For the example in this tutorial we will load in a collection of slides from the Intro to Data Science Course by Simon Munzert. We use the readtext function as mentioned above.
 
@@ -80,7 +80,7 @@ presentations_corpus = corpus(presentations_df)
 summary(presentations_corpus)
 ```
 
-#Preparing our texts for non-relational analysis - Tokens and the DFM
+# Preparing our texts for non-relational analysis - Tokens and the DFM
 
 Now that we have our corpus we can begin to analyse the text data. For this section we will focus on non-relational analysis, i.e. we will look at the presence and frequency of words in each slideshow, regardless of their context. The first process our data will undergo is tokenisation. This splits up the text of each document into tokens, which are usually words, but can be other standalone character units.
 
@@ -94,6 +94,8 @@ Don't worry if this process of tokenisation and constructing a dfm still feels u
 presentation_tokens = tokens(presentations_corpus)
 
 presentation_dfm = dfm(presentation_tokens)
+
+print(presentation_dfm)
 
 topfeatures(presentation_dfm)
 ```
@@ -130,10 +132,12 @@ presentation_dfm = dfm(presentation_tokens)
 topfeatures(presentation_dfm)
 ```
 
-#Analysing our texts non-relationally
+# Analysing our texts non-relationally
 
 ```{r}
-textstat_lexdiv(presentation_dfm)
+textstat_lexdiv(presentation_dfm) 
+```
 
-#idea: find most similar slideshows, 'whihc IDS lecture is yours?'
+```{r}
+textstat_dist(presentation_dfm)
 ```

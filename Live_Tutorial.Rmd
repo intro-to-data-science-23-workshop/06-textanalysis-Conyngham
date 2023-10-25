@@ -76,28 +76,64 @@ Here we can see the structure of our dataframe. Luckily for us, readtext automat
 We can now create our first Corpus - this is the object at the centre of the quanteda package.  
 
 ```{r}
-
+presentations_corpus = corpus(presentations_df)
+summary(presentations_corpus)
 ```
 
+#Preparing our texts for non-relational analysis - Tokens and the DFM
 
+Now that we have our corpus we can begin to analyse the text data. For this section we will focus on non-relational analysis, i.e. we will look at the presence and frequency of words in each slideshow, regardless of their context. The first process our data will undergo is tokenisation. This splits up the text of each document into tokens, which are usually words, but can be other standalone character units.
+
+Once we have tokenised our corpus we can create a Document feature matrix. This (insert infor about DFM).
+
+Finally, we run the function top features, to have a look at the most common tokens in the entire corpus. This is our first analysis function, just to get an overview, but we will dive into more later.
+
+Don't worry if this process of tokenisation and constructing a dfm still feels unclear, we will go over it a few times, and you'll have a chance to adjust the process yourselves.
 
 ```{r}
-slideshow_corpus = corpus(rt_pdf)
-summary(slideshow_corpus)
+presentation_tokens = tokens(presentations_corpus)
 
-slideshow_tokens = tokens(slideshow_corpus, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE)
+presentation_dfm = dfm(presentation_tokens)
+
+topfeatures(presentation_dfm)
 ```
 
+Looking at this, we can see that all the most common tokens by far are punctuation or filler words which don't carry much meaning. This is normal, and luckily quantedata comes built-in with some handy functions and options to help alleviate this.
 
+The first thing we can do is adjust the parameters on the function tokens(), allowing us to remove punctuation, numbers and symbols.
+
+An even more powerful tool is the token_remove function combined with the build in stopwords database. Quantedata comes loaded with common filler words or stop words for _ different languages. Removing these may help us with our analysis.
 
 ```{r}
-slideshow_tokens = tokens_remove(slideshow_tokens, stopwords("en"))
+presentation_tokens = tokens(presentations_corpus, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE)
 
-slideshow_dfm = dfm(slideshow_tokens)
+presentation_tokens = tokens_remove(presentation_tokens, stopwords("en"))
 
-textstat_lexdiv(slideshow_dfm)
+presentation_dfm = dfm(presentation_tokens)
 
-topfeatures(slideshow_dfm)
+topfeatures(presentation_dfm)
+```
+Now this looks more promising!
+
+You can use your own discretion to decide whether punctuation, numbers, symbols or stop words should be included or excluded in your use case. It is also possible to remove words individually. For example, I felt that 'can' and 'use' were not words that carried much useful meaning, especially with their very high frequency in the data. Have a look at the outputs above and see if there are any adjustments you would make for our final tokenisation process.
+
+(We repeat the whole process here for the sake of having it all in once place as an overview)
+
+```{r}
+presentation_tokens = tokens(presentations_corpus, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE)
+
+presentation_tokens = tokens_remove(presentation_tokens, stopwords("en"))
+presentation_tokens = tokens_remove(presentation_tokens, c('can','use'))
+
+presentation_dfm = dfm(presentation_tokens)
+
+topfeatures(presentation_dfm)
+```
+
+#Analysing our texts non-relationally
+
+```{r}
+textstat_lexdiv(presentation_dfm)
 
 #idea: find most similar slideshows, 'whihc IDS lecture is yours?'
 ```

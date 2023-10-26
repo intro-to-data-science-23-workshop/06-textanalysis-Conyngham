@@ -9,8 +9,8 @@ This repository provides materials for a session that is part of the [I2DS Tools
 
 This session will introduce you to the modern data wrangling workflow with R and dplyr. Data wrangling is one of the core steps in the data science workflow. dplyr is a grammar of data manipulation, providing a consistent set of verbs that help you solve the most common data manipulation challenges, including the manipulation of datasets and variables. 
 
-##Tutorial
-Follow [this link for the html]()
+##Live Tutorial
+Follow [this link for the html](https://cdn.githubraw.com/intro-to-data-science-23-workshop/06-textanalysis-Conyngham-Vellage-Marquez/main/Live_Tutorial.html) which contains all the info you need to follow along with our tutorial or teach yourself quoanteda in your own time.
 
 ### Main learning objectives
 

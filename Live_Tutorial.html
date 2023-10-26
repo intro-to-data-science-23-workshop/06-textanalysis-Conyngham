@@ -14,7 +14,7 @@
 
 <title>Quanteda</title>
 
-<script src="Live_Tutorial_files/header-attrs-2.25/header-attrs.js"></script>
+<script src="Live_Tutorial_files/header-attrs-2.24/header-attrs.js"></script>
 <script src="Live_Tutorial_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="Live_Tutorial_files/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -444,13 +444,14 @@ line.</p>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span></code></pre></div>
 <pre><code>## Package version: 3.3.1
-## Unicode version: 14.0
-## ICU version: 71.1</code></pre>
-<pre><code>## Parallel computing: 4 of 4 threads used.</code></pre>
+## Unicode version: 13.0
+## ICU version: 69.1</code></pre>
+<pre><code>## Parallel computing: 8 of 8 threads used.</code></pre>
 <pre><code>## See https://quanteda.io for tutorials and examples.</code></pre>
 <p>The package is split in to modular packages so we also download a
 selection of those of interest to us in this tutorial.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="fu">library</span>(quanteda.textplots)</span></code></pre></div>
 <p>Finally we load readtext which makes the process of importing texts
 easier, and also imports meta data. Specifically in our case, it allows
 us to read in pdfs as text files.</p>
@@ -469,6 +470,8 @@ slides from the Intro to Data Science Course by Simon Munzert. We use
 the readtext function as mentioned above.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>ids_presentations_df <span class="ot">=</span> <span class="fu">readtext</span>(<span class="st">&quot;./Slideshows/*.pdf&quot;</span>, <span class="at">docvarsfrom =</span> <span class="st">&quot;filenames&quot;</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="co">#rt_pdf = readtext(&quot;./Slideshows/*.pdf&quot;, docvarsfrom = &quot;filenames&quot;, dvsep = &quot;-&quot;)</span></span></code></pre></div>
+<div id="adding-your-own-slideshow" class="section level2">
+<h2>Adding your own slideshow</h2>
 <p>We encourage you to add your own slideshow in pdf format. To do this,
 just insert the pdf file in the Input folder and delete any other
 contents. For demonstration purposes we have included the slideshow you
@@ -490,32 +493,26 @@ analysis we want to do.</p>
 <span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>presentations_df <span class="ot">=</span> <span class="fu">rbind</span>(ids_presentations_df, your_presentation_df)</span>
 <span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="fu">print</span>(presentations_df, <span class="at">n =</span> <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## readtext object consisting of 8 documents and 2 docvars.
-## $text
-##  [1] &quot;# A data frame: 8 × 4&quot;                                                                 
-##  [2] &quot;  doc_id                     text                docvar1        yourpresentation&quot;      
-##  [3] &quot;  &lt;chr&gt;                      &lt;chr&gt;               &lt;chr&gt;          &lt;lgl&gt;           &quot;      
-##  [4] &quot;1 00-tidyverse.pdf           \&quot;\\\&quot;Introducti\\\&quot;...\&quot; 00-tidyverse   FALSE           &quot;
-##  [5] &quot;2 01-introduction.pdf        \&quot;\\\&quot;Introducti\\\&quot;...\&quot; 01-introducti… FALSE           &quot;
-##  [6] &quot;3 02-version-control.pdf     \&quot;\\\&quot;Introducti\\\&quot;...\&quot; 02-version-co… FALSE           &quot;
-##  [7] &quot;4 03-ethics.pdf              \&quot;\\\&quot;Introducti\\\&quot;...\&quot; 03-ethics      FALSE           &quot;
-##  [8] &quot;5 04-functions-debugging.pdf \&quot;\\\&quot;Introducti\\\&quot;...\&quot; 04-functions-… FALSE           &quot;
-##  [9] &quot;6 05-databases.pdf           \&quot;\\\&quot;Introducti\\\&quot;...\&quot; 05-databases   FALSE           &quot;
-## [10] &quot;7 06-webdata.pdf             \&quot;\\\&quot;Introducti\\\&quot;...\&quot; 06-webdata     FALSE           &quot;
-## [11] &quot;8 09-modeling.pdf            \&quot;\\\&quot;Introducti\\\&quot;...\&quot; 09-modeling    TRUE            &quot;
-## 
-## $summary
-## $summary[[1]]
-## NULL
-## 
-## 
-## attr(,&quot;class&quot;)
-## [1] &quot;trunc_mat&quot;</code></pre>
+## # A data frame: 8 × 4
+##   doc_id                     text                docvar1        yourpresentation
+##   &lt;chr&gt;                      &lt;chr&gt;               &lt;chr&gt;          &lt;lgl&gt;           
+## 1 00-tidyverse.pdf           &quot;\&quot;Introducti\&quot;...&quot; 00-tidyverse   FALSE           
+## 2 01-introduction.pdf        &quot;\&quot;Introducti\&quot;...&quot; 01-introducti… FALSE           
+## 3 02-version-control.pdf     &quot;\&quot;Introducti\&quot;...&quot; 02-version-co… FALSE           
+## 4 03-ethics.pdf              &quot;\&quot;Introducti\&quot;...&quot; 03-ethics      FALSE           
+## 5 04-functions-debugging.pdf &quot;\&quot;Introducti\&quot;...&quot; 04-functions-… FALSE           
+## 6 05-databases.pdf           &quot;\&quot;Introducti\&quot;...&quot; 05-databases   FALSE           
+## 7 06-webdata.pdf             &quot;\&quot;Introducti\&quot;...&quot; 06-webdata     FALSE           
+## 8 09-modeling.pdf            &quot;\&quot;Introducti\&quot;...&quot; 09-modeling    TRUE</code></pre>
 <p>Here we can see the structure of our dataframe. Luckily for us,
 readtext automatically formats the dataframe as quantedata expects them,
 but for furute reference if you are constructing your own dataframes for
 analysis, the text for analysis for each row (which will be each unique
 text, presentation, section or any other unit of analysis) must be in a
 column called ‘text’.</p>
+</div>
+<div id="creating-a-corpus" class="section level2">
+<h2>Creating a Corpus</h2>
 <p>We can now create our first Corpus - this is the object at the centre
 of the quanteda package.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>presentations_corpus <span class="ot">=</span> <span class="fu">corpus</span>(presentations_df)</span>
@@ -524,6 +521,10 @@ of the quanteda package.</p>
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Text"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Types"],"name":[2],"type":["int"],"align":["right"]},{"label":["Tokens"],"name":[3],"type":["int"],"align":["right"]},{"label":["Sentences"],"name":[4],"type":["int"],"align":["right"]},{"label":["docvar1"],"name":[5],"type":["chr"],"align":["left"]},{"label":["yourpresentation"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"00-tidyverse.pdf","2":"1679","3":"10305","4":"264","5":"00-tidyverse","6":"FALSE","_rn_":"1"},{"1":"01-introduction.pdf","2":"825","3":"2907","4":"121","5":"01-introduction","6":"FALSE","_rn_":"2"},{"1":"02-version-control.pdf","2":"1554","3":"10083","4":"616","5":"02-version-control","6":"FALSE","_rn_":"3"},{"1":"03-ethics.pdf","2":"850","3":"3874","4":"231","5":"03-ethics","6":"FALSE","_rn_":"4"},{"1":"04-functions-debugging.pdf","2":"1238","3":"7361","4":"279","5":"04-functions-debugging","6":"FALSE","_rn_":"5"},{"1":"05-databases.pdf","2":"1694","3":"10029","4":"389","5":"05-databases","6":"FALSE","_rn_":"6"},{"1":"06-webdata.pdf","2":"1462","3":"8439","4":"306","5":"06-webdata","6":"FALSE","_rn_":"7"},{"1":"09-modeling.pdf","2":"1685","3":"9406","4":"246","5":"09-modeling","6":"TRUE","_rn_":"8"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
+</div>
+<p>Here we see the corpus structure with some information about the text
+in each slideshow, plus the document-level variables we added
+earlier.</p>
 </div>
 </div>
 <div
@@ -603,10 +604,10 @@ look at the outputs above and see if there are any adjustments you would
 make for our final tokenisation process.</p>
 <p>(We repeat the whole process here for the sake of having it all in
 once place as an overview)</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>presentation_tokens <span class="ot">=</span> <span class="fu">tokens</span>(presentations_corpus, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>)</span>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>presentation_tokens <span class="ot">=</span> <span class="fu">tokens</span>(presentations_corpus, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>,<span class="at">remove_url =</span> <span class="cn">TRUE</span>, <span class="at">remove_separators =</span> <span class="cn">TRUE</span>, <span class="at">split_hyphens =</span> <span class="cn">FALSE</span>, <span class="at">split_tags =</span> <span class="cn">FALSE</span>)<span class="co">#Do you think we should be excluding all these categories? Feel free to change these options as you feel makes the msot sense</span></span>
 <span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>presentation_tokens <span class="ot">=</span> <span class="fu">tokens_remove</span>(presentation_tokens, <span class="fu">stopwords</span>(<span class="st">&quot;en&quot;</span>))</span>
-<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>presentation_tokens <span class="ot">=</span> <span class="fu">tokens_remove</span>(presentation_tokens, <span class="fu">c</span>(<span class="st">&#39;can&#39;</span>,<span class="st">&#39;use&#39;</span>))</span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>presentation_tokens <span class="ot">=</span> <span class="fu">tokens_remove</span>(presentation_tokens, <span class="fu">c</span>(<span class="st">&#39;can&#39;</span>,<span class="st">&#39;use&#39;</span>)) <span class="co">#You can add any &#39;filler&#39; words here which you would like excluded from the analysis.</span></span>
 <span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a></span>
 <span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>presentation_dfm <span class="ot">=</span> <span class="fu">dfm</span>(presentation_tokens)</span>
 <span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a></span>
@@ -615,9 +616,17 @@ once place as an overview)</p>
 ##      526      438      174      160      154      138      108      104 
 ##      one     repo 
 ##      102      101</code></pre>
+<p>Now we have a nice looking Document Feature matrix for our further
+analysis. For our live presentation we will stop here and move on to the
+next section: Analysing text non-relationally, but if you would like to
+learn some more about creating and tweaking corpuses continue below.</p>
 </div>
 <div id="analysing-our-texts-non-relationally" class="section level1">
 <h1>Analysing our texts non-relationally</h1>
+<p>There are many many functions across the quantedata family of
+packages which can be used to analyse our newly created DFM, here we
+will focus on some of the fucntions we foudn the most interesting from
+the textstat and testplot packages.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">textstat_lexdiv</span>(presentation_dfm) </span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -627,41 +636,86 @@ once place as an overview)</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="fu">textstat_dist</span>(presentation_dfm)</span></code></pre></div>
 <pre><code>## textstat_dist object; method = &quot;euclidean&quot;
 ##                            00-tidyverse.pdf 01-introduction.pdf
-## 00-tidyverse.pdf                          0                 260
-## 01-introduction.pdf                     260                   0
-## 02-version-control.pdf                  377                 296
-## 03-ethics.pdf                           286                 142
-## 04-functions-debugging.pdf              286                 237
-## 05-databases.pdf                        296                 260
-## 06-webdata.pdf                          284                 217
-## 09-modeling.pdf                         284                 237
+## 00-tidyverse.pdf                          0                 259
+## 01-introduction.pdf                     259                   0
+## 02-version-control.pdf                  376                 295
+## 03-ethics.pdf                           285                 141
+## 04-functions-debugging.pdf              285                 237
+## 05-databases.pdf                        296                 259
+## 06-webdata.pdf                          282                 214
+## 09-modeling.pdf                         282                 236
 ##                            02-version-control.pdf 03-ethics.pdf
-## 00-tidyverse.pdf                              377           286
-## 01-introduction.pdf                           296           142
+## 00-tidyverse.pdf                              376           285
+## 01-introduction.pdf                           295           141
 ## 02-version-control.pdf                          0           319
 ## 03-ethics.pdf                                 319             0
-## 04-functions-debugging.pdf                    359           262
-## 05-databases.pdf                              382           292
-## 06-webdata.pdf                                350           245
-## 09-modeling.pdf                               366           267
+## 04-functions-debugging.pdf                    358           261
+## 05-databases.pdf                              382           291
+## 06-webdata.pdf                                348           243
+## 09-modeling.pdf                               364           266
 ##                            04-functions-debugging.pdf 05-databases.pdf
-## 00-tidyverse.pdf                                  286              296
-## 01-introduction.pdf                               237              260
-## 02-version-control.pdf                            359              382
-## 03-ethics.pdf                                     262              292
+## 00-tidyverse.pdf                                  285              296
+## 01-introduction.pdf                               237              259
+## 02-version-control.pdf                            358              382
+## 03-ethics.pdf                                     261              291
 ## 04-functions-debugging.pdf                          0              319
 ## 05-databases.pdf                                  319                0
-## 06-webdata.pdf                                    269              301
-## 09-modeling.pdf                                   272              289
+## 06-webdata.pdf                                    267              299
+## 09-modeling.pdf                                   270              288
 ##                            06-webdata.pdf 09-modeling.pdf
-## 00-tidyverse.pdf                      284             284
-## 01-introduction.pdf                   217             237
-## 02-version-control.pdf                350             366
-## 03-ethics.pdf                         245             267
-## 04-functions-debugging.pdf            269             272
-## 05-databases.pdf                      301             289
-## 06-webdata.pdf                          0             273
-## 09-modeling.pdf                       273               0</code></pre>
+## 00-tidyverse.pdf                      282             282
+## 01-introduction.pdf                   214             236
+## 02-version-control.pdf                348             364
+## 03-ethics.pdf                         243             266
+## 04-functions-debugging.pdf            267             270
+## 05-databases.pdf                      299             288
+## 06-webdata.pdf                          0             270
+## 09-modeling.pdf                       270               0</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">textstat_dist</span>(presentation_dfm)</span></code></pre></div>
+<pre><code>## textstat_dist object; method = &quot;euclidean&quot;
+##                            00-tidyverse.pdf 01-introduction.pdf
+## 00-tidyverse.pdf                          0                 259
+## 01-introduction.pdf                     259                   0
+## 02-version-control.pdf                  376                 295
+## 03-ethics.pdf                           285                 141
+## 04-functions-debugging.pdf              285                 237
+## 05-databases.pdf                        296                 259
+## 06-webdata.pdf                          282                 214
+## 09-modeling.pdf                         282                 236
+##                            02-version-control.pdf 03-ethics.pdf
+## 00-tidyverse.pdf                              376           285
+## 01-introduction.pdf                           295           141
+## 02-version-control.pdf                          0           319
+## 03-ethics.pdf                                 319             0
+## 04-functions-debugging.pdf                    358           261
+## 05-databases.pdf                              382           291
+## 06-webdata.pdf                                348           243
+## 09-modeling.pdf                               364           266
+##                            04-functions-debugging.pdf 05-databases.pdf
+## 00-tidyverse.pdf                                  285              296
+## 01-introduction.pdf                               237              259
+## 02-version-control.pdf                            358              382
+## 03-ethics.pdf                                     261              291
+## 04-functions-debugging.pdf                          0              319
+## 05-databases.pdf                                  319                0
+## 06-webdata.pdf                                    267              299
+## 09-modeling.pdf                                   270              288
+##                            06-webdata.pdf 09-modeling.pdf
+## 00-tidyverse.pdf                      282             282
+## 01-introduction.pdf                   214             236
+## 02-version-control.pdf                348             364
+## 03-ethics.pdf                         243             266
+## 04-functions-debugging.pdf            267             270
+## 05-databases.pdf                      299             288
+## 06-webdata.pdf                          0             270
+## 09-modeling.pdf                       270               0</code></pre>
+<p>Just for fun: lets make an ever popular word cloud! We can do this
+super easily with the textplot_wordcloud() function.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">textplot_wordcloud</span>(presentation_dfm, <span class="at">max_words =</span> <span class="dv">50</span>)</span></code></pre></div>
+<p><img src="Live_Tutorial_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="natural-language-processing-1" class="section level1">
+<h1>Natural Language Processing</h1>
 </div>
 
 

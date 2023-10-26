@@ -12,7 +12,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ## R Markdown
 
 
-
 ```{r}
 ## Install quanteda package
 
@@ -88,6 +87,52 @@ library(quanteda)
 # -> related measures such as tf-idf.
 
 
+
+```
+
+
+```{r}
+install.packages("RSelenium")
+
+library(rvest)
+library(stringr)
+library(tidyverse)
+library(here)
+
+```
+
+```{r}
+obama_best_speeches <- "http://obamaspeeches.com/P-Obama-Inaugural-Speech-Inauguration.htm"
+
+obama_speeches <- read_html(obama_best_speeches)
+
+
+# Extract the table containing the speech
+table <- obama_speeches %>%
+  html_table(fill = TRUE)
+
+speech_text <- table[[1]]
+
+# Print the speech text
+cat(speech_text$X1)
+```
+
+
+```{r}
+
+
+body_nodes <- obama_speeches |> 
+ html_elements("body") |> 
+ html_children()
+
+body_nodes |> 
+ html_children()
+
+```
+
+```{r}
+speech <- obama_speeches |> 
+  xml_node(xpath = '//p+//p//font | //font//font//strong')
 
 ```
 

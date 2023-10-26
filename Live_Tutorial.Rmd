@@ -84,16 +84,22 @@ Additionally available via GitHub:
 First we load the core quanteda package.
 ```{r}
 #install.packages('quanteda')
-#library(quanteda)
+library(quanteda)
 ```
 
 Additionally, we load the [readtext package](https://readtext.quanteda.io)
 
 ```{r}
 #install.packages('readtext')
-#library(readtext)
+library(readtext)
 ```
 The readtext package provides an easy way to read text data into R, from almost any input format. 
+
+```{r}
+#install.packages('dplyr')
+library(dplyr)
+```
+
 
 #### Main Functions
 
@@ -154,7 +160,7 @@ presentations_df = rbind(ids_presentations_df, your_presentation_df)
 print(presentations_df, n = 10)
 ```
 
-Here we can see the structure of our dataframe. Luckily for us, readtext automatically formats the dataframe as quantedata expects them, but for furute reference if you are constructing your own dataframes for analysis, the text for analysis for each row (which will be each unique text, presentation, section or any other unit of analysis) must be in a column called 'text'.
+Here we can see the structure of our dataframe. Luckily for us, readtext automatically formats the dataframe as quantedata expects them, but for future reference if you are constructing your own dataframes for analysis, the text for analysis for each row (which will be each unique text, presentation, section or any other unit of analysis) must be in a column called 'text'.
 
 ## Creating a  Corpus
 
@@ -171,7 +177,7 @@ Here we see the corpus structure with some information about the text in each sl
 
 Now that we have our corpus we can begin to analyse the text data. For this section we will focus on non-relational analysis, i.e. we will look at the presence and frequency of words in each slideshow, regardless of their context. The first process our data will undergo is tokenisation. This splits up the text of each document into tokens, which are usually words, but can be other standalone character units.
 
-Once we have tokenised our corpus we can create a Document feature matrix. This (insert infor about DFM).
+Once we have tokenised our corpus we can create a Document feature matrix. This (insert information about DFM).
 
 Finally, we run the function top features, to have a look at the most common tokens in the entire corpus. This is our first analysis function, just to get an overview, but we will dive into more later.
 
@@ -209,7 +215,7 @@ You can use your own discretion to decide whether punctuation, numbers, symbols 
 (We repeat the whole process here for the sake of having it all in once place as an overview)
 
 ```{r}
-presentation_tokens = tokens(presentations_corpus, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE,remove_url = TRUE, remove_separators = TRUE, split_hyphens = FALSE, split_tags = FALSE)#Do you think we should be excluding all these categories? Feel free to change these options as you feel makes the msot sense
+presentation_tokens = tokens(presentations_corpus, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE,remove_url = TRUE, remove_separators = TRUE, split_hyphens = FALSE, split_tags = FALSE)#Do you think we should be excluding all these categories? Feel free to change these options as you feel makes the most sense
 
 presentation_tokens = tokens_remove(presentation_tokens, stopwords("en"))
 presentation_tokens = tokens_remove(presentation_tokens, c('can','use')) #You can add any 'filler' words here which you would like excluded from the analysis.
@@ -222,17 +228,27 @@ topfeatures(presentation_dfm)
 Now we have a nice looking Document Feature matrix for our further analysis. For our live presentation we will stop here and move on to the next section: Analysing text non-relationally, but if you would like to learn some more about creating and tweaking corpuses continue below.
 
 
+
 # Analysing our texts non-relationally
 
 There are many many functions across the quantedata family of packages which can be used to analyse our newly created DFM, here we will focus on some of the fucntions we foudn the most interesting from the textstat and testplot packages.
 
-```{r}
-textstat_lexdiv(presentation_dfm) 
-```
+## Lexical Diversity
+
+The first function we look at is textstat_lexdiv(), which calculates the lexical diverstiy of the text. As a default this is the ratio of unique tokens to total tokens in the text, but you can also use the (measure = ) parameter to change to measures.
 
 ```{r}
-textstat_dist(presentation_dfm)
+textstat_lexdiv(presentation_dfm)
 ```
+
+
+```{r}
+yourpresentationname = as.character(as.data.frame(your_presentation_df)[[1]])
+as.data.frame(textstat_dist(presentation_dfm)) %>% filter(document2 == yourpresentationname) 
+
+```
+
+Which IDS slideshow is your presentation most like?
 
 ```{r}
 textstat_dist(presentation_dfm)

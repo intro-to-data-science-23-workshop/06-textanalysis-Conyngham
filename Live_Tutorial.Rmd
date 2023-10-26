@@ -38,11 +38,11 @@ Quantitative text analysis is a subfield of NLP and refers to the process of ana
 # Quanteda 💡
 
 ### Background
-Quanteda is an R packagae for managing and analysing textual data. It was founded by [Ken Benoit] (https://kenbenoit.net) and is available via [CRAN] (https://cran.r-project.org/web/packages/quanteda/index.html). The latest update of quanteda is version 4.0 and the package is maintained by the UK-based non-profit company [Quanteda Initiative] (https://quanteda.org). 
+Quanteda is an R packagae for managing and analysing textual data. It was founded by [Ken Benoit](https://kenbenoit.net) and is available via [CRAN](https://cran.r-project.org/web/packages/quanteda/index.html). The latest update of quanteda is version 4.0 and the package is maintained by the UK-based non-profit company [Quanteda Initiative](https://quanteda.org). 
 
 Since Version 3.0, quanteda has been split into modular packages. These consist of: 
 
-quanteda: 
+**quanteda:**
 Contains all core natural language processing and textual data management functions 
 
 **quanteda.textmodels:**
@@ -82,16 +82,16 @@ Additionally available via GitHub:
 #### Getting started 
 
 First we load the core quanteda package.
-```{r initialise, warning=FALSE}
-install.packages('quanteda')
-library(quanteda)
+```{r}
+#install.packages('quanteda')
+#library(quanteda)
 ```
 
-Additionally, we load the [readtext package] (https://readtext.quanteda.io)
+Additionally, we load the [readtext package](https://readtext.quanteda.io)
 
-```{r initialise, warning=FALSE}
-install.packages('readtext')
-library(readtext)
+```{r}
+#install.packages('readtext')
+#library(readtext)
 ```
 The readtext package provides an easy way to read text data into R, from almost any input format. 
 

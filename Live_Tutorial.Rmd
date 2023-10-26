@@ -1,7 +1,7 @@
 ---
 author: "Killian, Luca, Aranxa"
 title: "Quanteda"
-subtitle: "Analysing text data quantitively"
+subtitle: "Quantitative Text Analyis"
 output: 
   html_document:
     toc: TRUE
@@ -19,13 +19,94 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Insert session Intro here
+# Welcome!👋
+
+This Workshop introduces you to quanteda, an R package for quantitative text analysis. 
+
+# Text Analysis 📚
+
+Why do we want to analyze textual data? Text is everywhere, grows in volume and becomes more easily accessible as we speak. Main reasons for this are the widespread use of social media and the digitalisation of many aspects of our lives, making lots of data available for (social science) research. Natural language processing provides us with the fundamental tools and methods to analyse text data.
+
+### Natural Language Processing
+
+Natural Language Processing (NLP) is concerned with enabling computers/machines to process, understand, interpret and even generate natural language, for example in the form of text or speech. Some examples of applications using NLP are chatbots, speech recognition, sentiment analysis, Google Translate, automatic text summarization, and more.
+
+### Quantitative Text Analysis
+
+Quantitative text analysis is a subfield of NLP and refers to the process of analyzing text data using statistical and computational methods to derive quantitative information from the input text. Some examples of quantitative text analysis include word frequency analysis, keyword extraction, sentiment analysis, text visualization, and more. All of this can be done using the R package quanteda! 
+
+# Quanteda 💡
+
+### Background
+Quanteda is an R packagae for managing and analysing textual data. It was founded by [Ken Benoit](https://kenbenoit.net) and is available via [CRAN](https://cran.r-project.org/web/packages/quanteda/index.html). The latest update of quanteda is version 4.0 and the package is maintained by the UK-based non-profit company [Quanteda Initiative](https://quanteda.org). 
+
+Since Version 3.0, quanteda has been split into modular packages. These consist of: 
+
+**quanteda:**
+Contains all core natural language processing and textual data management functions 
+
+**quanteda.textmodels:**
+-   Contains all text models and supporting functions 
+-   Textmodel_* functions 
+
+**quanteda.textstats:**
+-   Statistics for textual data 
+-   textstat_*() functions 
+
+**quanteda.textplots:**
+-   Plots for textual data 
+-   textplot_*() functions
+
+Additionally available via GitHub: 
+
+**quanteda.sentiment:**
+-   Sentiment analysis using dictionaries 
+
+**quanteda.tidy:**
+-   Extensions for manipulating document variables in core quanteda objects using tidyverse functions 
+
+# Quanteda Basics 📝
+
+### Main Objects
+
+#### Corpus 
+
+#### Tokens 
+
+#### Document Feature Matrix 
+
+
+# Workflow 💪
+
+
+#### Getting started 
+
+First we load the core quanteda package.
+```{r}
+#install.packages('quanteda')
+#library(quanteda)
+```
+
+Additionally, we load the [readtext package](https://readtext.quanteda.io)
+
+```{r}
+#install.packages('readtext')
+#library(readtext)
+```
+The readtext package provides an easy way to read text data into R, from almost any input format. 
+
+#### Main Functions
+
+
+
+# Why quanteda? ✅
+
 
 ---
 # Loading the package
 If 
 
-First we load the core of the quantedata package. If any of the packages are not installed on your machine you can uncomment the first line.
+First we load the core of the quanteda package. If any of the packages are not installed on your machine you can uncomment the first line.
 
 ```{r initialise, warning=FALSE}
 #install.packages('quanteda','quanteda.textstats','readtext')

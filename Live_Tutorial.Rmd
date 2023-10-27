@@ -454,6 +454,7 @@ Finally we load dplyr for our workflow and gt for creating nice looking tables.
 ```{r initialise4, warning=FALSE}
 library(dplyr)
 library(gt)
+library(rvest)
 ```
 
 # Loading and prepping our data - The Corpus

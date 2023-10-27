@@ -10,7 +10,7 @@ This repository provides materials for a session that is part of the [I2DS Tools
 This session will introduce you to quanteda! Quanteda is an R package for quantitative text analysis. A lot of data we deal with every day comes in text, and will increasingly do so in the future! Through the use of social media and digitalisation efforts in all parts of life, large volumes of data become increasingly accessible. Quanteda is an efficient R package to process large text data and analyse it quantitatively. The possibilities for analysis which quanteda and its expansion packages offer are well maintained and are constantly evolving. In this session we will introduce the main objects and most important functions of quanteda. We will run participants through the workflow of analyzing text data with quanteda and illustrate these steps with the analysis of speeched given by Barack Obama. 
 
 
-##Live Tutorial
+## Live Tutorial
 In the live tutorial you will be able to apply basic quanteda functions yourself and will ultimately analyze content from our Introduction to Data Science lectures. 
 Follow [this link for the html](https://cdn.githubraw.com/intro-to-data-science-23-workshop/06-textanalysis-Conyngham-Vellage-Marquez/main/Live_Tutorial.html) which contains some background information on quanteda and all instructions you need to follow along with our tutorial or teach yourself quanteda in your own time.
 

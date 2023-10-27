@@ -21,49 +21,72 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Welcome!👋
 
-This Workshop introduces you to quanteda, an R package for quantitative text analysis. 
+This Workshop introduces you to quanteda, an R package for quantitative text analysis.
 
 # Text Analysis 📚
 
-Why do we want to analyze textual data? Text is everywhere, grows in volume and becomes more easily accessible as we speak. Main reasons for this are the widespread use of social media and the digitalisation of many aspects of our lives, making lots of data available for (social science) research. Natural language processing provides us with the fundamental tools and methods to analyse text data.
+Why do we want to analyze textual data? Text is everywhere, grows in volume and becomes more easily accessible as we speak. Main reasons for this are the widespread use of
+social media and the digitalisation of many aspects of our lives, making lots of data
+available for (social science) research. Natural language processing provides us with
+the fundamental tools and methods to analyse text data.
 
 ### Natural Language Processing
-
-Natural Language Processing (NLP) is concerned with enabling computers/machines to process, understand, interpret and even generate natural language, for example in the form of text or speech. Some examples of applications using NLP are chatbots, speech recognition, sentiment analysis, Google Translate, automatic text summarization, and more.
+Natural Language Processing (NLP) is concerned with enabling computers/machines to
+process, understand, interpret and even generate natural language, for example in the
+form of text or speech. Some examples of applications using NLP are chatbots, tools for
+speech recognition,  automatic text summarization or translation, such as Google
+Translate.
 
 ### Quantitative Text Analysis
+Quantitative text analysis is a subfield of NLP and refers to the process of analyzing
+text data using statistical and computational methods to derive quantitative information
+from the input text. Some examples of quantitative text analysis include word frequency
+analysis, keyword extraction, sentiment analysis, text visualization, and more. All of
+this can be done using the R package quanteda!
 
-Quantitative text analysis is a subfield of NLP and refers to the process of analyzing text data using statistical and computational methods to derive quantitative information from the input text. Some examples of quantitative text analysis include word frequency analysis, keyword extraction, sentiment analysis, text visualization, and more. All of this can be done using the R package quanteda! 
+### Use Cases
+Some popular use cases of quantitative text analysis in social science research are:
+-   The analysis of political speeches or party manifestos to identify key phrases
+-   Sentiment analysis of social media posts
+-   Categorization and quantification of open-ended survey responses
+In order to illustrate the workflow and main functions of the quanteda package, we
+analyse speeches by Barack Obama which we previously scraped from (insert link). (TO DO:
+add more explanation about data?)
+
 
 # Quanteda 💡
 
 ### Background
-Quanteda is an R packagae for managing and analysing textual data. It was founded by [Ken Benoit](https://kenbenoit.net) and is available via [CRAN](https://cran.r-project.org/web/packages/quanteda/index.html). The latest update of quanteda is version 4.0 and the package is maintained by the UK-based non-profit company [Quanteda Initiative](https://quanteda.org). 
+### Background
+Quanteda is an R packagae for managing and analysing textual data. It was created by
+[Ken Benoit](https://kenbenoit.net) and is available via [CRAN](https://cran.r-
+project.org/web/packages/quanteda/index.html). The latest update of quanteda is version 4.0 and the package is maintained by the UK-based non-profit company [Quanteda
+Initiative](https://quanteda.org).
 
-Since Version 3.0, quanteda has been split into modular packages. These consist of: 
-
+Since Version 3.0, quanteda has been split into modular packages. These consist of:
 **quanteda:**
-Contains all core natural language processing and textual data management functions 
+
+Contains all core natural language processing and textual data management functions
 
 **quanteda.textmodels:**
--   Contains all text models and supporting functions 
--   Textmodel_* functions 
+-   Contains all text models and supporting functions
+-   Textmodel_* functions
 
 **quanteda.textstats:**
--   Statistics for textual data 
--   textstat_*() functions 
+-   Statistics for textual data
+-   textstat_*() functions
 
 **quanteda.textplots:**
--   Plots for textual data 
+-   Plots for textual data
 -   textplot_*() functions
 
-Additionally available via GitHub: 
-
+Additionally available via GitHub:
 **quanteda.sentiment:**
--   Sentiment analysis using dictionaries 
+-   Sentiment analysis using dictionaries
 
 **quanteda.tidy:**
--   Extensions for manipulating document variables in core quanteda objects using tidyverse functions 
+-   Extensions for manipulating document variables in core quanteda objects using
+tidyverse functions
 
 # Quanteda Basics 📝
 

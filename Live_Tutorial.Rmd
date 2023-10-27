@@ -28,7 +28,6 @@ This Workshop introduces you to quanteda, an R package for quantitative text ana
 Why do we want to analyze textual data? Text is everywhere, grows in volume and becomes more easily accessible as we speak. Main reasons for this are the widespread use of social media and the digitalisation of many aspects of our lives, making lots of data available for (social science) research. Natural language processing provides us with the fundamental tools and methods to analyse text data.
 
 ### Natural Language Processing
-
 Natural Language Processing (NLP) is concerned with enabling computers/machines to process, understand, interpret and even generate natural language, for example in the form of text or speech. Some examples of applications using NLP are chatbots, tools for speech recognition, automatic text summarization or translation, such as Google Translate.
 
 ### Quantitative Text Analysis

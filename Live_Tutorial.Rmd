@@ -182,6 +182,86 @@ The readtext package provides an easy way to read text data into R, from almost 
 
 #TO DO: Show our use case --\> Aranxa
 
+## Try it out! Comparing political discourses
+Now we're going to give you an example where you can apply this for on of the most used cases: analyzing political discourses.
+
+**Step 1**. Scraping a discourse
+To practice you can use the http://obamaspeeches.com website to explore on his best* speeches(according to the webpage creators). Let's try with his inaugural speech.
+
+```{r}
+#Save the link as object
+obama_speeches <- "http://obamaspeeches.com/P-Obama-Inaugural-Speech-Inauguration.htm"
+obama_inaugural <- read_html(obama_speeches)
+
+```
+
+With Selector Gadget we identify the structure in the html containing the text. Copy it direct from the bar, do not click on the xpath function. 
+```{r}
+inaugural_speech_container <- obama_inaugural |>  html_nodes("br+ table font+ font")
+
+# Extract the text from the container
+inaugural_speech_text <- html_text(inaugural_speech_container)
+
+# Print the speech text
+cat(inaugural_speech_text, sep = "\n")
+
+```
+
+Here you can have a look at the different speeches you would like to work on later that are available on the website.
+```{r}
+
+titles_speeches <- obama_inaugural |> 
+  html_nodes("table p")
+
+titles_speeches <- sapply(titles_speeches, html_text, USE.NAMES = FALSE)
+
+cat(titles_speeches , sep = "\n")
+```
+
+Following on what you just learned, you can now explore with the 'corpus' and the 'token' functions how this speech is structured.
+```{r}
+
+inaugural_df <- rbind(inaugural_speech_text)
+inaugural_speech_corpus <- corpus(inaugural_df )
+inaugural_speech_tokens <- tokens(inaugural_speech_corpus)
+
+summary(inaugural_speech_corpus)
+
+```
+Transform the speech into a document-feature matrix (dmf)
+```{r}
+
+inaugural_speech_dfm <- dfm(inaugural_speech_tokens)
+
+print(inaugural_speech_dfm)
+
+```
+Explore which are the most frequend words in the discoure.
+```{r}
+topfeatures(inaugural_speech_dfm )
+```
+
+To keep on working, let's clean the speech a little.
+```{r}
+
+inaugural_speech_tokens <- tokens(inaugural_speech_corpus, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE)
+
+inaugural_speech_tokens <- tokens_remove(inaugural_speech_tokens, stopwords("en"))
+inaugural_speech_tokens  <-  tokens_remove(inaugural_speech_tokens, c('the','and', 'that','to', 'can', 'must', 'of', 'every', 'words', 'let', 'end', 'whether'))
+
+inaugural_speech_dfm <- dfm(inaugural_speech_tokens)
+
+topfeatures(inaugural_speech_dfm)
+```
+
+
+Let's see the wordcloud from this speech
+```{r}
+textplot_wordcloud(inaugural_speech_dfm, max_words = 50)
+
+```
+
+
 The following functions will be relevant for the live coding session:
 
 construct a corpus from a character vector: `{r}corpus()`

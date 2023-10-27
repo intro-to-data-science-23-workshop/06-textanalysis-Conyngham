@@ -11,83 +11,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## R Markdown
 
-
 ```{r}
 ## Install quanteda package
-
 # install.packages("quanteda") 
 
 library(quanteda)
 
-?quanteda
-
-
 ```
-
-```{r}
-#### Mention authors from the Package (beginning or end)
-
-
-```
-
-
-
-```{r}
-# quanteda can segment texts easily by words, paragraphs, sentences, or even user-supplied delimiters and tags.
-
-# quanteda is principally designed to allow users a fast and convenient method to go from a corpus of texts to a selected matrix of documents by features, after defining what the documents and features.
-
-# The package makes it easy to redefine documents, for instance by splitting them into sentences or paragraphs, or by tags, as well as to group them into larger documents by document variables, or to subset them based on logical conditions or combinations of document variables.
-
-# Tools for working with dictionaries are one of quanteda's principal strengths, and the package includes several core functions for preparing and applying dictionaries to texts, for example for lexicon-based sentiment analysis.
-
-
-```
-
-
-```{r}
-
-### Infrastructure of Quanteda
-
-## The stringi package -> Text processing
-
-## The Matrix package -> for sparse matrix objects
-## Computationally intensive processing (e.g. for tokens) handled in parallelized C++. 
-
-
-```
-
-
-
-```{r}
-
-### Concepts:
-
-## dfm
-
-## tokenizing
-# functions for tokenizing texts and forming multiple
-# tokenized documents into a document-feature matrix are
-# both extremely fast and very simple to use
-
-## stemming
-
-## ngrams
-
-## Unicode
-
-## ICU libraries
-
-## NLP feature selection functions
-# -> such as removing stopwords and stemming in numerous languages
-# -> selecting words found in dictionaries
-# -> treating words as equivalent based on a user-defined "thesaurus"
-# -> and trimming and weighting features based on document frequency
-# ->feature frequency
-# -> related measures such as tf-idf.
-
-```
-
 
 ```{r}
 library(rvest)
@@ -101,132 +31,93 @@ library(quanteda)
 library(quanteda.textstats)
 ```
 
-# Try it out! Comparing political discourses
+## Try it out! Comparing political discourses
+Now we're going to give you an example where you can apply this for on of the most used cases: analysing political discourses.
+
+**Step 1**. Scraping a discourse
+To practice you can use the http://obamaspeeches.com website to explore on his best* speeches.
+
+*According to the webpage creators.
 
 ```{r}
-obama_best_speeches <- "http://obamaspeeches.com/P-Obama-Inaugural-Speech-Inauguration.htm"
-obama_speeches <- read_html(obama_best_speeches)
+obama_speeches <- "http://obamaspeeches.com/P-Obama-Inaugural-Speech-Inauguration.htm"
+obama_inaugural <- read_html(obama_inaugural_speech)
 
-# With Selector Gadget we identify the structure in the html containing the text.
-speech_container <- obama_speeches %>% html_nodes("br+ table font+ font") #Copy direct from the bar, do not ask for xpath.
-
-# Extract the text from the container
-speech_text <- html_text(speech_container)
-
-# Print the speech text
-cat(speech_text, sep = "\n")
 ```
 
-
+With Selector Gadget we identify the structure in the html containing the text. Copy it direct from the bar, do not click on the xpath function. 
 ```{r}
+inaugural_speech_container <- obama_inaugural |>  html_nodes("br+ table font+ font")
 
-# Extract the <p> elements within the table
-titles_speeches <- obama_speeches %>%
-  html_nodes("table p")
-
-# Extract the text from the <p> elements and combine them
-titles_speeches <- sapply(titles_speeches, html_text, USE.NAMES = FALSE)
-
-# Here you can see what are the other speeches you can find in the website
+# Extract the text from the container
+inaugural_speech_text <- html_text(inaugural_speech_container)
 
 # Print the speech text
+cat(inaugural_speech_text, sep = "\n")
+
+```
+
+You can have a look here on the different speeches you would like to work on later that are available on the website.
+```{r}
+
+titles_speeches <- obama_inaugural |> 
+  html_nodes("table p")
+
+titles_speeches <- sapply(titles_speeches, html_text, USE.NAMES = FALSE)
+
 cat(titles_speeches , sep = "\n")
 ```
 
 
-
+Following on the functions you just learned, you can now explore with the 'corpus' and the 'token' functions how this speech is structured.
 ```{r}
 
-speech_df <- rbind(speech_text)
-speech_corpus <- corpus(speech_df)
-speech_tokens <- tokens(speech_corpus)
+inaugural_df <- rbind(inaugural_speech_text)
+inaugural_speech_corpus <- corpus(inaugural_df )
+inaugural_speech_tokens <- tokens(inaugural_speech_corpus)
 
-summary(speech_corpus)
+summary(inaugural_speech_corpus)
+
+```
+We transform the speech into a document-feature matrix (dmf)
+```{r}
+
+inaugural_speech_dfm <- dfm(inaugural_speech_tokens)
+
+print(inaugural_speech_dfm)
 
 ```
 
 ```{r}
-
-speech_dfm = dfm(speech_tokens)
-
-print(speech_dfm)
-
-topfeatures(speech_dfm)
-
-
-speech_tokens <- tokens(speech_corpus, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE)
-
-speech_tokens <- tokens_remove(speech_tokens, stopwords("en"))
-speech_tokens <-  tokens_remove(speech_tokens, c('the','and', 'that','to', 'can', 'must'))
-
-speech_dfm <-  dfm(speech_tokens)
-
-topfeatures(speech_dfm)
-
-
+topfeatures(inaugural_speech_dfm )
 ```
-
-```{r}
-# presentations_df = rbind(ids_presentations_df, your_presentation_df)
-# print(presentations_df, n = 10)
-
-# presentations_corpus = corpus(presentations_df)
-# summary(presentations_corpus)
-
-# presentation_tokens = tokens(presentations_corpus)
-
-# presentation_dfm = dfm(presentation_tokens)
-
-# print(presentation_dfm)
-
-# topfeatures(presentation_dfm)
-```
-
-
-
-
-
-
 
 
 ```{r}
-## We need a set of URLs leading to all sources. Inspect the URLs of different sources and find the pattern. Then, construct the list of URLs from scratch.
 
-baseurl <- "http://obamaspeeches.com/"
-volurl <- paste0("0", 1:99)
-volurl[1:9] <- paste0("00", 1:9)
-brurl <- paste0("0", 1:9)
+inaugural_speech_tokens <- tokens(inaugural_speech_corpus, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE)
 
-urls_list <- cross2(volurl, brurl) |> map_chr(~paste0(baseurl, .[[1]], 'i', .[[2]]))
-names <- cross2(volurl, brurl) |> map_chr(~paste0(.[[1]], '_', .[[2]], '.htm'))
+inaugural_speech_tokens <- tokens_remove(inaugural_speech_tokens, stopwords("en"))
+speech_tokens <-  tokens_remove(inaugural_speech_tokens, c('the','and', 'that','to', 'can', 'must'))
 
+inaugural_speech_dfm <- dfm(inaugural_speech_tokens)
 
+topfeatures(inaugural_speech_dfm)
 ```
+
+
+
+We'll compare it with another speech, this time with "An Honest Government - A Hopeful Future" which Obama hold at the University of Nairobi.
 
 ```{r}
-tempwd <- here::here("~/Colab_Workshop/Obama Speeches")
-dir.create(tempwd, recursive = TRUE)
-setwd(tempwd)
 
-
-
-folder <- paste0(tempwd, "/html_articles/")
-dir.create(folder, recursive = TRUE)
-
-for (i in seq_along(urls_list)) {
-  # only update, don't replace
-  if (!file.exists(paste0(folder, names[i]))) {
-    # skip article when we run into an error
-    tryCatch(
-      download.file(urls_list[i], destfile = paste0(folder, names[i])),
-      error = function(e)
-        e
-    )
-    # don't kill their server --> be polite!
-    Sys.sleep(runif(1, 0, 1))
-  } 
-}
 ```
 
 
-You can try it yourself with the following examples! Just take out the '#' to run the code!
+```{r}
+
+
+
+```
+
+

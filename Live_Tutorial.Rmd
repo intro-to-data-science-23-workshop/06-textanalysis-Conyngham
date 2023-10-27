@@ -169,15 +169,35 @@ input format. Compatible input formats include .txt, .csv, .tab, .json, .pdf, .d
 #TO DO: Add short explanations of the main corpus() functions --> Luca
 #TO DO: Show our use case --> Aranxa
 
+The following functions will be relevant for the live coding session:
+
+construct a corpus from a character vector:
 ```{r}corpus()```
 
+It is also possible to explore the corpus:
+```{r}summary(corpus_name)```
+
+Extract or add document-level variables: 
+```{r}docvars()```
+
+Other relevant corpus functions include:
+#Discuss: Do we want to taylor the example functions to our use case or would that take too much time now?
+
+Subset corpora:
 ```{r}corpus_subset()```
+```{r}corpus_subset(x, Year > 1990)```
 
+Change units of a corpus:
 ```{r}corpus_reshape()```
+```{r}corpus_reshape(x, to = c("sentences", "paragraphs"))```
 
+Segment texts on a pattern match:
 ```{r}corpus_segment()```
+```{r}corpus_segment(x, pattern, valuetype, extract_pattern = TRUE)```
 
-```{r}corpus_sample()```
+Take a random sample of the corpus texts:
+```{r}corpus_sample```
+```{r}corpus_sample(x, size = 10, replace = FALSE)```
 
 ## Preprocessing
 

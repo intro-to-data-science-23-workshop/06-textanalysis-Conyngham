@@ -143,7 +143,7 @@ library(readtext)
 
 Finally we load dplyr for our workflow and gt for creating nice looking tables. 
 
-```{r initialise4, warning=FALSE}
+```{r initialise4, warning=FALSE, message=FALSE}
 library(dplyr)
 library(gt)
 library(rvest)
@@ -155,7 +155,6 @@ For the example in this tutorial we will load in a collection of slides from the
 
 ```{r}
 ids_presentations_df = readtext("./Slideshows/*.pdf", docvarsfrom = "filenames")
-#rt_pdf = readtext("./Slideshows/*.pdf", docvarsfrom = "filenames", dvsep = "-")
 ```
 
 ## Adding your own slideshow
@@ -165,8 +164,8 @@ We encourage you to add your own slideshow in pdf format. To do this, just inser
 We will then add the text and info on the presentation such as it's title to our presentations data frame. This is straightforward as readtext will give us the same variable names for both imports. We also add an indicator variable which tells us which presentation is the 'extra' one we added. This will be important later for some of the analysis we want to do.
 
 ```{r}
-your_presentation_df = readtext("./Import/*.pdf", docvarsfrom = "filenames")
-if (nrow(your_presentation_df) > 1) stop("More than one pdf in Import folder, please remove extras") 
+your_presentation_df = readtext("./Import/*.pdf", docvarsfrom = "filenames")#Importing the presentation in the import folder
+if (nrow(your_presentation_df) > 1) stop("More than one pdf in Import folder, please remove extras") #sanity check that there is not more than 1 file in the folder
 
 your_presentation_df$yourpresentation = c(TRUE)
 ids_presentations_df$yourpresentation = rep(FALSE,rep=nrow(ids_presentations_df))
@@ -175,8 +174,8 @@ ids_presentations_df$yourpresentation = rep(FALSE,rep=nrow(ids_presentations_df)
 yourpresentationname = as.character(as.data.frame(your_presentation_df)[[1]])
 #this line saves the name of your specific presentation for later use
 
-presentations_df = rbind(ids_presentations_df, your_presentation_df)
-print(presentations_df, n = 10)
+presentations_df = rbind(ids_presentations_df, your_presentation_df)#combining the two data frames
+print(presentations_df, n = 10)#printing the combined frame
 ```
 
 Here we can see the structure of our dataframe. Luckily for us, readtext automatically formats the dataframe as quantedata expects them, but for future reference if you are constructing your own dataframes for analysis, the text for analysis for each row (which will be each unique text, presentation, section or any other unit of analysis) must be in a column called 'text'.
@@ -186,7 +185,7 @@ Here we can see the structure of our dataframe. Luckily for us, readtext automat
 We can now create our first Corpus - this is the object at the centre of the quanteda package.
 
 ```{r}
-presentations_corpus = corpus(presentations_df)
+presentations_corpus = corpus(presentations_df) #This function creates a corpus out of our combined dataframe
 summary(presentations_corpus)
 ```
 
@@ -203,13 +202,13 @@ Finally, we run the function top features, to have a look at the most common tok
 Don't worry if this process of tokenization and constructing a dfm still feels unclear, we will go over it a few times, and you'll have a chance to adjust the process yourselves.
 
 ```{r}
-presentation_tokens = tokens(presentations_corpus)
+presentation_tokens = tokens(presentations_corpus) #Tokenising our corpus
 
-presentation_dfm = dfm(presentation_tokens)
+presentation_dfm = dfm(presentation_tokens) #creates a DFM out of our tokens
 
 print(presentation_dfm)
 
-topfeatures(presentation_dfm)
+topfeatures(presentation_dfm) # Shows the most popular tokens in the dfm
 ```
 
 There we have it, our first DFM! Not so difficult to begin with.
@@ -294,34 +293,6 @@ Tokens_wordstem() - This is a really interesting and useful function that reduce
 tokens_wordstem(tokens('She runs, he can run, they are running'))
 ```
 
-```{r}Tokens_compound()```
-
-### Other Token functions (From Luca's list, still need doing.)
-```{r}Tokens_lookup()```
-
-```{r}Tokens_ngrams()```
-
-```{r}Tokens_skipgrams()```
-
-```{r}Tokens_sample()```
-
-```{r}Tokens_subset()```
-
-### More document Feature Matrix functions
-```dictionary()```
-
-```dfm_lookup()```
-
-```dfm_select()```
-
-```dfm_compress()```
-
-```dfm_sample()```
-
-```dfm_weight()```
-
-```dfm_sort()```
-
 # Analysing our texts non-relationally
 
 There are many many functions across the quantedata family of packages which can be used to analyse our newly created DFM, here we will focus on some of the fucntions we foudn the most interesting from the textstat and testplot packages.
@@ -379,8 +350,6 @@ Just for fun: lets make an ever popular word cloud! We can do this super easily 
 
 ```{r}
 textplot_wordcloud(presentation_dfm, max_words = 50)
-
-#dfm_group(presentation_dfm, presentation_dfm$yourpresentation) %>% textplot_wordcloud( max_words = 20, comparison = TRUE) - Can't get working yet - Killian
 ```
 
 # Webscraping example 

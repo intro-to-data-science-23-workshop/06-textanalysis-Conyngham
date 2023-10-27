@@ -98,8 +98,10 @@ The readtext package provides an easy way to read text data into R, from almost 
 ```{r}
 #install.packages('dplyr')
 library(dplyr)
+#install.packages('gt')
+library(gt)
 ```
-
+These are some extra packages that are nice to have.
 
 #### Main Functions
 
@@ -156,6 +158,9 @@ your_presentation_df$yourpresentation = c(TRUE)
 ids_presentations_df$yourpresentation = rep(FALSE,rep=nrow(ids_presentations_df))
 #These two lines create the variable your presentation and set it to true only for the presentation imported from the Import folder
 
+yourpresentationname = as.character(as.data.frame(your_presentation_df)[[1]])
+#this line saves the name of your specific presentation for later use
+
 presentations_df = rbind(ids_presentations_df, your_presentation_df)
 print(presentations_df, n = 10)
 ```
@@ -197,7 +202,7 @@ Looking at this, we can see that all the most common tokens by far are punctuati
 
 The first thing we can do is adjust the parameters on the function tokens(), allowing us to remove punctuation, numbers and symbols.
 
-An even more powerful tool is the token_remove function combined with the build in stopwords database. Quantedata comes loaded with common filler words or stop words for _ different languages. Removing these may help us with our analysis.
+An even more powerful tool is the token_remove function combined with the built-in stopwords database. Quantedata comes loaded with common filler words or stop words for _ different languages. Removing these may help us with our analysis.
 
 ```{r}
 presentation_tokens = tokens(presentations_corpus, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE)
@@ -235,31 +240,61 @@ There are many many functions across the quantedata family of packages which can
 
 ## Lexical Diversity
 
-The first function we look at is textstat_lexdiv(), which calculates the lexical diverstiy of the text. As a default this is the ratio of unique tokens to total tokens in the text, but you can also use the (measure = ) parameter to change to measures.
+The first function we look at is textstat_lexdiv(), which calculates the lexical diverstiy of the text. As a default this is the ratio of unique tokens to total tokens in the text (TTR), but you can also use the (measure = ) parameter to change to measure.
+
+Also important to note here that while the output of most functions in textstat look like data frames, they are initially stored as lists, of specific type depending on the funciton. We use as.list(), or as.data.frame() to tranform them into more useable data types as seen below.
 
 ```{r}
-textstat_lexdiv(presentation_dfm)
+typeof(textstat_lexdiv(presentation_dfm))
+
+as.data.frame(textstat_lexdiv(presentation_dfm)) %>%
+  arrange(desc(TTR)) %>% gt() #ordering our results in terms of TTR and presenting them in a nice table
 ```
 
+## Distance and Similarity
+
+Another interesting function for looking at the distance between two text documents is textstat_dist(), which can calculate the distance between two documents, which can most easily be understood as how different the choice and frequency of words used is between the documents. 
 
 ```{r}
-yourpresentationname = as.character(as.data.frame(your_presentation_df)[[1]])
-as.data.frame(textstat_dist(presentation_dfm)) %>% filter(document2 == yourpresentationname) 
-
+as.data.frame(textstat_dist(presentation_dfm)) %>% #Here we run the function, with the default, euclidean distance measurement.
+  
+  filter(document2 == yourpresentationname) %>% arrange(euclidean) %>% select (c(1,3)) %>% gt() #Here we use dplyr to filter for only the distances relative to your presentation, arrange in ascending order of distance and filter out the column of your presentation name repeated and gt to give us a nice readable table
 ```
 
 Which IDS slideshow is your presentation most like?
 
+Another similar function is textstat_simil() which calculates similarities, and defaults to the correlation in two documents. See if you can make a similar function to the one above and see how well the results match.
+
 ```{r}
-textstat_dist(presentation_dfm)
+#Insert your code here:
 ```
 
+## Grouping DFMs
+
+Above, we filtered out all comparisons not involving your presentation manually, but because our document-level variables have been retained in our DFM, we can actually group the presentation by the variable 'yourpresentation' we created earlier. (Remember, this variable is true for the presentation you inputted and false for all others.)
+
+One way of doing this is the dfm_group() function, which is useful as part of a pipe, to pass the group DFMs based on a parameter of interest into the next function.
+
+Some functions in the package have funcitonality for this built in, as we can see with topfeatures below.
+
+```{r}
+dfm_group(presentation_dfm, presentation_dfm$yourpresentation)
+
+topfeatures(groups = yourpresentation)
+```
+
+While this is just a toy example as our documents don't have many document level variables, there are many useful applications of this in analysing texts, like grouping by chapter in a book, by which party gave a political speech, or any other category of interest in our documents.
+
+
+## Word Clouds
 
 Just for fun: lets make an ever popular word cloud! We can do this super easily with the textplot_wordcloud() function.
 ```{r}
 textplot_wordcloud(presentation_dfm, max_words = 50)
 
+dfm_group(presentation_dfm, presentation_dfm$yourpresentation) %>% textplot_wordcloud( max_words = 20, comparison = TRUE)
 ```
 
 
 # Natural Language Processing
+

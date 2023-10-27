@@ -500,13 +500,10 @@ processinf large textual data, quanteda is faster and more
 efficient</li>
 </ul>
 <p>…And now it’s time to try it yourself!</p>
-<table>
-<tbody>
-<tr class="odd">
-<td># Workflow 💪</td>
-</tr>
-</tbody>
-</table>
+<hr />
+</div>
+<div id="workflow" class="section level1">
+<h1>Workflow 💪</h1>
 </div>
 <div id="loading-the-package" class="section level1">
 <h1>Loading the package</h1>
@@ -516,31 +513,21 @@ uncomment the first line.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#install.packages(&#39;quanteda&#39;,&#39;quanteda.textstats&#39;,&#39;readtext&#39;,&#39;gt&#39;)</span></span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span></code></pre></div>
-<pre><code>## Package version: 3.3.1
-## Unicode version: 13.0
-## ICU version: 69.1</code></pre>
-<pre><code>## Parallel computing: 8 of 8 threads used.</code></pre>
-<pre><code>## See https://quanteda.io for tutorials and examples.</code></pre>
 <p>As mentioned above, the quanteda package is split in to modular
 packages so we also download a selection of those of interest to us in
 this tutorial.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">library</span>(quanteda.textplots)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">library</span>(quanteda.textplots)</span></code></pre></div>
 <p>We also load readtext which makes the process of importing texts
 easier, and also imports meta data. Specifically in our case, it allows
 us to read in pdfs as text files. Other compatible input formats include
 .txt, .csv, .tab, .json, .doc and .docx files.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">library</span>(readtext)</span></code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;readtext&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:quanteda&#39;:
-## 
-##     texts</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(readtext)</span></code></pre></div>
 <p>Finally we load dplyr for our workflow and gt for creating nice
 looking tables.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="fu">library</span>(rvest)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="fu">library</span>(rvest)</span></code></pre></div>
 </div>
 <div id="loading-and-prepping-our-data---the-corpus"
 class="section level1">
@@ -548,7 +535,7 @@ class="section level1">
 <p>For the example in this tutorial we will load in a collection of
 slides from the Intro to Data Science Course by Simon Munzert. We use
 the readtext function as mentioned above.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>ids_presentations_df <span class="ot">=</span> <span class="fu">readtext</span>(<span class="st">&quot;./Slideshows/*.pdf&quot;</span>, <span class="at">docvarsfrom =</span> <span class="st">&quot;filenames&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>ids_presentations_df <span class="ot">=</span> <span class="fu">readtext</span>(<span class="st">&quot;./Slideshows/*.pdf&quot;</span>, <span class="at">docvarsfrom =</span> <span class="st">&quot;filenames&quot;</span>)</span></code></pre></div>
 <div id="adding-your-own-slideshow" class="section level2">
 <h2>Adding your own slideshow</h2>
 <p>We encourage you to add your own slideshow in pdf format. To do this,
@@ -562,18 +549,18 @@ readtext will give us the same variable names for both imports. We also
 add an indicator variable which tells us which presentation is the
 ‘extra’ one we added. This will be important later for some of the
 analysis we want to do.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>your_presentation_df <span class="ot">=</span> <span class="fu">readtext</span>(<span class="st">&quot;./Import/*.pdf&quot;</span>, <span class="at">docvarsfrom =</span> <span class="st">&quot;filenames&quot;</span>)<span class="co">#Importing the presentation in the import folder</span></span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(your_presentation_df) <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="fu">stop</span>(<span class="st">&quot;More than one pdf in Import folder, please remove extras&quot;</span>) <span class="co">#sanity check that there is not more than 1 file in the folder</span></span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>your_presentation_df<span class="sc">$</span>yourpresentation <span class="ot">=</span> <span class="fu">c</span>(<span class="cn">TRUE</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>ids_presentations_df<span class="sc">$</span>yourpresentation <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">FALSE</span>,<span class="at">rep=</span><span class="fu">nrow</span>(ids_presentations_df))</span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co">#These two lines create the variable your presentation and set it to true only for the presentation imported from the Import folder</span></span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>yourpresentationname <span class="ot">=</span> <span class="fu">as.character</span>(<span class="fu">as.data.frame</span>(your_presentation_df)[[<span class="dv">1</span>]])</span>
-<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co">#this line saves the name of your specific presentation for later use</span></span>
-<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>presentations_df <span class="ot">=</span> <span class="fu">rbind</span>(ids_presentations_df, your_presentation_df)<span class="co">#combining the two data frames</span></span>
-<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="fu">print</span>(presentations_df, <span class="at">n =</span> <span class="dv">10</span>)<span class="co">#printing the combined frame</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>your_presentation_df <span class="ot">=</span> <span class="fu">readtext</span>(<span class="st">&quot;./Import/*.pdf&quot;</span>, <span class="at">docvarsfrom =</span> <span class="st">&quot;filenames&quot;</span>)<span class="co">#Importing the presentation in the import folder</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(your_presentation_df) <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="fu">stop</span>(<span class="st">&quot;More than one pdf in Import folder, please remove extras&quot;</span>) <span class="co">#sanity check that there is not more than 1 file in the folder</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>your_presentation_df<span class="sc">$</span>yourpresentation <span class="ot">=</span> <span class="fu">c</span>(<span class="cn">TRUE</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>ids_presentations_df<span class="sc">$</span>yourpresentation <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">FALSE</span>,<span class="at">rep=</span><span class="fu">nrow</span>(ids_presentations_df))</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#These two lines create the variable your presentation and set it to true only for the presentation imported from the Import folder</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>yourpresentationname <span class="ot">=</span> <span class="fu">as.character</span>(<span class="fu">as.data.frame</span>(your_presentation_df)[[<span class="dv">1</span>]])</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#this line saves the name of your specific presentation for later use</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>presentations_df <span class="ot">=</span> <span class="fu">rbind</span>(ids_presentations_df, your_presentation_df)<span class="co">#combining the two data frames</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="fu">print</span>(presentations_df, <span class="at">n =</span> <span class="dv">10</span>)<span class="co">#printing the combined frame</span></span></code></pre></div>
 <pre><code>## readtext object consisting of 8 documents and 2 docvars.
 ## # A data frame: 8 × 4
 ##   doc_id                     text                docvar1        yourpresentation
@@ -597,8 +584,8 @@ column called ‘text’.</p>
 <h2>Creating a Corpus</h2>
 <p>We can now create our first Corpus - this is the object at the centre
 of the quanteda package.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>presentations_corpus <span class="ot">=</span> <span class="fu">corpus</span>(presentations_df) <span class="co">#This function creates a corpus out of our combined dataframe</span></span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">summary</span>(presentations_corpus)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>presentations_corpus <span class="ot">=</span> <span class="fu">corpus</span>(presentations_df) <span class="co">#This function creates a corpus out of our combined dataframe</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="fu">summary</span>(presentations_corpus)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Text"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Types"],"name":[2],"type":["int"],"align":["right"]},{"label":["Tokens"],"name":[3],"type":["int"],"align":["right"]},{"label":["Sentences"],"name":[4],"type":["int"],"align":["right"]},{"label":["docvar1"],"name":[5],"type":["chr"],"align":["left"]},{"label":["yourpresentation"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"00-tidyverse.pdf","2":"1679","3":"10305","4":"264","5":"00-tidyverse","6":"FALSE","_rn_":"1"},{"1":"01-introduction.pdf","2":"825","3":"2907","4":"121","5":"01-introduction","6":"FALSE","_rn_":"2"},{"1":"02-version-control.pdf","2":"1554","3":"10083","4":"616","5":"02-version-control","6":"FALSE","_rn_":"3"},{"1":"03-ethics.pdf","2":"850","3":"3874","4":"231","5":"03-ethics","6":"FALSE","_rn_":"4"},{"1":"04-functions-debugging.pdf","2":"1238","3":"7361","4":"279","5":"04-functions-debugging","6":"FALSE","_rn_":"5"},{"1":"05-databases.pdf","2":"1694","3":"10029","4":"389","5":"05-databases","6":"FALSE","_rn_":"6"},{"1":"06-webdata.pdf","2":"1462","3":"8439","4":"306","5":"06-webdata","6":"FALSE","_rn_":"7"},{"1":"09-modeling.pdf","2":"1685","3":"9406","4":"246","5":"09-modeling","6":"TRUE","_rn_":"8"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -632,11 +619,11 @@ just to get an overview, but we will dive into more later.</p>
 <p>Don’t worry if this process of tokenization and constructing a dfm
 still feels unclear, we will go over it a few times, and you’ll have a
 chance to adjust the process yourselves.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>presentation_tokens <span class="ot">=</span> <span class="fu">tokens</span>(presentations_corpus) <span class="co">#Tokenising our corpus</span></span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>presentation_dfm <span class="ot">=</span> <span class="fu">dfm</span>(presentation_tokens) <span class="co">#creates a DFM out of our tokens</span></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="fu">print</span>(presentation_dfm)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>presentation_tokens <span class="ot">=</span> <span class="fu">tokens</span>(presentations_corpus) <span class="co">#Tokenising our corpus</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>presentation_dfm <span class="ot">=</span> <span class="fu">dfm</span>(presentation_tokens) <span class="co">#creates a DFM out of our tokens</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="fu">print</span>(presentation_dfm)</span></code></pre></div>
 <pre><code>## Document-feature matrix of: 8 documents, 5,292 features (76.49% sparse) and 2 docvars.
 ##                             features
 ## docs                         introduction  to data science session 0   :   r
@@ -655,7 +642,7 @@ chance to adjust the process yourselves.</p>
 ##   04-functions-debugging.pdf  64 198
 ##   05-databases.pdf            99 284
 ## [ reached max_ndoc ... 2 more documents, reached max_nfeat ... 5,282 more features ]</code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">topfeatures</span>(presentation_dfm) <span class="co"># Shows the most popular tokens in the dfm</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">topfeatures</span>(presentation_dfm) <span class="co"># Shows the most popular tokens in the dfm</span></span></code></pre></div>
 <pre><code>##    .    ,    )    (  the    &quot;    #    &gt;    :   to 
 ## 2962 2343 1672 1658 1626 1408 1207 1160 1060 1016</code></pre>
 <p>There we have it, our first DFM! Not so difficult to begin with.</p>
@@ -669,15 +656,15 @@ handy functions and options to help alleviate this.</p>
 tokens(), allowing us to remove punctuation, numbers and symbols.</p>
 <p>An even more powerful tool is the token_remove function combined with
 the built-in stopwords database. Quantedata comes loaded with common
-filler words or stop words for _ different languages. Removing these may
-help us with our analysis.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>presentation_tokens <span class="ot">=</span> <span class="fu">tokens</span>(presentations_corpus, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>presentation_tokens <span class="ot">=</span> <span class="fu">tokens_remove</span>(presentation_tokens, <span class="fu">stopwords</span>(<span class="st">&quot;en&quot;</span>))</span>
-<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>presentation_dfm <span class="ot">=</span> <span class="fu">dfm</span>(presentation_tokens)</span>
-<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="fu">topfeatures</span>(presentation_dfm)</span></code></pre></div>
+filler words or stop words for many different languages. Removing these
+may help us with our analysis.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>presentation_tokens <span class="ot">=</span> <span class="fu">tokens</span>(presentations_corpus, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>presentation_tokens <span class="ot">=</span> <span class="fu">tokens_remove</span>(presentation_tokens, <span class="fu">stopwords</span>(<span class="st">&quot;en&quot;</span>))</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>presentation_dfm <span class="ot">=</span> <span class="fu">dfm</span>(presentation_tokens)</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="fu">topfeatures</span>(presentation_dfm)</span></code></pre></div>
 <pre><code>##        r     data      can function      chr      git    model      use 
 ##      526      438      175      174      160      154      138      124 
 ##   github database 
@@ -697,21 +684,21 @@ even more in the section entitled: More Token Cleaunup, whcih you can
 add to the pipeline.</p>
 <p>(We repeat the whole process here for the sake of having it all in
 once place as an overview)</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>presentation_tokens <span class="ot">=</span> <span class="fu">tokens</span>(presentations_corpus, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>,<span class="at">remove_url =</span> <span class="cn">TRUE</span>, <span class="at">remove_separators =</span> <span class="cn">TRUE</span>, <span class="at">split_hyphens =</span> <span class="cn">FALSE</span>, <span class="at">split_tags =</span> <span class="cn">FALSE</span>)<span class="co">#Do you think we should be excluding all these categories? Feel free to change these options as you feel makes the most sense</span></span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>presentation_dfm <span class="ot">=</span> presentation_tokens <span class="sc">%&gt;%</span> </span>
-<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="at">pattern=</span> <span class="fu">stopwords</span>(<span class="st">&quot;en&quot;</span>)) <span class="sc">%&gt;%</span> <span class="co">#removing the stopwords as before</span></span>
-<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="at">pattern =</span> <span class="fu">c</span>(<span class="st">&#39;can&#39;</span>,<span class="st">&#39;use&#39;</span>)) <span class="sc">%&gt;%</span> <span class="co">#Removing can and use as mentioned, you can add any &#39;filler&#39; words which you would like excluded from the analysis here.</span></span>
-<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a>  <span class="co">#Some more functions you may want to consider for cleaning your tokens (uncomment first line for each to use and remember to include pipe symbol at the end):</span></span>
-<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a>  <span class="co">#tokens_tolower() %&gt;%</span></span>
-<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a>  <span class="co">#Changes all tokens to be lower case</span></span>
-<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a>  <span class="co">#tokens_toupper() %&gt;%</span></span>
-<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a>  <span class="co">#Changes all tokens to be upper case</span></span>
-<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a>  <span class="co">#tokens_replace(pattern = c(&#39;color&#39;), replacement = (&#39;colour&#39;)) %&gt;%</span></span>
-<span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a>  <span class="co">#Allows you to find and replace words in your tokens, remember that pattern and replacement should always be the same length and that entries are matched pairwise.</span></span>
-<span id="cb20-13"><a href="#cb20-13" tabindex="-1"></a>  <span class="fu">dfm</span>() <span class="co">#Finally we run the dfm function on our finished and cleaned tokens.</span></span>
-<span id="cb20-14"><a href="#cb20-14" tabindex="-1"></a></span>
-<span id="cb20-15"><a href="#cb20-15" tabindex="-1"></a><span class="fu">topfeatures</span>(presentation_dfm)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>presentation_tokens <span class="ot">=</span> <span class="fu">tokens</span>(presentations_corpus, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>,<span class="at">remove_url =</span> <span class="cn">TRUE</span>, <span class="at">remove_separators =</span> <span class="cn">TRUE</span>, <span class="at">split_hyphens =</span> <span class="cn">FALSE</span>, <span class="at">split_tags =</span> <span class="cn">FALSE</span>)<span class="co">#Do you think we should be excluding all these categories? Feel free to change these options as you feel makes the most sense</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>presentation_dfm <span class="ot">=</span> presentation_tokens <span class="sc">%&gt;%</span> </span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="at">pattern=</span> <span class="fu">stopwords</span>(<span class="st">&quot;en&quot;</span>)) <span class="sc">%&gt;%</span> <span class="co">#removing the stopwords as before</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="at">pattern =</span> <span class="fu">c</span>(<span class="st">&#39;can&#39;</span>,<span class="st">&#39;use&#39;</span>)) <span class="sc">%&gt;%</span> <span class="co">#Removing can and use as mentioned, you can add any &#39;filler&#39; words which you would like excluded from the analysis here.</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>  <span class="co">#Some more functions you may want to consider for cleaning your tokens (uncomment first line for each to use and remember to include pipe symbol at the end):</span></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>  <span class="co">#tokens_tolower() %&gt;%</span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>  <span class="co">#Changes all tokens to be lower case</span></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>  <span class="co">#tokens_toupper() %&gt;%</span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a>  <span class="co">#Changes all tokens to be upper case</span></span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a>  <span class="co">#tokens_replace(pattern = c(&#39;color&#39;), replacement = (&#39;colour&#39;)) %&gt;%</span></span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a>  <span class="co">#Allows you to find and replace words in your tokens, remember that pattern and replacement should always be the same length and that entries are matched pairwise.</span></span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a>  <span class="fu">dfm</span>() <span class="co">#Finally we run the dfm function on our finished and cleaned tokens.</span></span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a><span class="fu">topfeatures</span>(presentation_dfm)</span></code></pre></div>
 <pre><code>##        r     data function      chr      git    model   github database 
 ##      526      438      174      160      154      138      108      104 
 ##      one     repo 
@@ -724,15 +711,36 @@ learn some more about creating and tweaking corpuses continue below.</p>
 </div>
 <div id="additional-functions-for-corpuses" class="section level2">
 <h2>Additional Functions for Corpuses</h2>
-<p>Subset corpora: <code>{r}corpus_subset()</code>
-<code>{r}corpus_subset(x, Year &gt; 1990)</code></p>
-<p>Change units of a corpus: <code>{r}corpus_reshape()</code>
-<code>{r}corpus_reshape(x, to = c("sentences", "paragraphs"))</code></p>
-<p>Segment texts on a pattern match: <code>{r}corpus_segment()</code>
-<code>{r}corpus_segment(x, pattern, valuetype, extract_pattern = TRUE)</code></p>
-<p>Take a random sample of the corpus texts:
-<code>{r}corpus_sample</code>
-<code>{r}corpus_sample(x, size = 10, replace = FALSE)</code></p>
+<p>Subset corpora:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">corpus_subset</span>(presentations_corpus, (yourpresentation<span class="sc">==</span><span class="cn">FALSE</span>))<span class="co">#Subestting our corpus so it&#39;s only the original IDS lectures</span></span></code></pre></div>
+<pre><code>## Corpus consisting of 7 documents and 2 docvars.
+## 00-tidyverse.pdf :
+## &quot;Introduction to Data Science Session 0: R and the tidyverse ...&quot;
+## 
+## 01-introduction.pdf :
+## &quot;Introduction to Data Science Session 1: What is data science...&quot;
+## 
+## 02-version-control.pdf :
+## &quot;Introduction to Data Science Session 2: Version control and ...&quot;
+## 
+## 03-ethics.pdf :
+## &quot;Introduction to Data Science Session 3: Data science ethics ...&quot;
+## 
+## 04-functions-debugging.pdf :
+## &quot;Introduction to Data Science Session 4: Functions and debugg...&quot;
+## 
+## 05-databases.pdf :
+## &quot;Introduction to Data Science Session 5: Relational databases...&quot;
+## 
+## [ reached max_ndoc ... 1 more document ]</code></pre>
+<p>Take a random sample of the corpus texts:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">corpus_sample</span>(presentations_corpus, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Corpus consisting of 2 documents and 2 docvars.
+## 01-introduction.pdf :
+## &quot;Introduction to Data Science Session 1: What is data science...&quot;
+## 
+## 03-ethics.pdf :
+## &quot;Introduction to Data Science Session 3: Data science ethics ...&quot;</code></pre>
 </div>
 <div id="additional-funtions-for-tokens" class="section level2">
 <h2>Additional Funtions for Tokens</h2>
@@ -746,7 +754,7 @@ what you want to do with the matched tokens.</p>
 <p>Tokens_wordstem() - This is a really interesting and useful function
 that reduces all words and tokens to their root. We use a very simple
 sentence below to show an example of this in action.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">tokens_wordstem</span>(<span class="fu">tokens</span>(<span class="st">&#39;She runs, he can run, they are running&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">tokens_wordstem</span>(<span class="fu">tokens</span>(<span class="st">&#39;She runs, he can run, they are running&#39;</span>))</span></code></pre></div>
 <pre><code>## Tokens consisting of 1 document.
 ## text1 :
 ##  [1] &quot;She&quot;  &quot;run&quot;  &quot;,&quot;    &quot;he&quot;   &quot;can&quot;  &quot;run&quot;  &quot;,&quot;    &quot;they&quot; &quot;are&quot;  &quot;run&quot;</code></pre>
@@ -770,27 +778,27 @@ in textstat look like data frames, they are initially stored as lists,
 of specific type depending on the funciton. We use as.list(), or
 as.data.frame() to tranform them into more useable data types as seen
 below.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="fu">typeof</span>(<span class="fu">textstat_lexdiv</span>(presentation_dfm))</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">typeof</span>(<span class="fu">textstat_lexdiv</span>(presentation_dfm))</span></code></pre></div>
 <pre><code>## [1] &quot;list&quot;</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">as.data.frame</span>(<span class="fu">textstat_lexdiv</span>(presentation_dfm)) <span class="sc">%&gt;%</span></span>
-<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(TTR)) <span class="sc">%&gt;%</span> <span class="fu">gt</span>() <span class="co">#ordering our results in terms of TTR and presenting them in a nice table</span></span></code></pre></div>
-<div id="sawgxqzpzi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#sawgxqzpzi table {
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">as.data.frame</span>(<span class="fu">textstat_lexdiv</span>(presentation_dfm)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(TTR)) <span class="sc">%&gt;%</span> <span class="fu">gt</span>() <span class="co">#ordering our results in terms of TTR and presenting them in a nice table</span></span></code></pre></div>
+<div id="ijajqkttbw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ijajqkttbw table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#sawgxqzpzi thead, #sawgxqzpzi tbody, #sawgxqzpzi tfoot, #sawgxqzpzi tr, #sawgxqzpzi td, #sawgxqzpzi th {
+#ijajqkttbw thead, #ijajqkttbw tbody, #ijajqkttbw tfoot, #ijajqkttbw tr, #ijajqkttbw td, #ijajqkttbw th {
   border-style: none;
 }
 
-#sawgxqzpzi p {
+#ijajqkttbw p {
   margin: 0;
   padding: 0;
 }
 
-#sawgxqzpzi .gt_table {
+#ijajqkttbw .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -816,12 +824,12 @@ below.</p>
   border-left-color: #D3D3D3;
 }
 
-#sawgxqzpzi .gt_caption {
+#ijajqkttbw .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#sawgxqzpzi .gt_title {
+#ijajqkttbw .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -833,7 +841,7 @@ below.</p>
   border-bottom-width: 0;
 }
 
-#sawgxqzpzi .gt_subtitle {
+#ijajqkttbw .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -845,7 +853,7 @@ below.</p>
   border-top-width: 0;
 }
 
-#sawgxqzpzi .gt_heading {
+#ijajqkttbw .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -857,13 +865,13 @@ below.</p>
   border-right-color: #D3D3D3;
 }
 
-#sawgxqzpzi .gt_bottom_border {
+#ijajqkttbw .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#sawgxqzpzi .gt_col_headings {
+#ijajqkttbw .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -878,7 +886,7 @@ below.</p>
   border-right-color: #D3D3D3;
 }
 
-#sawgxqzpzi .gt_col_heading {
+#ijajqkttbw .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -898,7 +906,7 @@ below.</p>
   overflow-x: hidden;
 }
 
-#sawgxqzpzi .gt_column_spanner_outer {
+#ijajqkttbw .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -910,15 +918,15 @@ below.</p>
   padding-right: 4px;
 }
 
-#sawgxqzpzi .gt_column_spanner_outer:first-child {
+#ijajqkttbw .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#sawgxqzpzi .gt_column_spanner_outer:last-child {
+#ijajqkttbw .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#sawgxqzpzi .gt_column_spanner {
+#ijajqkttbw .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -930,11 +938,11 @@ below.</p>
   width: 100%;
 }
 
-#sawgxqzpzi .gt_spanner_row {
+#ijajqkttbw .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#sawgxqzpzi .gt_group_heading {
+#ijajqkttbw .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -960,7 +968,7 @@ below.</p>
   text-align: left;
 }
 
-#sawgxqzpzi .gt_empty_group_heading {
+#ijajqkttbw .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -975,15 +983,15 @@ below.</p>
   vertical-align: middle;
 }
 
-#sawgxqzpzi .gt_from_md > :first-child {
+#ijajqkttbw .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#sawgxqzpzi .gt_from_md > :last-child {
+#ijajqkttbw .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#sawgxqzpzi .gt_row {
+#ijajqkttbw .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1002,7 +1010,7 @@ below.</p>
   overflow-x: hidden;
 }
 
-#sawgxqzpzi .gt_stub {
+#ijajqkttbw .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1015,7 +1023,7 @@ below.</p>
   padding-right: 5px;
 }
 
-#sawgxqzpzi .gt_stub_row_group {
+#ijajqkttbw .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1029,15 +1037,15 @@ below.</p>
   vertical-align: top;
 }
 
-#sawgxqzpzi .gt_row_group_first td {
+#ijajqkttbw .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#sawgxqzpzi .gt_row_group_first th {
+#ijajqkttbw .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#sawgxqzpzi .gt_summary_row {
+#ijajqkttbw .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1047,16 +1055,16 @@ below.</p>
   padding-right: 5px;
 }
 
-#sawgxqzpzi .gt_first_summary_row {
+#ijajqkttbw .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#sawgxqzpzi .gt_first_summary_row.thick {
+#ijajqkttbw .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#sawgxqzpzi .gt_last_summary_row {
+#ijajqkttbw .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1066,7 +1074,7 @@ below.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#sawgxqzpzi .gt_grand_summary_row {
+#ijajqkttbw .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1076,7 +1084,7 @@ below.</p>
   padding-right: 5px;
 }
 
-#sawgxqzpzi .gt_first_grand_summary_row {
+#ijajqkttbw .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1086,7 +1094,7 @@ below.</p>
   border-top-color: #D3D3D3;
 }
 
-#sawgxqzpzi .gt_last_grand_summary_row_top {
+#ijajqkttbw .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1096,11 +1104,11 @@ below.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#sawgxqzpzi .gt_striped {
+#ijajqkttbw .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#sawgxqzpzi .gt_table_body {
+#ijajqkttbw .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1109,7 +1117,7 @@ below.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#sawgxqzpzi .gt_footnotes {
+#ijajqkttbw .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1123,7 +1131,7 @@ below.</p>
   border-right-color: #D3D3D3;
 }
 
-#sawgxqzpzi .gt_footnote {
+#ijajqkttbw .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1132,7 +1140,7 @@ below.</p>
   padding-right: 5px;
 }
 
-#sawgxqzpzi .gt_sourcenotes {
+#ijajqkttbw .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1146,7 +1154,7 @@ below.</p>
   border-right-color: #D3D3D3;
 }
 
-#sawgxqzpzi .gt_sourcenote {
+#ijajqkttbw .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1154,63 +1162,63 @@ below.</p>
   padding-right: 5px;
 }
 
-#sawgxqzpzi .gt_left {
+#ijajqkttbw .gt_left {
   text-align: left;
 }
 
-#sawgxqzpzi .gt_center {
+#ijajqkttbw .gt_center {
   text-align: center;
 }
 
-#sawgxqzpzi .gt_right {
+#ijajqkttbw .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#sawgxqzpzi .gt_font_normal {
+#ijajqkttbw .gt_font_normal {
   font-weight: normal;
 }
 
-#sawgxqzpzi .gt_font_bold {
+#ijajqkttbw .gt_font_bold {
   font-weight: bold;
 }
 
-#sawgxqzpzi .gt_font_italic {
+#ijajqkttbw .gt_font_italic {
   font-style: italic;
 }
 
-#sawgxqzpzi .gt_super {
+#ijajqkttbw .gt_super {
   font-size: 65%;
 }
 
-#sawgxqzpzi .gt_footnote_marks {
+#ijajqkttbw .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#sawgxqzpzi .gt_asterisk {
+#ijajqkttbw .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#sawgxqzpzi .gt_indent_1 {
+#ijajqkttbw .gt_indent_1 {
   text-indent: 5px;
 }
 
-#sawgxqzpzi .gt_indent_2 {
+#ijajqkttbw .gt_indent_2 {
   text-indent: 10px;
 }
 
-#sawgxqzpzi .gt_indent_3 {
+#ijajqkttbw .gt_indent_3 {
   text-indent: 15px;
 }
 
-#sawgxqzpzi .gt_indent_4 {
+#ijajqkttbw .gt_indent_4 {
   text-indent: 20px;
 }
 
-#sawgxqzpzi .gt_indent_5 {
+#ijajqkttbw .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1252,26 +1260,26 @@ text documents is textstat_dist(), which can calculate the distance
 between two documents, which can most easily be understood as how
 different the choice and frequency of words used is between the
 documents.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">as.data.frame</span>(<span class="fu">textstat_dist</span>(presentation_dfm)) <span class="sc">%&gt;%</span> <span class="co">#Here we run the function, with the default, euclidean distance measurement.</span></span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>  </span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>  <span class="fu">filter</span>(document2 <span class="sc">==</span> yourpresentationname) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(euclidean) <span class="sc">%&gt;%</span> <span class="fu">select</span> (<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)) <span class="sc">%&gt;%</span> <span class="fu">gt</span>() <span class="co">#Here we use dplyr to filter for only the distances relative to your presentation, arrange in ascending order of distance and filter out the column of your presentation name repeated and gt to give us a nice readable table</span></span></code></pre></div>
-<div id="xrunbbhalo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#xrunbbhalo table {
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">as.data.frame</span>(<span class="fu">textstat_dist</span>(presentation_dfm)) <span class="sc">%&gt;%</span> <span class="co">#Here we run the function, with the default, euclidean distance measurement.</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>  </span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>  <span class="fu">filter</span>(document2 <span class="sc">==</span> yourpresentationname) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(euclidean) <span class="sc">%&gt;%</span> <span class="fu">select</span> (<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)) <span class="sc">%&gt;%</span> <span class="fu">gt</span>() <span class="co">#Here we use dplyr to filter for only the distances relative to your presentation, arrange in ascending order of distance and filter out the column of your presentation name repeated and gt to give us a nice readable table</span></span></code></pre></div>
+<div id="eldeyqwexe" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#eldeyqwexe table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#xrunbbhalo thead, #xrunbbhalo tbody, #xrunbbhalo tfoot, #xrunbbhalo tr, #xrunbbhalo td, #xrunbbhalo th {
+#eldeyqwexe thead, #eldeyqwexe tbody, #eldeyqwexe tfoot, #eldeyqwexe tr, #eldeyqwexe td, #eldeyqwexe th {
   border-style: none;
 }
 
-#xrunbbhalo p {
+#eldeyqwexe p {
   margin: 0;
   padding: 0;
 }
 
-#xrunbbhalo .gt_table {
+#eldeyqwexe .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1297,12 +1305,12 @@ documents.</p>
   border-left-color: #D3D3D3;
 }
 
-#xrunbbhalo .gt_caption {
+#eldeyqwexe .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#xrunbbhalo .gt_title {
+#eldeyqwexe .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1314,7 +1322,7 @@ documents.</p>
   border-bottom-width: 0;
 }
 
-#xrunbbhalo .gt_subtitle {
+#eldeyqwexe .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1326,7 +1334,7 @@ documents.</p>
   border-top-width: 0;
 }
 
-#xrunbbhalo .gt_heading {
+#eldeyqwexe .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1338,13 +1346,13 @@ documents.</p>
   border-right-color: #D3D3D3;
 }
 
-#xrunbbhalo .gt_bottom_border {
+#eldeyqwexe .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xrunbbhalo .gt_col_headings {
+#eldeyqwexe .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1359,7 +1367,7 @@ documents.</p>
   border-right-color: #D3D3D3;
 }
 
-#xrunbbhalo .gt_col_heading {
+#eldeyqwexe .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1379,7 +1387,7 @@ documents.</p>
   overflow-x: hidden;
 }
 
-#xrunbbhalo .gt_column_spanner_outer {
+#eldeyqwexe .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1391,15 +1399,15 @@ documents.</p>
   padding-right: 4px;
 }
 
-#xrunbbhalo .gt_column_spanner_outer:first-child {
+#eldeyqwexe .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xrunbbhalo .gt_column_spanner_outer:last-child {
+#eldeyqwexe .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xrunbbhalo .gt_column_spanner {
+#eldeyqwexe .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1411,11 +1419,11 @@ documents.</p>
   width: 100%;
 }
 
-#xrunbbhalo .gt_spanner_row {
+#eldeyqwexe .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#xrunbbhalo .gt_group_heading {
+#eldeyqwexe .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1441,7 +1449,7 @@ documents.</p>
   text-align: left;
 }
 
-#xrunbbhalo .gt_empty_group_heading {
+#eldeyqwexe .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1456,15 +1464,15 @@ documents.</p>
   vertical-align: middle;
 }
 
-#xrunbbhalo .gt_from_md > :first-child {
+#eldeyqwexe .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xrunbbhalo .gt_from_md > :last-child {
+#eldeyqwexe .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xrunbbhalo .gt_row {
+#eldeyqwexe .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1483,7 +1491,7 @@ documents.</p>
   overflow-x: hidden;
 }
 
-#xrunbbhalo .gt_stub {
+#eldeyqwexe .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1496,7 +1504,7 @@ documents.</p>
   padding-right: 5px;
 }
 
-#xrunbbhalo .gt_stub_row_group {
+#eldeyqwexe .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1510,15 +1518,15 @@ documents.</p>
   vertical-align: top;
 }
 
-#xrunbbhalo .gt_row_group_first td {
+#eldeyqwexe .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#xrunbbhalo .gt_row_group_first th {
+#eldeyqwexe .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#xrunbbhalo .gt_summary_row {
+#eldeyqwexe .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1528,16 +1536,16 @@ documents.</p>
   padding-right: 5px;
 }
 
-#xrunbbhalo .gt_first_summary_row {
+#eldeyqwexe .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#xrunbbhalo .gt_first_summary_row.thick {
+#eldeyqwexe .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#xrunbbhalo .gt_last_summary_row {
+#eldeyqwexe .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1547,7 +1555,7 @@ documents.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#xrunbbhalo .gt_grand_summary_row {
+#eldeyqwexe .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1557,7 +1565,7 @@ documents.</p>
   padding-right: 5px;
 }
 
-#xrunbbhalo .gt_first_grand_summary_row {
+#eldeyqwexe .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1567,7 +1575,7 @@ documents.</p>
   border-top-color: #D3D3D3;
 }
 
-#xrunbbhalo .gt_last_grand_summary_row_top {
+#eldeyqwexe .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1577,11 +1585,11 @@ documents.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#xrunbbhalo .gt_striped {
+#eldeyqwexe .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xrunbbhalo .gt_table_body {
+#eldeyqwexe .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1590,7 +1598,7 @@ documents.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#xrunbbhalo .gt_footnotes {
+#eldeyqwexe .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1604,7 +1612,7 @@ documents.</p>
   border-right-color: #D3D3D3;
 }
 
-#xrunbbhalo .gt_footnote {
+#eldeyqwexe .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1613,7 +1621,7 @@ documents.</p>
   padding-right: 5px;
 }
 
-#xrunbbhalo .gt_sourcenotes {
+#eldeyqwexe .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1627,7 +1635,7 @@ documents.</p>
   border-right-color: #D3D3D3;
 }
 
-#xrunbbhalo .gt_sourcenote {
+#eldeyqwexe .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1635,63 +1643,63 @@ documents.</p>
   padding-right: 5px;
 }
 
-#xrunbbhalo .gt_left {
+#eldeyqwexe .gt_left {
   text-align: left;
 }
 
-#xrunbbhalo .gt_center {
+#eldeyqwexe .gt_center {
   text-align: center;
 }
 
-#xrunbbhalo .gt_right {
+#eldeyqwexe .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xrunbbhalo .gt_font_normal {
+#eldeyqwexe .gt_font_normal {
   font-weight: normal;
 }
 
-#xrunbbhalo .gt_font_bold {
+#eldeyqwexe .gt_font_bold {
   font-weight: bold;
 }
 
-#xrunbbhalo .gt_font_italic {
+#eldeyqwexe .gt_font_italic {
   font-style: italic;
 }
 
-#xrunbbhalo .gt_super {
+#eldeyqwexe .gt_super {
   font-size: 65%;
 }
 
-#xrunbbhalo .gt_footnote_marks {
+#eldeyqwexe .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#xrunbbhalo .gt_asterisk {
+#eldeyqwexe .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#xrunbbhalo .gt_indent_1 {
+#eldeyqwexe .gt_indent_1 {
   text-indent: 5px;
 }
 
-#xrunbbhalo .gt_indent_2 {
+#eldeyqwexe .gt_indent_2 {
   text-indent: 10px;
 }
 
-#xrunbbhalo .gt_indent_3 {
+#eldeyqwexe .gt_indent_3 {
   text-indent: 15px;
 }
 
-#xrunbbhalo .gt_indent_4 {
+#eldeyqwexe .gt_indent_4 {
   text-indent: 20px;
 }
 
-#xrunbbhalo .gt_indent_5 {
+#eldeyqwexe .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1728,7 +1736,7 @@ documents.</p>
 similarities, and defaults to the correlation in two documents. See if
 you can make a similar function to the one above and see how well the
 results match.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="co">#Insert your code here:</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="co">#Insert your code here:</span></span></code></pre></div>
 </div>
 <div id="grouping-dfms" class="section level2">
 <h2>Grouping DFMs</h2>
@@ -1742,7 +1750,7 @@ part of a pipe, to pass the group DFMs based on a parameter of interest
 into the next function.</p>
 <p>Some functions in the package have funcitonality for this built in,
 as we can see with topfeatures below.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="fu">dfm_group</span>(presentation_dfm, presentation_dfm<span class="sc">$</span>yourpresentation)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">dfm_group</span>(presentation_dfm, presentation_dfm<span class="sc">$</span>yourpresentation)</span></code></pre></div>
 <pre><code>## Document-feature matrix of: 2 documents, 4,485 features (42.75% sparse) and 1 docvar.
 ##        features
 ## docs    introduction data science session   r tidyverse simon munzert hertie
@@ -1753,7 +1761,7 @@ as we can see with topfeatures below.</p>
 ##   FALSE     13
 ##   TRUE       1
 ## [ reached max_nfeat ... 4,475 more features ]</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">topfeatures</span>(presentation_dfm, <span class="at">groups =</span> yourpresentation)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="fu">topfeatures</span>(presentation_dfm, <span class="at">groups =</span> yourpresentation)</span></code></pre></div>
 <pre><code>## $`FALSE`
 ##        r     data      git function      chr   github database     repo 
 ##      421      370      154      153      143      108      104      101 
@@ -1775,8 +1783,8 @@ documents.</p>
 <h2>Word Clouds</h2>
 <p>Just for fun: lets make an ever popular word cloud! We can do this
 super easily with the textplot_wordcloud() function.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="fu">textplot_wordcloud</span>(presentation_dfm, <span class="at">max_words =</span> <span class="dv">50</span>)</span></code></pre></div>
-<p><img src="Live_Tutorial_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">textplot_wordcloud</span>(presentation_dfm, <span class="at">max_words =</span> <span class="dv">50</span>)</span></code></pre></div>
+<p><img src="Live_Tutorial_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 </div>
 </div>
 <div id="webscraping-example" class="section level1">
@@ -1791,19 +1799,19 @@ the <a href="http://obamaspeeches.com"
 class="uri">http://obamaspeeches.com</a> website to explore on his best*
 speeches(according to the webpage creators). Let’s try with his
 inaugural speech.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="co">#Save the link as object</span></span>
-<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a>obama_speeches <span class="ot">&lt;-</span> <span class="st">&quot;http://obamaspeeches.com/P-Obama-Inaugural-Speech-Inauguration.htm&quot;</span></span>
-<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>obama_inaugural <span class="ot">&lt;-</span> <span class="fu">read_html</span>(obama_speeches)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="co">#Save the link as object</span></span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>obama_speeches <span class="ot">&lt;-</span> <span class="st">&quot;http://obamaspeeches.com/P-Obama-Inaugural-Speech-Inauguration.htm&quot;</span></span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a>obama_inaugural <span class="ot">&lt;-</span> <span class="fu">read_html</span>(obama_speeches)</span></code></pre></div>
 <p>With Selector Gadget we identify the structure in the html containing
 the text. (Copy it direct from the bar, do not click on the xpath
 function.)</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>inaugural_speech_container <span class="ot">&lt;-</span> obama_inaugural <span class="sc">|&gt;</span>  <span class="fu">html_nodes</span>(<span class="st">&quot;br+ table font+ font&quot;</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a></span>
-<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a><span class="co"># Extract the text from the container</span></span>
-<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a>inaugural_speech_text <span class="ot">&lt;-</span> <span class="fu">html_text</span>(inaugural_speech_container)</span>
-<span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a></span>
-<span id="cb35-6"><a href="#cb35-6" tabindex="-1"></a><span class="co"># Print the speech text</span></span>
-<span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a><span class="fu">cat</span>(inaugural_speech_text, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>inaugural_speech_container <span class="ot">&lt;-</span> obama_inaugural <span class="sc">|&gt;</span>  <span class="fu">html_nodes</span>(<span class="st">&quot;br+ table font+ font&quot;</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a><span class="co"># Extract the text from the container</span></span>
+<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a>inaugural_speech_text <span class="ot">&lt;-</span> <span class="fu">html_text</span>(inaugural_speech_container)</span>
+<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a><span class="co"># Print the speech text</span></span>
+<span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a><span class="fu">cat</span>(inaugural_speech_text, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ##             My fellow citizens:
 ##             I stand here today humbled by the task before us, grateful for the 
@@ -2016,68 +2024,68 @@ function.)</p>
 <p>Here you can have a look at the different speeches you would like to
 work on later that are available on the website.Just take away the “#”
 symbol.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a><span class="co"># titles_speeches &lt;- obama_inaugural |&gt; </span></span>
-<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a>  <span class="co"># html_nodes(&quot;table p&quot;)</span></span>
-<span id="cb37-3"><a href="#cb37-3" tabindex="-1"></a></span>
-<span id="cb37-4"><a href="#cb37-4" tabindex="-1"></a><span class="co"># titles_speeches &lt;- sapply(titles_speeches, html_text, USE.NAMES = FALSE)</span></span>
-<span id="cb37-5"><a href="#cb37-5" tabindex="-1"></a></span>
-<span id="cb37-6"><a href="#cb37-6" tabindex="-1"></a><span class="co"># cat(titles_speeches , sep = &quot;\n&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="co"># titles_speeches &lt;- obama_inaugural |&gt; </span></span>
+<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a>  <span class="co"># html_nodes(&quot;table p&quot;)</span></span>
+<span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" tabindex="-1"></a><span class="co"># titles_speeches &lt;- sapply(titles_speeches, html_text, USE.NAMES = FALSE)</span></span>
+<span id="cb36-5"><a href="#cb36-5" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="#cb36-6" tabindex="-1"></a><span class="co"># cat(titles_speeches , sep = &quot;\n&quot;)</span></span></code></pre></div>
 <p>Following on what you just learned, you can now explore with the
 ‘corpus’ and the ‘token’ functions how this speech is structured.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>inaugural_df <span class="ot">&lt;-</span> <span class="fu">rbind</span>(inaugural_speech_text)</span>
-<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a>inaugural_speech_corpus <span class="ot">&lt;-</span> <span class="fu">corpus</span>(inaugural_df )</span>
-<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a>inaugural_speech_tokens <span class="ot">&lt;-</span> <span class="fu">tokens</span>(inaugural_speech_corpus)</span>
-<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a></span>
-<span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a><span class="fu">summary</span>(inaugural_speech_corpus)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a>inaugural_df <span class="ot">&lt;-</span> <span class="fu">rbind</span>(inaugural_speech_text)</span>
+<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a>inaugural_speech_corpus <span class="ot">&lt;-</span> <span class="fu">corpus</span>(inaugural_df )</span>
+<span id="cb37-3"><a href="#cb37-3" tabindex="-1"></a>inaugural_speech_tokens <span class="ot">&lt;-</span> <span class="fu">tokens</span>(inaugural_speech_corpus)</span>
+<span id="cb37-4"><a href="#cb37-4" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" tabindex="-1"></a><span class="fu">summary</span>(inaugural_speech_corpus)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Text"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Types"],"name":[2],"type":["int"],"align":["right"]},{"label":["Tokens"],"name":[3],"type":["int"],"align":["right"]},{"label":["Sentences"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"text1","2":"939","3":"2692","4":"109","_rn_":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Transform the speech into a document-feature matrix (dmf)</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>inaugural_speech_dfm <span class="ot">&lt;-</span> <span class="fu">dfm</span>(inaugural_speech_tokens)</span>
-<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a></span>
-<span id="cb39-3"><a href="#cb39-3" tabindex="-1"></a><span class="fu">print</span>(inaugural_speech_dfm)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>inaugural_speech_dfm <span class="ot">&lt;-</span> <span class="fu">dfm</span>(inaugural_speech_tokens)</span>
+<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a><span class="fu">print</span>(inaugural_speech_dfm)</span></code></pre></div>
 <pre><code>## Document-feature matrix of: 1 document, 901 features (0.00% sparse) and 0 docvars.
 ##        features
 ## docs    my fellow citizens : i stand here today humbled by
 ##   text1  2      1        1 4 3     2    1     6       1  8
 ## [ reached max_nfeat ... 891 more features ]</code></pre>
 <p>Explore which are the most frequend words in the discoure.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="fu">topfeatures</span>(inaugural_speech_dfm )</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="fu">topfeatures</span>(inaugural_speech_dfm )</span></code></pre></div>
 <pre><code>##  the    ,    .  and   of   to  our   we that    a 
 ##  133  131  115  114   82   70   66   62   49   48</code></pre>
 <p>To keep on working, let’s clean the speech a little.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a>inaugural_speech_tokens <span class="ot">&lt;-</span> <span class="fu">tokens</span>(inaugural_speech_corpus, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a></span>
-<span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a>inaugural_speech_tokens <span class="ot">&lt;-</span> <span class="fu">tokens_remove</span>(inaugural_speech_tokens, <span class="fu">stopwords</span>(<span class="st">&quot;en&quot;</span>))</span>
-<span id="cb43-4"><a href="#cb43-4" tabindex="-1"></a>inaugural_speech_tokens  <span class="ot">&lt;-</span>  <span class="fu">tokens_remove</span>(inaugural_speech_tokens, <span class="fu">c</span>(<span class="st">&#39;the&#39;</span>,<span class="st">&#39;and&#39;</span>, <span class="st">&#39;that&#39;</span>,<span class="st">&#39;to&#39;</span>, <span class="st">&#39;can&#39;</span>, <span class="st">&#39;must&#39;</span>, <span class="st">&#39;of&#39;</span>, <span class="st">&#39;every&#39;</span>, <span class="st">&#39;words&#39;</span>, <span class="st">&#39;let&#39;</span>, <span class="st">&#39;end&#39;</span>, <span class="st">&#39;whether&#39;</span>))</span>
-<span id="cb43-5"><a href="#cb43-5" tabindex="-1"></a></span>
-<span id="cb43-6"><a href="#cb43-6" tabindex="-1"></a>inaugural_speech_dfm <span class="ot">&lt;-</span> <span class="fu">dfm</span>(inaugural_speech_tokens)</span>
-<span id="cb43-7"><a href="#cb43-7" tabindex="-1"></a></span>
-<span id="cb43-8"><a href="#cb43-8" tabindex="-1"></a><span class="fu">topfeatures</span>(inaugural_speech_dfm)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a>inaugural_speech_tokens <span class="ot">&lt;-</span> <span class="fu">tokens</span>(inaugural_speech_corpus, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a>inaugural_speech_tokens <span class="ot">&lt;-</span> <span class="fu">tokens_remove</span>(inaugural_speech_tokens, <span class="fu">stopwords</span>(<span class="st">&quot;en&quot;</span>))</span>
+<span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a>inaugural_speech_tokens  <span class="ot">&lt;-</span>  <span class="fu">tokens_remove</span>(inaugural_speech_tokens, <span class="fu">c</span>(<span class="st">&#39;the&#39;</span>,<span class="st">&#39;and&#39;</span>, <span class="st">&#39;that&#39;</span>,<span class="st">&#39;to&#39;</span>, <span class="st">&#39;can&#39;</span>, <span class="st">&#39;must&#39;</span>, <span class="st">&#39;of&#39;</span>, <span class="st">&#39;every&#39;</span>, <span class="st">&#39;words&#39;</span>, <span class="st">&#39;let&#39;</span>, <span class="st">&#39;end&#39;</span>, <span class="st">&#39;whether&#39;</span>))</span>
+<span id="cb42-5"><a href="#cb42-5" tabindex="-1"></a></span>
+<span id="cb42-6"><a href="#cb42-6" tabindex="-1"></a>inaugural_speech_dfm <span class="ot">&lt;-</span> <span class="fu">dfm</span>(inaugural_speech_tokens)</span>
+<span id="cb42-7"><a href="#cb42-7" tabindex="-1"></a></span>
+<span id="cb42-8"><a href="#cb42-8" tabindex="-1"></a><span class="fu">topfeatures</span>(inaugural_speech_dfm)</span></code></pre></div>
 <pre><code>##      us  nation     new america  people    less   today     now    time    work 
 ##      23      12      11       8       7       7       6       6       6       6</code></pre>
 <p>Let’s see the wordcloud from this speech</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a><span class="fu">textplot_wordcloud</span>(inaugural_speech_dfm, <span class="at">max_words =</span> <span class="dv">50</span>)</span></code></pre></div>
-<p><img src="Live_Tutorial_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a><span class="fu">textplot_wordcloud</span>(inaugural_speech_dfm, <span class="at">max_words =</span> <span class="dv">50</span>)</span></code></pre></div>
+<p><img src="Live_Tutorial_files/figure-html/unnamed-chunk-22-1.png" width="672" />
 <strong>Step 2</strong> We’ll compare it with another speech, this time
 with “An Honest Government - A Hopeful Future” which Obama hold at the
 University of Nairobi under the topic: Our Past, Our Future &amp; Vision
 for America (August 28, 2006).</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a><span class="co">#Save the link as object</span></span>
-<span id="cb46-2"><a href="#cb46-2" tabindex="-1"></a>obama_speeches_2 <span class="ot">&lt;-</span> <span class="st">&quot;http://obamaspeeches.com/088-An-Honest-Government-A-Hopeful-Future-Obama-Speech.htm&quot;</span></span>
-<span id="cb46-3"><a href="#cb46-3" tabindex="-1"></a>obama_honest_gov <span class="ot">&lt;-</span> <span class="fu">read_html</span>(obama_speeches_2)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a><span class="co">#Save the link as object</span></span>
+<span id="cb45-2"><a href="#cb45-2" tabindex="-1"></a>obama_speeches_2 <span class="ot">&lt;-</span> <span class="st">&quot;http://obamaspeeches.com/088-An-Honest-Government-A-Hopeful-Future-Obama-Speech.htm&quot;</span></span>
+<span id="cb45-3"><a href="#cb45-3" tabindex="-1"></a>obama_honest_gov <span class="ot">&lt;-</span> <span class="fu">read_html</span>(obama_speeches_2)</span></code></pre></div>
 <p>With Selector Gadget we identify the structure in the html containing
 the text. Copy it direct from the bar, do not click on the xpath
 function.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a>honest_gov_speech_container <span class="ot">&lt;-</span> obama_honest_gov <span class="sc">|&gt;</span>  <span class="fu">html_nodes</span>(<span class="st">&quot;font p font&quot;</span>)</span>
-<span id="cb47-2"><a href="#cb47-2" tabindex="-1"></a></span>
-<span id="cb47-3"><a href="#cb47-3" tabindex="-1"></a><span class="co"># Extract the text from the container</span></span>
-<span id="cb47-4"><a href="#cb47-4" tabindex="-1"></a>honest_gov_speech_text <span class="ot">&lt;-</span> <span class="fu">html_text</span>(honest_gov_speech_container)</span>
-<span id="cb47-5"><a href="#cb47-5" tabindex="-1"></a></span>
-<span id="cb47-6"><a href="#cb47-6" tabindex="-1"></a><span class="co"># Print the speech text</span></span>
-<span id="cb47-7"><a href="#cb47-7" tabindex="-1"></a><span class="fu">cat</span>(honest_gov_speech_text, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a>honest_gov_speech_container <span class="ot">&lt;-</span> obama_honest_gov <span class="sc">|&gt;</span>  <span class="fu">html_nodes</span>(<span class="st">&quot;font p font&quot;</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" tabindex="-1"></a><span class="co"># Extract the text from the container</span></span>
+<span id="cb46-4"><a href="#cb46-4" tabindex="-1"></a>honest_gov_speech_text <span class="ot">&lt;-</span> <span class="fu">html_text</span>(honest_gov_speech_container)</span>
+<span id="cb46-5"><a href="#cb46-5" tabindex="-1"></a></span>
+<span id="cb46-6"><a href="#cb46-6" tabindex="-1"></a><span class="co"># Print the speech text</span></span>
+<span id="cb46-7"><a href="#cb46-7" tabindex="-1"></a><span class="fu">cat</span>(honest_gov_speech_text, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## The first time I came to 
 ##               Kenya was in 1987. I had just finished three years of work as a 
 ##               community organizer in low-income neighborhoods of Chicago, and 
@@ -2414,20 +2422,20 @@ function.</p>
 ##               to help in any way I can. Thank you.</code></pre>
 <p>Following on what you just learned, you can now explore with the
 ‘corpus’ and the ‘token’ functions how this speech is structured.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a>honest_gov_df <span class="ot">&lt;-</span> <span class="fu">rbind</span>(honest_gov_speech_text)</span>
-<span id="cb49-2"><a href="#cb49-2" tabindex="-1"></a>honest_gov_speech_corpus <span class="ot">&lt;-</span> <span class="fu">corpus</span>(honest_gov_df)</span>
-<span id="cb49-3"><a href="#cb49-3" tabindex="-1"></a>honest_gov_speech_tokens <span class="ot">&lt;-</span> <span class="fu">tokens</span>(honest_gov_speech_corpus)</span>
-<span id="cb49-4"><a href="#cb49-4" tabindex="-1"></a></span>
-<span id="cb49-5"><a href="#cb49-5" tabindex="-1"></a><span class="fu">summary</span>(honest_gov_speech_corpus)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a>honest_gov_df <span class="ot">&lt;-</span> <span class="fu">rbind</span>(honest_gov_speech_text)</span>
+<span id="cb48-2"><a href="#cb48-2" tabindex="-1"></a>honest_gov_speech_corpus <span class="ot">&lt;-</span> <span class="fu">corpus</span>(honest_gov_df)</span>
+<span id="cb48-3"><a href="#cb48-3" tabindex="-1"></a>honest_gov_speech_tokens <span class="ot">&lt;-</span> <span class="fu">tokens</span>(honest_gov_speech_corpus)</span>
+<span id="cb48-4"><a href="#cb48-4" tabindex="-1"></a></span>
+<span id="cb48-5"><a href="#cb48-5" tabindex="-1"></a><span class="fu">summary</span>(honest_gov_speech_corpus)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Text"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Types"],"name":[2],"type":["int"],"align":["right"]},{"label":["Tokens"],"name":[3],"type":["int"],"align":["right"]},{"label":["Sentences"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"text1","2":"46","3":"63","4":"3","_rn_":"1"},{"1":"text2","2":"78","3":"118","4":"5","_rn_":"2"},{"1":"text3","2":"39","3":"56","4":"3","_rn_":"3"},{"1":"text4","2":"20","3":"24","4":"1","_rn_":"4"},{"1":"text5","2":"58","3":"91","4":"2","_rn_":"5"},{"1":"text6","2":"76","3":"111","4":"3","_rn_":"6"},{"1":"text7","2":"86","3":"134","4":"3","_rn_":"7"},{"1":"text8","2":"61","3":"93","4":"2","_rn_":"8"},{"1":"text9","2":"70","3":"98","4":"1","_rn_":"9"},{"1":"text10","2":"40","3":"47","4":"3","_rn_":"10"},{"1":"text11","2":"65","3":"99","4":"4","_rn_":"11"},{"1":"text12","2":"15","3":"15","4":"2","_rn_":"12"},{"1":"text13","2":"40","3":"52","4":"2","_rn_":"13"},{"1":"text14","2":"42","3":"50","4":"2","_rn_":"14"},{"1":"text15","2":"97","3":"138","4":"7","_rn_":"15"},{"1":"text16","2":"49","3":"68","4":"3","_rn_":"16"},{"1":"text17","2":"35","3":"46","4":"3","_rn_":"17"},{"1":"text18","2":"40","3":"51","4":"3","_rn_":"18"},{"1":"text19","2":"77","3":"103","4":"3","_rn_":"19"},{"1":"text20","2":"27","3":"33","4":"2","_rn_":"20"},{"1":"text21","2":"69","3":"99","4":"6","_rn_":"21"},{"1":"text22","2":"31","3":"38","4":"1","_rn_":"22"},{"1":"text23","2":"32","3":"43","4":"2","_rn_":"23"},{"1":"text24","2":"89","3":"118","4":"4","_rn_":"24"},{"1":"text25","2":"31","3":"36","4":"2","_rn_":"25"},{"1":"text26","2":"24","3":"25","4":"1","_rn_":"26"},{"1":"text27","2":"38","3":"48","4":"1","_rn_":"27"},{"1":"text28","2":"57","3":"74","4":"1","_rn_":"28"},{"1":"text29","2":"53","3":"67","4":"2","_rn_":"29"},{"1":"text30","2":"41","3":"53","4":"2","_rn_":"30"},{"1":"text31","2":"46","3":"62","4":"3","_rn_":"31"},{"1":"text32","2":"49","3":"67","4":"2","_rn_":"32"},{"1":"text33","2":"25","3":"30","4":"2","_rn_":"33"},{"1":"text34","2":"62","3":"85","4":"2","_rn_":"34"},{"1":"text35","2":"38","3":"48","4":"2","_rn_":"35"},{"1":"text36","2":"58","3":"87","4":"3","_rn_":"36"},{"1":"text37","2":"84","3":"122","4":"3","_rn_":"37"},{"1":"text38","2":"65","3":"83","4":"2","_rn_":"38"},{"1":"text39","2":"66","3":"101","4":"5","_rn_":"39"},{"1":"text40","2":"43","3":"59","4":"2","_rn_":"40"},{"1":"text41","2":"35","3":"48","4":"2","_rn_":"41"},{"1":"text42","2":"118","3":"162","4":"4","_rn_":"42"},{"1":"text43","2":"62","3":"88","4":"3","_rn_":"43"},{"1":"text44","2":"18","3":"20","4":"1","_rn_":"44"},{"1":"text45","2":"17","3":"20","4":"1","_rn_":"45"},{"1":"text46","2":"19","3":"23","4":"1","_rn_":"46"},{"1":"text47","2":"37","3":"47","4":"1","_rn_":"47"},{"1":"text48","2":"26","3":"31","4":"1","_rn_":"48"},{"1":"text49","2":"41","3":"48","4":"1","_rn_":"49"},{"1":"text50","2":"47","3":"60","4":"2","_rn_":"50"},{"1":"text51","2":"26","3":"31","4":"1","_rn_":"51"},{"1":"text52","2":"32","3":"43","4":"2","_rn_":"52"},{"1":"text53","2":"56","3":"88","4":"3","_rn_":"53"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Transform the speech into a document-feature matrix (dmf).</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a>honest_gov_speech_dfm <span class="ot">&lt;-</span> <span class="fu">dfm</span>(honest_gov_speech_tokens)</span>
-<span id="cb50-2"><a href="#cb50-2" tabindex="-1"></a></span>
-<span id="cb50-3"><a href="#cb50-3" tabindex="-1"></a><span class="fu">print</span>(honest_gov_speech_dfm)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a>honest_gov_speech_dfm <span class="ot">&lt;-</span> <span class="fu">dfm</span>(honest_gov_speech_tokens)</span>
+<span id="cb49-2"><a href="#cb49-2" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" tabindex="-1"></a><span class="fu">print</span>(honest_gov_speech_dfm)</span></code></pre></div>
 <pre><code>## Document-feature matrix of: 53 documents, 1,080 features (95.53% sparse) and 0 docvars.
 ##        features
 ## docs    the first time i came to kenya was in 1987
@@ -2439,27 +2447,27 @@ function.</p>
 ##   text6   7     0    0 2    0  5     1   1  2    0
 ## [ reached max_ndoc ... 47 more documents, reached max_nfeat ... 1,070 more features ]</code></pre>
 <p>Explore which are the most frequend words in the discoure.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a><span class="fu">topfeatures</span>(honest_gov_speech_dfm )</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a><span class="fu">topfeatures</span>(honest_gov_speech_dfm )</span></code></pre></div>
 <pre><code>##  the    ,    .  and   of   to    a that   in   is 
 ##  173  160  126  125  117   94   76   73   61   46</code></pre>
 <p>To keep on working, let’s clean the speech a little.</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a>honest_gov_speech_tokens <span class="ot">&lt;-</span> <span class="fu">tokens</span>(honest_gov_speech_corpus, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb54-2"><a href="#cb54-2" tabindex="-1"></a></span>
-<span id="cb54-3"><a href="#cb54-3" tabindex="-1"></a>honest_gov_speech_tokens <span class="ot">&lt;-</span> <span class="fu">tokens_remove</span>(honest_gov_speech_tokens, <span class="fu">stopwords</span>(<span class="st">&quot;en&quot;</span>))</span>
-<span id="cb54-4"><a href="#cb54-4" tabindex="-1"></a>honest_gov_speech_tokens  <span class="ot">&lt;-</span>  <span class="fu">tokens_remove</span>(honest_gov_speech_tokens, <span class="fu">c</span>(<span class="st">&#39;the&#39;</span>,<span class="st">&#39;and&#39;</span>, <span class="st">&#39;that&#39;</span>,<span class="st">&#39;to&#39;</span>, <span class="st">&#39;can&#39;</span>, <span class="st">&#39;must&#39;</span>, <span class="st">&#39;of&#39;</span>, <span class="st">&#39;every&#39;</span>, <span class="st">&#39;words&#39;</span>, <span class="st">&#39;let&#39;</span>, <span class="st">&#39;end&#39;</span>, <span class="st">&#39;whether&#39;</span>, <span class="st">&#39;kenya&#39;</span>, <span class="st">&#39;kenyan&#39;</span>, <span class="st">&#39;kenyans&#39;</span>, <span class="st">&#39;also&#39;</span>, <span class="st">&#39;sometimes&#39;</span>))</span>
-<span id="cb54-5"><a href="#cb54-5" tabindex="-1"></a></span>
-<span id="cb54-6"><a href="#cb54-6" tabindex="-1"></a><span class="co"># We removed &quot;Kenya&quot; and &quot;kenyan&quot; to focus more on the topics around it, since we already know that&#39;s the main topic. We want to know what are other concepts associated to it. </span></span>
-<span id="cb54-7"><a href="#cb54-7" tabindex="-1"></a></span>
-<span id="cb54-8"><a href="#cb54-8" tabindex="-1"></a>honest_gov_speech_dfm <span class="ot">&lt;-</span> <span class="fu">dfm</span>(honest_gov_speech_tokens)</span>
-<span id="cb54-9"><a href="#cb54-9" tabindex="-1"></a></span>
-<span id="cb54-10"><a href="#cb54-10" tabindex="-1"></a><span class="fu">topfeatures</span>(honest_gov_speech_dfm)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a>honest_gov_speech_tokens <span class="ot">&lt;-</span> <span class="fu">tokens</span>(honest_gov_speech_corpus, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" tabindex="-1"></a></span>
+<span id="cb53-3"><a href="#cb53-3" tabindex="-1"></a>honest_gov_speech_tokens <span class="ot">&lt;-</span> <span class="fu">tokens_remove</span>(honest_gov_speech_tokens, <span class="fu">stopwords</span>(<span class="st">&quot;en&quot;</span>))</span>
+<span id="cb53-4"><a href="#cb53-4" tabindex="-1"></a>honest_gov_speech_tokens  <span class="ot">&lt;-</span>  <span class="fu">tokens_remove</span>(honest_gov_speech_tokens, <span class="fu">c</span>(<span class="st">&#39;the&#39;</span>,<span class="st">&#39;and&#39;</span>, <span class="st">&#39;that&#39;</span>,<span class="st">&#39;to&#39;</span>, <span class="st">&#39;can&#39;</span>, <span class="st">&#39;must&#39;</span>, <span class="st">&#39;of&#39;</span>, <span class="st">&#39;every&#39;</span>, <span class="st">&#39;words&#39;</span>, <span class="st">&#39;let&#39;</span>, <span class="st">&#39;end&#39;</span>, <span class="st">&#39;whether&#39;</span>, <span class="st">&#39;kenya&#39;</span>, <span class="st">&#39;kenyan&#39;</span>, <span class="st">&#39;kenyans&#39;</span>, <span class="st">&#39;also&#39;</span>, <span class="st">&#39;sometimes&#39;</span>))</span>
+<span id="cb53-5"><a href="#cb53-5" tabindex="-1"></a></span>
+<span id="cb53-6"><a href="#cb53-6" tabindex="-1"></a><span class="co"># We removed &quot;Kenya&quot; and &quot;kenyan&quot; to focus more on the topics around it, since we already know that&#39;s the main topic. We want to know what are other concepts associated to it. </span></span>
+<span id="cb53-7"><a href="#cb53-7" tabindex="-1"></a></span>
+<span id="cb53-8"><a href="#cb53-8" tabindex="-1"></a>honest_gov_speech_dfm <span class="ot">&lt;-</span> <span class="fu">dfm</span>(honest_gov_speech_tokens)</span>
+<span id="cb53-9"><a href="#cb53-9" tabindex="-1"></a></span>
+<span id="cb53-10"><a href="#cb53-10" tabindex="-1"></a><span class="fu">topfeatures</span>(honest_gov_speech_dfm)</span></code></pre></div>
 <pre><code>##     people corruption    country       many       know      great        one 
 ##         21         19         15         14         13         11         10 
 ##    nations       work government 
 ##         10          9          9</code></pre>
 <p>Let’s see the Word Cloud from this speech</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" tabindex="-1"></a><span class="fu">textplot_wordcloud</span>(honest_gov_speech_dfm, <span class="at">max_words =</span> <span class="dv">40</span>)</span></code></pre></div>
-<p><img src="Live_Tutorial_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a><span class="fu">textplot_wordcloud</span>(honest_gov_speech_dfm, <span class="at">max_words =</span> <span class="dv">40</span>)</span></code></pre></div>
+<p><img src="Live_Tutorial_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 </div>
 </div>
 

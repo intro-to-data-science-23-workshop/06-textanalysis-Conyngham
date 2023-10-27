@@ -113,14 +113,14 @@ There are several advantages to using quanteda for quantitative text analysis!
 
 ---
 # Workflow 💪
-------------------------------------------------------------------------
+
 
 # Loading the package
 First we load the core of the quanteda package.
 
 If any of the packages are not installed on your machine you can uncomment the first line.
 
-```{r initialise, warning=FALSE}
+```{r initialise, results='hide', message=FALSE, warning=FALSE}
 #install.packages('quanteda','quanteda.textstats','readtext','gt')
 
 library(quanteda)
@@ -128,7 +128,7 @@ library(quanteda)
 
 As mentioned above, the quanteda package is split in to modular packages so we also download a selection of those of interest to us in this tutorial.
 
-```{r initialise2, warning=FALSE}
+```{r initialise2, results='hide', message=FALSE, warning=FALSE}
 library(quanteda.textstats)
 library(quanteda.textplots)
 ```
@@ -137,13 +137,13 @@ We also load readtext which makes the process of importing texts easier, and als
 Other compatible input formats include .txt, .csv, .tab, .json, .doc and
 .docx files.
 
-```{r initialise3, warning=FALSE}
+```{r initialise3, results='hide', message=FALSE, warning=FALSE}
 library(readtext)
 ```
 
 Finally we load dplyr for our workflow and gt for creating nice looking tables. 
 
-```{r initialise4, warning=FALSE, message=FALSE}
+```{r initialise4, results='hide', message=FALSE, warning=FALSE}
 library(dplyr)
 library(gt)
 library(rvest)
@@ -219,7 +219,7 @@ Looking at the top features, we can see that all the most common tokens by far a
 
 The first thing we can do is adjust the parameters on the function tokens(), allowing us to remove punctuation, numbers and symbols.
 
-An even more powerful tool is the token_remove function combined with the built-in stopwords database. Quantedata comes loaded with common filler words or stop words for \_ different languages. Removing these may help us with our analysis.
+An even more powerful tool is the token_remove function combined with the built-in stopwords database. Quantedata comes loaded with common filler words or stop words for many different languages. Removing these may help us with our analysis.
 
 ```{r}
 presentation_tokens = tokens(presentations_corpus, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE)
@@ -264,20 +264,14 @@ Now we have a nice looking Document Feature matrix for our further analysis. For
 ## Additional Functions for Corpuses
 
 Subset corpora:
-```{r}corpus_subset()```
-```{r}corpus_subset(x, Year > 1990)```
-
-Change units of a corpus:
-```{r}corpus_reshape()```
-```{r}corpus_reshape(x, to = c("sentences", "paragraphs"))```
-
-Segment texts on a pattern match:
-```{r}corpus_segment()```
-```{r}corpus_segment(x, pattern, valuetype, extract_pattern = TRUE)```
+```{r}
+corpus_subset(presentations_corpus, (yourpresentation==FALSE))#Subestting our corpus so it's only the original IDS lectures
+```
 
 Take a random sample of the corpus texts:
-```{r}corpus_sample```
-```{r}corpus_sample(x, size = 10, replace = FALSE)```
+```{r}
+corpus_sample(presentations_corpus, size = 2, replace = FALSE)
+```
 
 ## Additional Funtions for Tokens
 

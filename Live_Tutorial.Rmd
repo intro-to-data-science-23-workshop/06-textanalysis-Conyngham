@@ -51,15 +51,6 @@ Our main goal is for you to learn the basic functions that will allow you to ach
 # Quanteda 💡
 
 ### Background
-<<<<<<< HEAD
-Quanteda is an R packagae for managing and analysing textual data. It was created by
-[Ken Benoit](https://kenbenoit.net) and is available via [CRAN](https://cran.r-
-project.org/web/packages/quanteda/index.html). The latest update of quanteda is version 4.0 and the package is maintained by the UK-based non-profit company [Quanteda
-Initiative](https://quanteda.org).
-=======
->>>>>>> 32964ae60c83dacc415cc180b667c01accaf08cd
-
-### Background
 
 Quanteda is an R packagae for managing and analysing textual data. It was created by [Ken Benoit](https://kenbenoit.net) and is available via [CRAN](https://cran.r-%20project.org/web/packages/quanteda/index.html). The latest update of quanteda is version 4.0 and the package is maintained by the UK-based non-profit company [Quanteda Initiative](https://quanteda.org).
 
@@ -83,11 +74,9 @@ Additionally available via GitHub:
 
 The quanteda workflow is structured around three main objects, these are
 
-<<<<<<< HEAD
-1. the Corpus
+1. The Corpus
 2. Tokens
 3. The Document-Feature Matrix (dfm)
-=======
 
 ## Corpus
 In quanteda, a corpus functions as the primary data structure for storing and organizing text data. The corpus stores 
@@ -98,7 +87,6 @@ In general, the corpus functions as relatively static library, meaning that text
 
 
 ## Tokens
-<<<<<<< HEAD
 In quanteda, tokens represent the basic units of text data, that are used for any further analysis. They comprise usually of words that have been extracted and grouped as semantic units. Nonetheless, phrases or even entire sentences can be tokenized as well.
 
 Tokenizing describes the process of splitting the input text into individual tokens. Once a text is tokenized, various operations for preprocessing, cleaning and feature extraction can be performed on those tokens.
@@ -423,7 +411,6 @@ topfeatures(presentation_dfm)
 
 Now we have a nice looking Document Feature matrix for our further analysis. For our live presentation we will stop here and move on to the next section: Analysing text non-relationally, but if you would like to learn some more about creating and tweaking corpuses continue below.
 
-<<<<<<< HEAD
 ## Additional Functions for Corpuses
 
 Subset corpora:
@@ -484,8 +471,6 @@ tokens_wordstem(tokens('She runs, he can run, they are running'))
 
 ```dfm_sort()```
 
-=======
->>>>>>> 32964ae60c83dacc415cc180b667c01accaf08cd
 # Analysing our texts non-relationally
 
 There are many many functions across the quantedata family of packages which can be used to analyse our newly created DFM, here we will focus on some of the fucntions we foudn the most interesting from the textstat and testplot packages.

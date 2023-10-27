@@ -1,33 +1,51 @@
-# Working with dplyr
+# Working with quanteda 
 
 
 ## Summary
 
-This repository provides materials for a session that is part of the [I2DS Tools for Data Science workshop](https://github.com/intro-to-data-science-23-workshop) run at the [Hertie School, Berlin](https://www.hertie-school.org/en/) in October 2023. The student-run workshop is part of the course [Introduction to Data Science](https://github.com/intro-to-data-science-23) taught by Simon Munzert at the Hertie School, Berlin, in Fall 2023.
+This repository provides materials for a session that is part of the [I2DS Tools for Data Science workshop 2023](https://github.com/intro-to-data-science-23-workshop) run at the [Hertie School, Berlin](https://www.hertie-school.org/en/) in October 2023. The student-run workshop is part of the course [Introduction to Data Science](https://github.com/intro-to-data-science-23) taught by Simon Munzert at the Hertie School, Berlin, in Fall 2023.
 
 ### Session contents
 
-This session will introduce you to the modern data wrangling workflow with R and dplyr. Data wrangling is one of the core steps in the data science workflow. dplyr is a grammar of data manipulation, providing a consistent set of verbs that help you solve the most common data manipulation challenges, including the manipulation of datasets and variables. 
+This session will introduce you to quanteda! Quanteda is an R package for quantitative text analysis. A lot of data we deal with every day comes in text, and will increasingly do so in the future! Through the use of social media and digitalisation efforts in all parts of life, large volumes of data become increasingly accessible. Quanteda is an efficient R package to process large text data and analyse it quantitatively. The possibilities for analysis which quanteda and its expansion packages offer are well maintained and are constantly evolving. In this session we will introduce the main objects and most important functions of quanteda. We will run participants through the workflow of analyzing text data with quanteda and illustrate these steps with the analysis of speeched given by Barack Obama. 
+
 
 ##Live Tutorial
-Follow [this link for the html](https://cdn.githubraw.com/intro-to-data-science-23-workshop/06-textanalysis-Conyngham-Vellage-Marquez/main/Live_Tutorial.html) which contains all the info you need to follow along with our tutorial or teach yourself quoanteda in your own time.
+In the live tutorial you will be able to apply basic quanteda functions yourself and will ultimately analyze content from our Introduction to Data Science lectures. 
+Follow [this link for the html](https://cdn.githubraw.com/intro-to-data-science-23-workshop/06-textanalysis-Conyngham-Vellage-Marquez/main/Live_Tutorial.html) which contains some background information on quanteda and all instructions you need to follow along with our tutorial or teach yourself quanteda in your own time.
 
 ### Main learning objectives
 
-The goals of this session are to (1) equip you with conceptual knowledge about the dplyr package and data wrangling workflow, (2) show you the three key verbs of the pacakge, and (3) provide you with practice material as well as some further readings.
+The goals of this session are to (1) equip you with conceptual knowledge about the quanteda package and the qunatitative text analysis workflow, (2) show you the three key objects of the package, and (3) provide you with the most commonly used functions, practice material as well as some further readings.
 
 
 ## Instructors
 
-- Simon Munzert ([website](http://simonmunzert.github.io/), [twitter](https://twitter.com/simonsaysnothin))
-- Kermit the Frog ([website](https://en.wikipedia.org/wiki/Kermit_the_Frog), [twitter](https://twitter.com/KermitTheFrog))
+- Killian Conyngham (contact details)
+- Aranxa Marquez Ampudia (contatc details)
+- Luca Vellage [E-Mail](l.v.vellage@gmail.com)
 
 
 ## Further resources
 
-- [dplyr overview at dplyr.tidyverse.org](https://dplyr.tidyverse.org/)
-- [Hands-on dplyr tutorial by Data School on YouTube](https://www.youtube.com/watch?v=jWjqLW-u3hc)
-- [R for Data Science book - part on data wrangling](https://r4ds.had.co.nz/wrangle-intro.html)
+
+🔍 [Quanteda Website](https://quanteda.io/)
+
+🔍 [Quanteda Tutorial on the Quanteda Website](https://tutorials.quanteda.io/introduction/)
+
+🔍 [Quanteda Cheat Sheet](https://muellerstefan.net/files/quanteda-cheatsheet.pdf)
+
+🔍 [Presentation by quanteda founder Kenneth Benoi at the University of Münster](https://www.uni-muenster.de/imperia/md/content/ifpol/grasp/2019-06-27_muenster.pdf)
+
+🔍 [A Beginner’s Guide to Text Analysis with quanteda (University of Virginia)](https://data.library.virginia.edu/a-beginners-guide-to-text-analysis-with-quanteda/)
+
+🔍 [quanteda: An R package for the quantitative analysis of textual data, JOSS, 2018](https://joss.theoj.org/papers/10.21105/joss.00774)
+
+🔍 [An Introduction to Text as Data with quanteda (Penn State and Essex courses in "Text as Dara")](https://burtmonroe.github.io/TextAsDataCourse/Tutorials/TADA-IntroToQuanteda.nb.html)
+
+🔍 [Advancing Text Mining with R and quanteda: Methods Bites](https://www.mzes.uni-mannheim.de/socialsciencedatalab/article/advancing-text-mining/)
+
+🔍 [Quanteda initiative](https://quanteda.org/)
 
 
 ## License

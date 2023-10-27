@@ -1,5 +1,5 @@
 ---
-author: "Killian, Luca, Aranxa"
+author: "Killian, Luca & Aranxa"
 title: "Quanteda"
 subtitle: "Quantitative Text Analyis"
 output: 

@@ -90,48 +90,171 @@ tidyverse functions
 
 # Quanteda Basics 📝
 
-### Main Objects
+The quanteda workflow is structured around three main objects, these are
 
-#### Corpus 
+1. the corpus
+2. tokens
+3. the document-feature matrix (dfm)
 
-#### Tokens 
+## Corpus
+In quanteda, a corpus functions as the primary data structure for storing and organizing
+text data. The corpus can be thought of as “library" that holds the textual data we want
+to analyse alongside specific document-level or metadata attributes, called docvars.
+Only by transforming our input text into a corpus format, quanteda is able to process
+it, therefore the corpus functions as starting point to our analysis. In general, the
+corpus functions as relatively static library, meaning that text data in the corpus
+should not be changed through cleaning and preprocessing steps. Rather, texts can be
+extracted from the corpus for any manipulation and should be assigned to new objects.
+This way, the corpus functions as a copy of the original input data.
+Within the corpus, each document is typically represented as a separate element.
+Documents within a corpus can be accessed by their index or via docvars.
 
-#### Document Feature Matrix 
+## Tokens
+In quanteda, tokens represent the basic units of text data, that are used for any
+further analysis. They comprise usually of words that have been extracted and grouped as
+semantic units. However, phrases or even entire sentences can be tokenized as well.
+Tokenizing describes the process of splitting the input text into individual tokens.
+Once a text is tokenized, various operations for preprocessing and cleaning and feature
+extraction can be performed on those tokens.
+**How do tokens relate to the Corpus?**
+When you tokenize text, you create a list of tokens for each document, and each document
+in the corpus is represented as a sequence of tokens.
+## Document Feature Matrix
+
+# Workflow 💪
+#TO DO: Explain better what 'features' entails --> Luca
+#TO DO: Explain how tokenization can be skipped when applying dfm() right away --> Luca
+The document feature matrix puts documents into matrix format and constitutes the unit
+on which analyses will be performed. In the DFM, each row corresponds to a document and
+each column corresponds to a feature of that text, these are often tokens. The matrix
+stores the frequency of each feature (column) within each document (row). DFMs are
+particularly useful if not all parts of the documents in the corpus should be included
+in the analysis.
+
+DFMs are often sparse, meaning that many entries in the matrix are zero, making the DFM
+more memory- and computationally efficient.
+
+**How does the DFM relate to tokens?**
+When you create DFM, the list of tokens is transformed into a structure matrix that
+functions as foundation for subsequent analysis, such as word frequency analysis,
+sentiment analysis, text classification, etc. Tokens constitute individual elements of
+text data, while a DFM constitutes a structural and numerical representation of text
+data.
+
+**When do I need a DFM?**
+#TO DO: Luca
 
 
 # Workflow 💪
-
-
-#### Getting started 
-
+## Getting started
 First we load the core quanteda package.
+
 ```{r}
 #install.packages('quanteda')
-library(quanteda)
+#library(quanteda)
 ```
-
 Additionally, we load the [readtext package](https://readtext.quanteda.io)
-
 ```{r}
 #install.packages('readtext')
-library(readtext)
+#library(readtext)
 ```
-The readtext package provides an easy way to read text data into R, from almost any input format. 
+The readtext package provides an easy way to read text data into R, from almost any
+input format. Compatible input formats include .txt, .csv, .tab, .json, .pdf, .doc and
+.docx files
 
-```{r}
-#install.packages('dplyr')
-library(dplyr)
-#install.packages('gt')
-library(gt)
-```
-These are some extra packages that are nice to have.
+## Read Data into R
 
-#### Main Functions
+#TO DO: Add webscraping example --> Aranxa
+##Creating a Corpus
+#TO DO: Add short explanations of the main corpus() functions --> Luca
+#TO DO: Show our use case --> Aranxa
 
+```{r}corpus()```
 
+```{r}corpus_subset()```
+
+```{r}corpus_reshape()```
+
+```{r}corpus_segment()```
+
+```{r}corpus_sample()```
+
+## Preprocessing
+
+### Cleaning and Creating Tokens
+
+#TO DO: Add short explanations what these functions do --> Luca
+#TO DO: Add short explanation based on our use case how we clean + tokenize the data -->
+Aranxa
+
+**Main Token functions**
+
+```{r}Tokens()```
+
+```{r}Tokens_tolower()/tokens_toupper()```
+
+```{r}Tokens_wordstem()```
+
+```{r}Tokens_compound()```
+
+```{r}Tokens_lookup()```
+
+```{r}Tokens_ngrams()```
+
+```{r}Tokens_skipgrams()```
+
+```{r}Tokens_select()/tokens_remove()/tokens_keep()/tokens_replace()```
+
+```{r}Tokens_sample()```
+
+```{r}Tokens_subset()```
+
+#TO DO: Should we add other cleaning functions here?
+
+## Document Feature Matrix
+#add our use case
+
+```dfm()```
+
+```dictionary()```
+
+```dfm_lookup()```
+
+```dfm_select()```
+
+```dfm_compress()```
+
+```dfm_sample()```
+
+```dfm_weight()```
+
+```dfm_sort()```
+
+```dfm_group()```
+
+## Analyis
+
+### Statistics
+
+### Models
+
+### Plots
 
 # Why quanteda? ✅
 
+There are several advantages to using quanteda for quantitative text analysis!
+
+-   Quanteda is compatible with other R packages, for example the magrittr |> and most
+of the grammar of the tidyverse!
+-   Quanteda is a well maintained package: The quanteda initiative offers user,
+technical and development support as well as teaching and workshop opportunities
+-   It is a relatively easy to use for beginners but offers complex functions for more
+advanced analyses too
+-   And it is fast: Compared to other R and Python package for processinf large textual
+data, quanteda is faster and more efficient
+
+
+...And now it's time to try it yourself!
 
 ---
 # Loading the package

@@ -174,13 +174,7 @@ The readtext package provides an easy way to read text data into R, from almost 
 
 ## Read Data into R
 
-#TO DO: Add webscraping example --\> Aranxa (+adjust function accordingly)
-
-`{r}my_texts <- readtext::readtext("~/link/to/path/*")`
-
-##Creating a Corpus
-
-#TO DO: Show our use case --\> Aranxa
+# Webscraping example 
 
 ## Try it out! Comparing political discourses
 Now we're going to give you an example where you can apply this for on of the most used cases: analyzing political discourses.
@@ -207,15 +201,15 @@ cat(inaugural_speech_text, sep = "\n")
 
 ```
 
-Here you can have a look at the different speeches you would like to work on later that are available on the website.
+Here you can have a look at the different speeches you would like to work on later that are available on the website.Just take away the "#" symbol.
 ```{r}
 
-titles_speeches <- obama_inaugural |> 
-  html_nodes("table p")
+# titles_speeches <- obama_inaugural |> 
+  # html_nodes("table p")
 
-titles_speeches <- sapply(titles_speeches, html_text, USE.NAMES = FALSE)
+# titles_speeches <- sapply(titles_speeches, html_text, USE.NAMES = FALSE)
 
-cat(titles_speeches , sep = "\n")
+# cat(titles_speeches , sep = "\n")
 ```
 
 Following on what you just learned, you can now explore with the 'corpus' and the 'token' functions how this speech is structured.
@@ -228,6 +222,7 @@ inaugural_speech_tokens <- tokens(inaugural_speech_corpus)
 summary(inaugural_speech_corpus)
 
 ```
+
 Transform the speech into a document-feature matrix (dmf)
 ```{r}
 
@@ -236,6 +231,7 @@ inaugural_speech_dfm <- dfm(inaugural_speech_tokens)
 print(inaugural_speech_dfm)
 
 ```
+
 Explore which are the most frequend words in the discoure.
 ```{r}
 topfeatures(inaugural_speech_dfm )
@@ -254,13 +250,77 @@ inaugural_speech_dfm <- dfm(inaugural_speech_tokens)
 topfeatures(inaugural_speech_dfm)
 ```
 
-
 Let's see the wordcloud from this speech
 ```{r}
 textplot_wordcloud(inaugural_speech_dfm, max_words = 50)
 
 ```
+**Step 2**
+We'll compare it with another speech, this time with "An Honest Government - A Hopeful Future" which Obama hold at the University of Nairobi under the topic: Our Past, Our Future & Vision for America (August 28, 2006).
 
+```{r}
+#Save the link as object
+obama_speeches_2 <- "http://obamaspeeches.com/088-An-Honest-Government-A-Hopeful-Future-Obama-Speech.htm"
+obama_honest_gov <- read_html(obama_speeches_2)
+
+```
+
+With Selector Gadget we identify the structure in the html containing the text. Copy it direct from the bar, do not click on the xpath function. 
+```{r}
+honest_gov_speech_container <- obama_honest_gov |>  html_nodes("font p font")
+
+# Extract the text from the container
+honest_gov_speech_text <- html_text(honest_gov_speech_container)
+
+# Print the speech text
+cat(honest_gov_speech_text, sep = "\n")
+
+```
+
+
+Following on what you just learned, you can now explore with the 'corpus' and the 'token' functions how this speech is structured.
+```{r}
+
+honest_gov_df <- rbind(honest_gov_speech_text)
+honest_gov_speech_corpus <- corpus(honest_gov_df)
+honest_gov_speech_tokens <- tokens(honest_gov_speech_corpus)
+
+summary(honest_gov_speech_corpus)
+
+```
+
+Transform the speech into a document-feature matrix (dmf)
+```{r}
+
+honest_gov_speech_dfm <- dfm(honest_gov_speech_tokens)
+
+print(honest_gov_speech_dfm)
+
+```
+Explore which are the most frequend words in the discoure.
+```{r}
+topfeatures(honest_gov_speech_dfm )
+```
+
+To keep on working, let's clean the speech a little.
+```{r}
+
+honest_gov_speech_tokens <- tokens(honest_gov_speech_corpus, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE)
+
+honest_gov_speech_tokens <- tokens_remove(honest_gov_speech_tokens, stopwords("en"))
+honest_gov_speech_tokens  <-  tokens_remove(honest_gov_speech_tokens, c('the','and', 'that','to', 'can', 'must', 'of', 'every', 'words', 'let', 'end', 'whether', 'kenya', 'kenyan', 'kenyans', 'also', 'sometimes'))
+
+# We removed "Kenya" and "kenyan" to focus more on the topics around it, since we already know that's the main topic. We want to know what are other concepts associated to it. 
+
+honest_gov_speech_dfm <- dfm(honest_gov_speech_tokens)
+
+topfeatures(honest_gov_speech_dfm)
+```
+
+Let's see the Word Cloud from this speech
+```{r}
+textplot_wordcloud(honest_gov_speech_dfm, max_words = 40)
+```
 
 The following functions will be relevant for the live coding session:
 

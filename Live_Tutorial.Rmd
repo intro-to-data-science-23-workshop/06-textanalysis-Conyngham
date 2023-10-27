@@ -41,8 +41,7 @@ Translate.
 Quantitative text analysis is a subfield of NLP and refers to the process of analyzing
 text data using statistical and computational methods to derive quantitative information
 from the input text. Some examples of quantitative text analysis include word frequency
-analysis, keyword extraction, sentiment analysis, text visualization, and more. All of
-this can be done using the R package quanteda!
+analysis, keyword extraction, sentiment analysis, text visualization, and more. All of this can be done using the R package quanteda!
 
 ### Use Cases
 Some popular use cases of quantitative text analysis in social science research are:
@@ -56,7 +55,6 @@ add more explanation about data?)
 
 # Quanteda 💡
 
-### Background
 ### Background
 Quanteda is an R packagae for managing and analysing textual data. It was created by
 [Ken Benoit](https://kenbenoit.net) and is available via [CRAN](https://cran.r-
@@ -81,6 +79,7 @@ Contains all core natural language processing and textual data management functi
 -   textplot_*() functions
 
 Additionally available via GitHub:
+
 **quanteda.sentiment:**
 -   Sentiment analysis using dictionaries
 
@@ -92,9 +91,9 @@ tidyverse functions
 
 The quanteda workflow is structured around three main objects, these are
 
-1. the corpus
-2. tokens
-3. the document-feature matrix (dfm)
+1. the Corpus
+2. Tokens
+3. The Document-Feature Matrix (dfm)
 
 ## Corpus
 In quanteda, a corpus functions as the primary data structure for storing and organizing
@@ -119,11 +118,8 @@ extraction can be performed on those tokens.
 **How do tokens relate to the Corpus?**
 When you tokenize text, you create a list of tokens for each document, and each document
 in the corpus is represented as a sequence of tokens.
-## Document Feature Matrix
 
-# Workflow 💪
-#TO DO: Explain better what 'features' entails --> Luca
-#TO DO: Explain how tokenization can be skipped when applying dfm() right away --> Luca
+## Document Feature Matrix
 The document feature matrix puts documents into matrix format and constitutes the unit
 on which analyses will be performed. In the DFM, each row corresponds to a document and
 each column corresponds to a feature of that text, these are often tokens. The matrix
@@ -133,126 +129,13 @@ in the analysis.
 
 DFMs are often sparse, meaning that many entries in the matrix are zero, making the DFM
 more memory- and computationally efficient.
-
+#TO DO: Explain better what 'features' entails --> Luca
 **How does the DFM relate to tokens?**
 When you create DFM, the list of tokens is transformed into a structure matrix that
 functions as foundation for subsequent analysis, such as word frequency analysis,
 sentiment analysis, text classification, etc. Tokens constitute individual elements of
 text data, while a DFM constitutes a structural and numerical representation of text
 data.
-
-**When do I need a DFM?**
-#TO DO: Luca
-
-
-# Workflow 💪
-## Getting started
-First we load the core quanteda package.
-
-The readtext package provides an easy way to read text data into R, from almost any
-input format. Compatible input formats include .txt, .csv, .tab, .json, .pdf, .doc and
-.docx files
-
-## Read Data into R
-
-#TO DO: Add webscraping example --> Aranxa (+adjust function accordingly)
-
-```{r}my_texts <- readtext::readtext("~/link/to/path/*")```
-
-##Creating a Corpus
-
-#TO DO: Show our use case --> Aranxa
-
-The following functions will be relevant for the live coding session:
-
-construct a corpus from a character vector:
-```{r}corpus()```
-
-It is also possible to explore the corpus:
-```{r}summary(corpus_name)```
-
-Extract or add document-level variables: 
-```{r}docvars()```
-
-Other relevant corpus functions include:
-#Discuss: Do we want to taylor the example functions to our use case or would that take too much time now?
-
-Subset corpora:
-```{r}corpus_subset()```
-```{r}corpus_subset(x, Year > 1990)```
-
-Change units of a corpus:
-```{r}corpus_reshape()```
-```{r}corpus_reshape(x, to = c("sentences", "paragraphs"))```
-
-Segment texts on a pattern match:
-```{r}corpus_segment()```
-```{r}corpus_segment(x, pattern, valuetype, extract_pattern = TRUE)```
-
-Take a random sample of the corpus texts:
-```{r}corpus_sample```
-```{r}corpus_sample(x, size = 10, replace = FALSE)```
-
-## Preprocessing
-
-### Cleaning and Creating Tokens
-
-#TO DO: Add short explanations what these functions do --> Luca
-#TO DO: Add short explanation based on our use case how we clean + tokenize the data -->
-Aranxa
-
-**Main Token functions**
-
-```{r}Tokens()```
-
-```{r}Tokens_tolower()/tokens_toupper()```
-
-```{r}Tokens_wordstem()```
-
-```{r}Tokens_compound()```
-
-```{r}Tokens_lookup()```
-
-```{r}Tokens_ngrams()```
-
-```{r}Tokens_skipgrams()```
-
-```{r}Tokens_select()/tokens_remove()/tokens_keep()/tokens_replace()```
-
-```{r}Tokens_sample()```
-
-```{r}Tokens_subset()```
-
-#TO DO: Should we add other cleaning functions here?
-
-## Document Feature Matrix
-#add our use case
-
-```dfm()```
-
-```dictionary()```
-
-```dfm_lookup()```
-
-```dfm_select()```
-
-```dfm_compress()```
-
-```dfm_sample()```
-
-```dfm_weight()```
-
-```dfm_sort()```
-
-```dfm_group()```
-
-## Analyis
-
-### Statistics
-
-### Models
-
-### Plots
 
 # Why quanteda? ✅
 
@@ -271,6 +154,8 @@ data, quanteda is faster and more efficient
 ...And now it's time to try it yourself!
 
 ---
+# Workflow 💪
+
 # Loading the package
 First we load the core of the quanteda package.
 
@@ -282,7 +167,7 @@ If any of the packages are not installed on your machine you can uncomment the f
 library(quanteda)
 ```
 
-The package is split in to modular packages so we also download a selection of those of interest to us in this tutorial.
+As mentioned above, the quanteda package is split in to modular packages so we also download a selection of those of interest to us in this tutorial.
 
 ```{r initialise2, warning=FALSE}
 library(quanteda.textstats)
@@ -290,6 +175,8 @@ library(quanteda.textplots)
 ```
 
 We also load readtext which makes the process of importing texts easier, and also imports meta data. Specifically in our case, it allows us to read in pdfs as text files.
+Other compatible input formats include .txt, .csv, .tab, .json, .doc and
+.docx files.
 
 ```{r initialise3, warning=FALSE}
 library(readtext)
@@ -349,7 +236,7 @@ Here we see the corpus structure with some information about the text in each sl
 
 Now that we have our corpus we can begin to analyse the text data. For this section we will focus on non-relational analysis, i.e. we will look at the presence and frequency of words in each slideshow, regardless of their context. The first process our data will undergo is tokenisation. This splits up the text of each document into tokens, which are usually words, but can be other standalone character units.
 
-Once we have tokenised our corpus we can create a Document feature matrix. This (insert information about DFM).
+Once we have tokenised our corpus we can create a Document feature matrix as introduced above. We introduce these concepts these concepts together as that is how you will usually emply the min the wild. But there are also some use cases where you might stop after tokenisation.
 
 Finally, we run the function top features, to have a look at the most common tokens in the entire corpus. This is our first analysis function, just to get an overview, but we will dive into more later.
 
@@ -365,7 +252,11 @@ print(presentation_dfm)
 topfeatures(presentation_dfm)
 ```
 
-Looking at this, we can see that all the most common tokens by far are punctuation or filler words which don't carry much meaning. This is normal, and luckily quantedata comes built-in with some handy functions and options to help alleviate this.
+There we have it, our first DFM! Not so difficult to begin with.
+
+Looking at the top features, we can see that all the most common tokens by far are punctuation or filler words which don't carry much meaning. This is normal, and luckily quantedata comes built-in with some handy functions and options to help alleviate this.
+
+## Cleaning our Tokens
 
 The first thing we can do is adjust the parameters on the function tokens(), allowing us to remove punctuation, numbers and symbols.
 
@@ -382,24 +273,93 @@ topfeatures(presentation_dfm)
 ```
 Now this looks more promising!
 
-You can use your own discretion to decide whether punctuation, numbers, symbols or stop words should be included or excluded in your use case. It is also possible to remove words individually. For example, I felt that 'can' and 'use' were not words that carried much useful meaning, especially with their very high frequency in the data. Have a look at the outputs above and see if there are any adjustments you would make for our final tokenisation process.
+### Bringing it all together
+
+You can use your own discretion to decide what exactly should be kept or excluded from your tokens. For example, I felt that 'can' and 'use' were not words that carried much useful meaning, especially with their very high frequency in the data, so I choose to remove the mbelow. Have a look at the outputs above and see if there are any adjustments you would make for our final tokenisation process, then apply them below.
+
+We have included some functions for you already here and there are even more in the section entitled: More Token Cleaunup, whcih you can add to the pipeline.
 
 (We repeat the whole process here for the sake of having it all in once place as an overview)
 
 ```{r}
 presentation_tokens = tokens(presentations_corpus, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE,remove_url = TRUE, remove_separators = TRUE, split_hyphens = FALSE, split_tags = FALSE)#Do you think we should be excluding all these categories? Feel free to change these options as you feel makes the most sense
 
-presentation_tokens = tokens_remove(presentation_tokens, stopwords("en"))
-presentation_tokens = tokens_remove(presentation_tokens, c('can','use')) #You can add any 'filler' words here which you would like excluded from the analysis.
-
-presentation_dfm = dfm(presentation_tokens)
+presentation_dfm = presentation_tokens %>% 
+  tokens_remove(pattern= stopwords("en")) %>% #removing the stopwords as before
+  tokens_remove(pattern = c('can','use')) %>% #Removing can and use as mentioned, you can add any 'filler' words which you would like excluded from the analysis here.
+  #Some more functions you may want to consider for cleaning your tokens (uncomment first line for each to use and remember to include pipe symbol at the end):
+  #tokens_tolower() %>%
+  #Changes all tokens to be lower case
+  #tokens_toupper() %>%
+  #Changes all tokens to be upper case
+  #tokens_replace(pattern = c('color'), replacement = ('colour')) %>%
+  #Allows you to find and replace words in your tokens, remember that pattern and replacement should always be the same length and that entries are matched pairwise.
+  dfm() #Finally we run the dfm function on our finished and cleaned tokens.
 
 topfeatures(presentation_dfm)
 ```
 
 Now we have a nice looking Document Feature matrix for our further analysis. For our live presentation we will stop here and move on to the next section: Analysing text non-relationally, but if you would like to learn some more about creating and tweaking corpuses continue below.
 
+## Additional Functions for Corpuses
 
+Subset corpora:
+```{r}corpus_subset()```
+```{r}corpus_subset(x, Year > 1990)```
+
+Change units of a corpus:
+```{r}corpus_reshape()```
+```{r}corpus_reshape(x, to = c("sentences", "paragraphs"))```
+
+Segment texts on a pattern match:
+```{r}corpus_segment()```
+```{r}corpus_segment(x, pattern, valuetype, extract_pattern = TRUE)```
+
+Take a random sample of the corpus texts:
+```{r}corpus_sample```
+```{r}corpus_sample(x, size = 10, replace = FALSE)```
+
+## Additional Funtions for Tokens
+
+### More Cleaning
+
+tokens_keep() - For when we only want to keep tokens matching a certain criteria.
+
+Tokens_select() - The function underlying tokens_keep and tokens_remove. Use the selections = 'keep' or 'remove' parameter to pick what you want to do with the matched tokens.
+
+Tokens_wordstem() - This is a really interesting and useful function that reduces all words and tokens to their root. We use a very simple sentence below to show an example of this in action.
+
+```{r}
+tokens_wordstem(tokens('She runs, he can run, they are running'))
+```
+
+```{r}Tokens_compound()```
+
+### Other Token functions (From Luca's list, still need doing.)
+```{r}Tokens_lookup()```
+
+```{r}Tokens_ngrams()```
+
+```{r}Tokens_skipgrams()```
+
+```{r}Tokens_sample()```
+
+```{r}Tokens_subset()```
+
+### More ocument Feature Matrix functions
+```dictionary()```
+
+```dfm_lookup()```
+
+```dfm_select()```
+
+```dfm_compress()```
+
+```dfm_sample()```
+
+```dfm_weight()```
+
+```dfm_sort()```
 
 # Analysing our texts non-relationally
 
@@ -447,7 +407,7 @@ Some functions in the package have funcitonality for this built in, as we can se
 ```{r}
 dfm_group(presentation_dfm, presentation_dfm$yourpresentation)
 
-topfeatures(groups = yourpresentation)
+topfeatures(presentation_dfm, groups = yourpresentation)
 ```
 
 While this is just a toy example as our documents don't have many document level variables, there are many useful applications of this in analysing texts, like grouping by chapter in a book, by which party gave a political speech, or any other category of interest in our documents.
@@ -456,10 +416,11 @@ While this is just a toy example as our documents don't have many document level
 ## Word Clouds
 
 Just for fun: lets make an ever popular word cloud! We can do this super easily with the textplot_wordcloud() function.
+
 ```{r}
 textplot_wordcloud(presentation_dfm, max_words = 50)
 
-dfm_group(presentation_dfm, presentation_dfm$yourpresentation) %>% textplot_wordcloud( max_words = 20, comparison = TRUE)
+#dfm_group(presentation_dfm, presentation_dfm$yourpresentation) %>% textplot_wordcloud( max_words = 20, comparison = TRUE) - Can't get working yet - Killian
 ```
 
 

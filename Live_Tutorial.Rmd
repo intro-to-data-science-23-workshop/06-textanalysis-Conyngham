@@ -177,7 +177,7 @@ The readtext package provides an easy way to read text data into R, from almost 
 # Webscraping example 
 
 ## Try it out! Comparing political discourses
-Now we're going to give you an example where you can apply this for on of the most used cases: analyzing political discourses.
+Now we're going to give you an example where you can apply this for one of the most used cases: analyzing political discourses.
 
 **Step 1**. Scraping a discourse
 To practice you can use the http://obamaspeeches.com website to explore on his best* speeches(according to the webpage creators). Let's try with his inaugural speech.
@@ -189,7 +189,7 @@ obama_inaugural <- read_html(obama_speeches)
 
 ```
 
-With Selector Gadget we identify the structure in the html containing the text. Copy it direct from the bar, do not click on the xpath function. 
+With Selector Gadget we identify the structure in the html containing the text. (Copy it direct from the bar, do not click on the xpath function.) 
 ```{r}
 inaugural_speech_container <- obama_inaugural |>  html_nodes("br+ table font+ font")
 

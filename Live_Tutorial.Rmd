@@ -149,15 +149,6 @@ data.
 ## Getting started
 First we load the core quanteda package.
 
-```{r}
-#install.packages('quanteda')
-#library(quanteda)
-```
-Additionally, we load the [readtext package](https://readtext.quanteda.io)
-```{r}
-#install.packages('readtext')
-#library(readtext)
-```
 The readtext package provides an easy way to read text data into R, from almost any
 input format. Compatible input formats include .txt, .csv, .tab, .json, .pdf, .doc and
 .docx files
@@ -281,12 +272,12 @@ data, quanteda is faster and more efficient
 
 ---
 # Loading the package
-If 
+First we load the core of the quanteda package.
 
-First we load the core of the quanteda package. If any of the packages are not installed on your machine you can uncomment the first line.
+If any of the packages are not installed on your machine you can uncomment the first line.
 
 ```{r initialise, warning=FALSE}
-#install.packages('quanteda','quanteda.textstats','readtext')
+#install.packages('quanteda','quanteda.textstats','readtext','gt')
 
 library(quanteda)
 ```
@@ -298,10 +289,17 @@ library(quanteda.textstats)
 library(quanteda.textplots)
 ```
 
-Finally we load readtext which makes the process of importing texts easier, and also imports meta data. Specifically in our case, it allows us to read in pdfs as text files.
+We also load readtext which makes the process of importing texts easier, and also imports meta data. Specifically in our case, it allows us to read in pdfs as text files.
 
 ```{r initialise3, warning=FALSE}
 library(readtext)
+```
+
+Finally we load dplyr for our workflow and gt for creating nice looking tables. 
+
+```{r initialise4, warning=FALSE}
+library(dplyr)
+library(gt)
 ```
 
 # Loading and prepping our data - The Corpus

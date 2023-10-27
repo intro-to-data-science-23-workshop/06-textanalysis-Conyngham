@@ -39,14 +39,11 @@ from the input text. Some examples of quantitative text analysis include word fr
 analysis, keyword extraction, sentiment analysis, text visualization, and more. All of this can be done using the R package quanteda!
 =======
 
-Quantitative text analysis is a subfield of NLP and refers to the process of analyzing text data using statistical and computational methods to derive quantitative information from the input text. Some examples of quantitative text analysis include word frequency analysis, keyword extraction, sentiment analysis, text visualization, and more. All of this can be done using the R package quanteda!
->>>>>>> 32964ae60c83dacc415cc180b667c01accaf08cd
-
 ### Use Cases
 
 Some popular use cases of quantitative text analysis in social science research are: 
 - The analysis of political speeches or party manifestos to identify key phrases 
-- Sentiment analysis of social media posts 
+- Social Media Listening
 - Categorization and quantification of open-ended survey responses. 
 In order to illustrate the workflow and main functions of the quanteda package, we analyse speeches by Barack Obama which we previously scraped from http://obamaspeeches.com/.
 
@@ -114,8 +111,7 @@ In general, the corpus functions as relatively static library, meaning that text
 
 ## Tokens
 <<<<<<< HEAD
-In quanteda, tokens represent the basic units of text data, that are used for any
-further analysis. They comprise usually of words that have been extracted and grouped as semantic units. Nonetheless, phrases or even entire sentences can be tokenized as well.
+In quanteda, tokens represent the basic units of text data, that are used for any further analysis. They comprise usually of words that have been extracted and grouped as semantic units. Nonetheless, phrases or even entire sentences can be tokenized as well.
 
 Tokenizing describes the process of splitting the input text into individual tokens. Once a text is tokenized, various operations for preprocessing, cleaning and feature extraction can be performed on those tokens.
 
@@ -129,18 +125,6 @@ The document feature matrix puts documents into matrix format and constitutes th
 When you create DFM, the list of tokens is transformed into a structure matrix that functions as foundation for subsequent analysis. Tokens constitute individual elements of text data, while a DFM constitutes a structural and numerical representation of text data. As opposed to tokens, the DFM does not store information on the position of words within a given document. A DFM is therefore used to perform non-positional (bag-of-words) analysis, for example word frequency analysis,sentiment analysis, text classification, and more. 
 
 =======
-
-In quanteda, tokens represent the basic units of text data, that are used for any further analysis. They comprise usually of words that have been extracted and grouped as semantic units. However, phrases or even entire sentences can be tokenized as well. Tokenizing describes the process of splitting the input text into individual tokens. Once a text is tokenized, various operations for preprocessing and cleaning and feature extraction can be performed on those tokens. **How do tokens relate to the Corpus?** When you tokenize text, you create a list of tokens for each document, and each document in the corpus is represented as a sequence of tokens. \## Document Feature Matrix
-
-# Workflow 💪
-
-#TO DO: Explain better what 'features' entails --\> Luca #TO DO: Explain how tokenization can be skipped when applying dfm() right away --\> Luca The document feature matrix puts documents into matrix format and constitutes the unit on which analyses will be performed. In the DFM, each row corresponds to a document and each column corresponds to a feature of that text, these are often tokens. The matrix stores the frequency of each feature (column) within each document (row). DFMs are particularly useful if not all parts of the documents in the corpus should be included in the analysis.
-
-DFMs are often sparse, meaning that many entries in the matrix are zero, making the DFM more memory- and computationally efficient.
-
-**How does the DFM relate to tokens?** When you create DFM, the list of tokens is transformed into a structure matrix that functions as foundation for subsequent analysis, such as word frequency analysis, sentiment analysis, text classification, etc. Tokens constitute individual elements of text data, while a DFM constitutes a structural and numerical representation of text data.
-
-**When do I need a DFM?** #TO DO: Luca
 
 # Workflow 💪
 
@@ -492,13 +476,13 @@ Here we see the corpus structure with some information about the text in each sl
 
 # Preparing our texts for non-relational analysis - Tokens and the DFM
 
-Now that we have our corpus we can begin to analyse the text data. For this section we will focus on non-relational analysis, i.e. we will look at the presence and frequency of words in each slideshow, regardless of their context. The first process our data will undergo is tokenisation. This splits up the text of each document into tokens, which are usually words, but can be other standalone character units.
+Now that we have our corpus we can begin to analyse the text data. For this section we will focus on non-relational analysis, i.e. we will look at the presence and frequency of words in each slideshow, regardless of their context. The first process our data will undergo is tokenization. This splits up the text of each document into tokens, which are usually words, but can be other standalone character units.
 
-Once we have tokenised our corpus we can create a Document feature matrix as introduced above. We introduce these concepts these concepts together as that is how you will usually emply the min the wild. But there are also some use cases where you might stop after tokenisation.
+Once we have tokenized our corpus we can create a Document feature matrix as introduced above. We introduce these concepts these concepts together as that is how you will usually emply the min the wild. But there are also some use cases where you might stop after tokenization.
 
 Finally, we run the function top features, to have a look at the most common tokens in the entire corpus. This is our first analysis function, just to get an overview, but we will dive into more later.
 
-Don't worry if this process of tokenisation and constructing a dfm still feels unclear, we will go over it a few times, and you'll have a chance to adjust the process yourselves.
+Don't worry if this process of tokenization and constructing a dfm still feels unclear, we will go over it a few times, and you'll have a chance to adjust the process yourselves.
 
 ```{r}
 presentation_tokens = tokens(presentations_corpus)
@@ -606,7 +590,7 @@ tokens_wordstem(tokens('She runs, he can run, they are running'))
 
 ```{r}Tokens_subset()```
 
-### More ocument Feature Matrix functions
+### More document Feature Matrix functions
 ```dictionary()```
 
 ```dfm_lookup()```

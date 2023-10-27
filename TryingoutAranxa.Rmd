@@ -100,7 +100,7 @@ To keep on working, let's clean the speech a little.
 inaugural_speech_tokens <- tokens(inaugural_speech_corpus, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE)
 
 inaugural_speech_tokens <- tokens_remove(inaugural_speech_tokens, stopwords("en"))
-inaugural_speech_tokens  <-  tokens_remove(inaugural_speech_tokens, c('the','and', 'that','to', 'can', 'must', 'of', 'every', 'words', 'let', 'end'))
+inaugural_speech_tokens  <-  tokens_remove(inaugural_speech_tokens, c('the','and', 'that','to', 'can', 'must', 'of', 'every', 'words', 'let', 'end', 'whether'))
 
 inaugural_speech_dfm <- dfm(inaugural_speech_tokens)
 
@@ -137,7 +137,7 @@ obama_honest_gov <- read_html(obama_speeches_2)
 
 With Selector Gadget we identify the structure in the html containing the text. Copy it direct from the bar, do not click on the xpath function. 
 ```{r}
-honest_gov_speech_container <- obama_honest_gov |>  html_nodes("br+ table font+ font")
+honest_gov_speech_container <- obama_honest_gov |>  html_nodes("font p font")
 
 # Extract the text from the container
 honest_gov_speech_text <- html_text(honest_gov_speech_container)
@@ -152,7 +152,7 @@ Following on what you just learned, you can now explore with the 'corpus' and th
 ```{r}
 
 honest_gov_df <- rbind(honest_gov_speech_text)
-honest_gov_speech_corpus <- corpus(honest_gov_df )
+honest_gov_speech_corpus <- corpus(honest_gov_df)
 honest_gov_speech_tokens <- tokens(honest_gov_speech_corpus)
 
 summary(honest_gov_speech_corpus)
@@ -177,7 +177,9 @@ To keep on working, let's clean the speech a little.
 honest_gov_speech_tokens <- tokens(honest_gov_speech_corpus, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE)
 
 honest_gov_speech_tokens <- tokens_remove(honest_gov_speech_tokens, stopwords("en"))
-honest_gov_speech_tokens  <-  tokens_remove(honest_gov_speech_tokens, c('the','and', 'that','to', 'can', 'must', 'of', 'every', 'words', 'let', 'end'))
+honest_gov_speech_tokens  <-  tokens_remove(honest_gov_speech_tokens, c('the','and', 'that','to', 'can', 'must', 'of', 'every', 'words', 'let', 'end', 'whether', 'kenya', 'kenyan', 'kenyans', 'also', 'sometimes'))
+
+# We removed "Kenya" and "kenyan" to focus more on the topics around it, since we already know that's the main topic. We want to know what are other concepts associated to it. 
 
 honest_gov_speech_dfm <- dfm(honest_gov_speech_tokens)
 
@@ -187,9 +189,7 @@ topfeatures(honest_gov_speech_dfm)
 
 Let's see the wordcloud from this speech
 ```{r}
-textplot_wordcloud(honest_gov_speech_dfm, max_words = 50)
-
-
+textplot_wordcloud(honest_gov_speech_dfm, max_words = 40)
 ```
 
 

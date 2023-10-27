@@ -9,8 +9,6 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
 ```{r}
 ## Install quanteda package
 # install.packages("quanteda") 
@@ -36,7 +34,7 @@ library(quanteda.textstats)
 ```
 
 ## Try it out! Comparing political discourses
-Now we're going to give you an example where you can apply this for on of the most used cases: analysing political discourses.
+Now we're going to give you an example where you can apply this for on of the most used cases: analyzing political discourses.
 
 **Step 1**. Scraping a discourse
 To practice you can use the http://obamaspeeches.com website to explore on his best* speeches(according to the webpage creators). Let's try with his inaugural speech.
@@ -126,7 +124,7 @@ as.data.frame(textstat_lexdiv(inaugural_speech_dfm))|>
 ```
 
 **Step 2**
-We'll compare it with another speech, this time with "An Honest Government - A Hopeful Future" which Obama hold at the University of Nairobi on about the topic: Our Past, Our Future & Vision for America (August 28, 2006). Updates.
+We'll compare it with another speech, this time with "An Honest Government - A Hopeful Future" which Obama hold at the University of Nairobi under the topic: Our Past, Our Future & Vision for America (August 28, 2006).
 
 ```{r}
 #Save the link as object
@@ -186,29 +184,8 @@ honest_gov_speech_dfm <- dfm(honest_gov_speech_tokens)
 topfeatures(honest_gov_speech_dfm)
 ```
 
-
 Let's see the wordcloud from this speech
 ```{r}
 textplot_wordcloud(honest_gov_speech_dfm, max_words = 40)
 ```
-
-
-With both discourses we can check the
-
-Distance and similarity
-```{r}
-as.data.frame(textstat_dist(honest_gov_speech_dfm)) %>% #Here we run the function, with the default, euclidean distance measurement.
-  
-  filter(document2 == yourpresentationname) %>% arrange(euclidean) %>% select (c(1,3)) %>% gt()
-```
-
-```{r}
-
-
-
-
-dfm_group(presentation_dfm, presentation_dfm$yourpresentation) %>% textplot_wordcloud( max_words = 20, comparison = TRUE)
-
-```
-
 

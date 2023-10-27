@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Install quanteda package
 # install.packages("quanteda") 
 
-library(quanteda)
+
 
 ```
 
@@ -24,6 +24,10 @@ library(rvest)
 library(stringr)
 library(tidyverse)
 library(quanteda)
+library(quanteda.textplots)
+library(readtext)
+library(gt)
+
 
 ```
 
@@ -35,13 +39,12 @@ library(quanteda.textstats)
 Now we're going to give you an example where you can apply this for on of the most used cases: analysing political discourses.
 
 **Step 1**. Scraping a discourse
-To practice you can use the http://obamaspeeches.com website to explore on his best* speeches.
-
-*According to the webpage creators.
+To practice you can use the http://obamaspeeches.com website to explore on his best* speeches(according to the webpage creators). Let's try with his inaugural speech.
 
 ```{r}
+#Save the link as object
 obama_speeches <- "http://obamaspeeches.com/P-Obama-Inaugural-Speech-Inauguration.htm"
-obama_inaugural <- read_html(obama_inaugural_speech)
+obama_inaugural <- read_html(obama_speeches)
 
 ```
 
@@ -57,7 +60,7 @@ cat(inaugural_speech_text, sep = "\n")
 
 ```
 
-You can have a look here on the different speeches you would like to work on later that are available on the website.
+Here you can have a look at the different speeches you would like to work on later that are available on the website.
 ```{r}
 
 titles_speeches <- obama_inaugural |> 
@@ -68,8 +71,7 @@ titles_speeches <- sapply(titles_speeches, html_text, USE.NAMES = FALSE)
 cat(titles_speeches , sep = "\n")
 ```
 
-
-Following on the functions you just learned, you can now explore with the 'corpus' and the 'token' functions how this speech is structured.
+Following on what you just learned, you can now explore with the 'corpus' and the 'token' functions how this speech is structured.
 ```{r}
 
 inaugural_df <- rbind(inaugural_speech_text)
@@ -79,7 +81,7 @@ inaugural_speech_tokens <- tokens(inaugural_speech_corpus)
 summary(inaugural_speech_corpus)
 
 ```
-We transform the speech into a document-feature matrix (dmf)
+Transform the speech into a document-feature matrix (dmf)
 ```{r}
 
 inaugural_speech_dfm <- dfm(inaugural_speech_tokens)
@@ -87,18 +89,18 @@ inaugural_speech_dfm <- dfm(inaugural_speech_tokens)
 print(inaugural_speech_dfm)
 
 ```
-
+Explore which are the most frequend words in the discoure.
 ```{r}
 topfeatures(inaugural_speech_dfm )
 ```
 
-
+To keep on working, let's clean the speech a little.
 ```{r}
 
 inaugural_speech_tokens <- tokens(inaugural_speech_corpus, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE)
 
 inaugural_speech_tokens <- tokens_remove(inaugural_speech_tokens, stopwords("en"))
-speech_tokens <-  tokens_remove(inaugural_speech_tokens, c('the','and', 'that','to', 'can', 'must'))
+inaugural_speech_tokens  <-  tokens_remove(inaugural_speech_tokens, c('the','and', 'that','to', 'can', 'must', 'of', 'every', 'words', 'let', 'end'))
 
 inaugural_speech_dfm <- dfm(inaugural_speech_tokens)
 
@@ -106,17 +108,106 @@ topfeatures(inaugural_speech_dfm)
 ```
 
 
-
-We'll compare it with another speech, this time with "An Honest Government - A Hopeful Future" which Obama hold at the University of Nairobi.
-
+Let's see the wordcloud from this speech
 ```{r}
+textplot_wordcloud(inaugural_speech_dfm, max_words = 50)
 
 ```
 
 
+Let's look at the lexical diversity of this
+```{r}
+
+typeof(textstat_lexdiv(inaugural_speech_dfm))
+
+as.data.frame(textstat_lexdiv(inaugural_speech_dfm))|> 
+  arrange(desc(TTR))|>  gt()
+
+```
+
+**Step 2**
+We'll compare it with another speech, this time with "An Honest Government - A Hopeful Future" which Obama hold at the University of Nairobi on about the topic: Our Past, Our Future & Vision for America (August 28, 2006). Updates.
+
+```{r}
+#Save the link as object
+obama_speeches_2 <- "http://obamaspeeches.com/088-An-Honest-Government-A-Hopeful-Future-Obama-Speech.htm"
+obama_honest_gov <- read_html(obama_speeches_2)
+
+```
+
+With Selector Gadget we identify the structure in the html containing the text. Copy it direct from the bar, do not click on the xpath function. 
+```{r}
+honest_gov_speech_container <- obama_honest_gov |>  html_nodes("br+ table font+ font")
+
+# Extract the text from the container
+honest_gov_speech_text <- html_text(honest_gov_speech_container)
+
+# Print the speech text
+cat(honest_gov_speech_text, sep = "\n")
+
+```
+
+
+Following on what you just learned, you can now explore with the 'corpus' and the 'token' functions how this speech is structured.
+```{r}
+
+honest_gov_df <- rbind(honest_gov_speech_text)
+honest_gov_speech_corpus <- corpus(honest_gov_df )
+honest_gov_speech_tokens <- tokens(honest_gov_speech_corpus)
+
+summary(honest_gov_speech_corpus)
+
+```
+Transform the speech into a document-feature matrix (dmf)
+```{r}
+
+honest_gov_speech_dfm <- dfm(honest_gov_speech_tokens)
+
+print(honest_gov_speech_dfm)
+
+```
+Explore which are the most frequend words in the discoure.
+```{r}
+topfeatures(honest_gov_speech_dfm )
+```
+
+To keep on working, let's clean the speech a little.
+```{r}
+
+honest_gov_speech_tokens <- tokens(honest_gov_speech_corpus, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE)
+
+honest_gov_speech_tokens <- tokens_remove(honest_gov_speech_tokens, stopwords("en"))
+honest_gov_speech_tokens  <-  tokens_remove(honest_gov_speech_tokens, c('the','and', 'that','to', 'can', 'must', 'of', 'every', 'words', 'let', 'end'))
+
+honest_gov_speech_dfm <- dfm(honest_gov_speech_tokens)
+
+topfeatures(honest_gov_speech_dfm)
+```
+
+
+Let's see the wordcloud from this speech
+```{r}
+textplot_wordcloud(honest_gov_speech_dfm, max_words = 50)
+
+
+```
+
+
+With both discourses we can check the
+
+Distance and similarity
+```{r}
+as.data.frame(textstat_dist(honest_gov_speech_dfm)) %>% #Here we run the function, with the default, euclidean distance measurement.
+  
+  filter(document2 == yourpresentationname) %>% arrange(euclidean) %>% select (c(1,3)) %>% gt()
+```
+
 ```{r}
 
 
+
+
+dfm_group(presentation_dfm, presentation_dfm$yourpresentation) %>% textplot_wordcloud( max_words = 20, comparison = TRUE)
 
 ```
 

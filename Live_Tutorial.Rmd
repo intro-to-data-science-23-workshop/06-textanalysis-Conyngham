@@ -262,7 +262,7 @@ summary(honest_gov_speech_corpus)
 
 ```
 
-Transform the speech into a document-feature matrix (dmf)
+Transform the speech into a document-feature matrix (dmf). 
 ```{r}
 
 honest_gov_speech_dfm <- dfm(honest_gov_speech_tokens)

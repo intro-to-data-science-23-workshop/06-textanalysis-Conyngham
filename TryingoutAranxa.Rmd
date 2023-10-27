@@ -86,53 +86,147 @@ library(quanteda)
 # ->feature frequency
 # -> related measures such as tf-idf.
 
-
-
 ```
 
 
 ```{r}
-install.packages("RSelenium")
-
 library(rvest)
 library(stringr)
 library(tidyverse)
-library(here)
+library(quanteda)
 
 ```
+
+```{r initialise2, warning=FALSE}
+library(quanteda.textstats)
+```
+
+# Try it out! Comparing political discourses
 
 ```{r}
 obama_best_speeches <- "http://obamaspeeches.com/P-Obama-Inaugural-Speech-Inauguration.htm"
-
 obama_speeches <- read_html(obama_best_speeches)
 
+# With Selector Gadget we identify the structure in the html containing the text.
+speech_container <- obama_speeches %>% html_nodes("br+ table font+ font") #Copy direct from the bar, do not ask for xpath.
 
-# Extract the table containing the speech
-table <- obama_speeches %>%
-  html_table(fill = TRUE)
-
-speech_text <- table[[1]]
+# Extract the text from the container
+speech_text <- html_text(speech_container)
 
 # Print the speech text
-cat(speech_text$X1)
+cat(speech_text, sep = "\n")
 ```
 
 
 ```{r}
 
+# Extract the <p> elements within the table
+titles_speeches <- obama_speeches %>%
+  html_nodes("table p")
 
-body_nodes <- obama_speeches |> 
- html_elements("body") |> 
- html_children()
+# Extract the text from the <p> elements and combine them
+titles_speeches <- sapply(titles_speeches, html_text, USE.NAMES = FALSE)
 
-body_nodes |> 
- html_children()
+# Here you can see what are the other speeches you can find in the website
+
+# Print the speech text
+cat(titles_speeches , sep = "\n")
+```
+
+
+
+```{r}
+
+speech_df <- rbind(speech_text)
+speech_corpus <- corpus(speech_df)
+speech_tokens <- tokens(speech_corpus)
+
+summary(speech_corpus)
 
 ```
 
 ```{r}
-speech <- obama_speeches |> 
-  xml_node(xpath = '//p+//p//font | //font//font//strong')
+
+speech_dfm = dfm(speech_tokens)
+
+print(speech_dfm)
+
+topfeatures(speech_dfm)
+
+
+speech_tokens <- tokens(speech_corpus, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE)
+
+speech_tokens <- tokens_remove(speech_tokens, stopwords("en"))
+speech_tokens <-  tokens_remove(speech_tokens, c('the','and', 'that','to', 'can', 'must'))
+
+speech_dfm <-  dfm(speech_tokens)
+
+topfeatures(speech_dfm)
+
 
 ```
 
+```{r}
+# presentations_df = rbind(ids_presentations_df, your_presentation_df)
+# print(presentations_df, n = 10)
+
+# presentations_corpus = corpus(presentations_df)
+# summary(presentations_corpus)
+
+# presentation_tokens = tokens(presentations_corpus)
+
+# presentation_dfm = dfm(presentation_tokens)
+
+# print(presentation_dfm)
+
+# topfeatures(presentation_dfm)
+```
+
+
+
+
+
+
+
+
+```{r}
+## We need a set of URLs leading to all sources. Inspect the URLs of different sources and find the pattern. Then, construct the list of URLs from scratch.
+
+baseurl <- "http://obamaspeeches.com/"
+volurl <- paste0("0", 1:99)
+volurl[1:9] <- paste0("00", 1:9)
+brurl <- paste0("0", 1:9)
+
+urls_list <- cross2(volurl, brurl) |> map_chr(~paste0(baseurl, .[[1]], 'i', .[[2]]))
+names <- cross2(volurl, brurl) |> map_chr(~paste0(.[[1]], '_', .[[2]], '.htm'))
+
+
+```
+
+```{r}
+tempwd <- here::here("~/Colab_Workshop/Obama Speeches")
+dir.create(tempwd, recursive = TRUE)
+setwd(tempwd)
+
+
+
+folder <- paste0(tempwd, "/html_articles/")
+dir.create(folder, recursive = TRUE)
+
+for (i in seq_along(urls_list)) {
+  # only update, don't replace
+  if (!file.exists(paste0(folder, names[i]))) {
+    # skip article when we run into an error
+    tryCatch(
+      download.file(urls_list[i], destfile = paste0(folder, names[i])),
+      error = function(e)
+        e
+    )
+    # don't kill their server --> be polite!
+    Sys.sleep(runif(1, 0, 1))
+  } 
+}
+```
+
+
+You can try it yourself with the following examples! Just take out the '#' to run the code!

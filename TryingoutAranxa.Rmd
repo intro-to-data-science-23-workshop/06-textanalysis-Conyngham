@@ -12,12 +12,10 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 ## Install quanteda package
 # install.packages("quanteda") 
-
-
-
 ```
 
 ```{r}
+
 library(rvest)
 library(stringr)
 library(tidyverse)
@@ -26,7 +24,6 @@ library(quanteda.textplots)
 library(readtext)
 library(gt)
 
-
 ```
 
 ```{r initialise2, warning=FALSE}
@@ -34,10 +31,10 @@ library(quanteda.textstats)
 ```
 
 ## Try it out! Comparing political discourses
+
 Now we're going to give you an example where you can apply this for on of the most used cases: analyzing political discourses.
 
-**Step 1**. Scraping a discourse
-To practice you can use the http://obamaspeeches.com website to explore on his best* speeches(according to the webpage creators). Let's try with his inaugural speech.
+**Step 1**. Scraping a discourse To practice you can use the <http://obamaspeeches.com> website to explore on his best\* speeches(according to the webpage creators). Let's try with his inaugural speech.
 
 ```{r}
 #Save the link as object
@@ -46,7 +43,8 @@ obama_inaugural <- read_html(obama_speeches)
 
 ```
 
-With Selector Gadget we identify the structure in the html containing the text. Copy it direct from the bar, do not click on the xpath function. 
+With Selector Gadget we identify the structure in the html containing the text. Copy it direct from the bar, do not click on the xpath function.
+
 ```{r}
 inaugural_speech_container <- obama_inaugural |>  html_nodes("br+ table font+ font")
 
@@ -59,6 +57,7 @@ cat(inaugural_speech_text, sep = "\n")
 ```
 
 Here you can have a look at the different speeches you would like to work on later that are available on the website.
+
 ```{r}
 
 titles_speeches <- obama_inaugural |> 
@@ -70,6 +69,7 @@ cat(titles_speeches , sep = "\n")
 ```
 
 Following on what you just learned, you can now explore with the 'corpus' and the 'token' functions how this speech is structured.
+
 ```{r}
 
 inaugural_df <- rbind(inaugural_speech_text)
@@ -79,7 +79,9 @@ inaugural_speech_tokens <- tokens(inaugural_speech_corpus)
 summary(inaugural_speech_corpus)
 
 ```
+
 Transform the speech into a document-feature matrix (dmf)
+
 ```{r}
 
 inaugural_speech_dfm <- dfm(inaugural_speech_tokens)
@@ -87,33 +89,36 @@ inaugural_speech_dfm <- dfm(inaugural_speech_tokens)
 print(inaugural_speech_dfm)
 
 ```
+
 Explore which are the most frequend words in the discoure.
+
 ```{r}
 topfeatures(inaugural_speech_dfm )
 ```
 
 To keep on working, let's clean the speech a little.
+
 ```{r}
 
 inaugural_speech_tokens <- tokens(inaugural_speech_corpus, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE)
 
 inaugural_speech_tokens <- tokens_remove(inaugural_speech_tokens, stopwords("en"))
-inaugural_speech_tokens  <-  tokens_remove(inaugural_speech_tokens, c('the','and', 'that','to', 'can', 'must', 'of', 'every', 'words', 'let', 'end', 'whether'))
+inaugural_speech_tokens  <-  tokens_remove(inaugural_speech_tokens, c('the','and', 'that','to', 'can', 'must', 'of', 'every', 'words', 'let', 'end', 'whether', 'things'))
 
 inaugural_speech_dfm <- dfm(inaugural_speech_tokens)
 
 topfeatures(inaugural_speech_dfm)
 ```
 
-
 Let's see the wordcloud from this speech
+
 ```{r}
-textplot_wordcloud(inaugural_speech_dfm, max_words = 50)
+textplot_wordcloud(inaugural_speech_dfm, max_words = 40)
 
 ```
 
-
 Let's look at the lexical diversity of this
+
 ```{r}
 
 typeof(textstat_lexdiv(inaugural_speech_dfm))
@@ -123,8 +128,7 @@ as.data.frame(textstat_lexdiv(inaugural_speech_dfm))|>
 
 ```
 
-**Step 2**
-We'll compare it with another speech, this time with "An Honest Government - A Hopeful Future" which Obama hold at the University of Nairobi under the topic: Our Past, Our Future & Vision for America (August 28, 2006).
+**Step 2** We'll compare it with another speech, this time with "An Honest Government - A Hopeful Future" which Obama hold at the University of Nairobi under the topic: Our Past, Our Future & Vision for America (August 28, 2006).
 
 ```{r}
 #Save the link as object
@@ -133,7 +137,8 @@ obama_honest_gov <- read_html(obama_speeches_2)
 
 ```
 
-With Selector Gadget we identify the structure in the html containing the text. Copy it direct from the bar, do not click on the xpath function. 
+With Selector Gadget we identify the structure in the html containing the text. Copy it direct from the bar, do not click on the xpath function.
+
 ```{r}
 honest_gov_speech_container <- obama_honest_gov |>  html_nodes("font p font")
 
@@ -145,8 +150,8 @@ cat(honest_gov_speech_text, sep = "\n")
 
 ```
 
-
 Following on what you just learned, you can now explore with the 'corpus' and the 'token' functions how this speech is structured.
+
 ```{r}
 
 honest_gov_df <- rbind(honest_gov_speech_text)
@@ -156,7 +161,9 @@ honest_gov_speech_tokens <- tokens(honest_gov_speech_corpus)
 summary(honest_gov_speech_corpus)
 
 ```
+
 Transform the speech into a document-feature matrix (dmf)
+
 ```{r}
 
 honest_gov_speech_dfm <- dfm(honest_gov_speech_tokens)
@@ -164,12 +171,14 @@ honest_gov_speech_dfm <- dfm(honest_gov_speech_tokens)
 print(honest_gov_speech_dfm)
 
 ```
-Explore which are the most frequend words in the discoure.
+
+Explore which are the most frequent words in the discourse.
 ```{r}
 topfeatures(honest_gov_speech_dfm )
 ```
 
 To keep on working, let's clean the speech a little.
+
 ```{r}
 
 honest_gov_speech_tokens <- tokens(honest_gov_speech_corpus, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE)
@@ -185,7 +194,7 @@ topfeatures(honest_gov_speech_dfm)
 ```
 
 Let's see the wordcloud from this speech
+
 ```{r}
 textplot_wordcloud(honest_gov_speech_dfm, max_words = 40)
 ```
-

@@ -125,10 +125,9 @@ When you tokenize text, you create a list of tokens for each document, and each 
 ## Document Feature Matrix
 The document feature matrix puts documents into matrix format and constitutes the unit on which analyses will be performed. In the DFM, each row corresponds to a document and each column corresponds to a feature of that text, which are often tokens. The matrix stores the frequency of each feature (column) within each document (row). DFMs are particularly useful if not all parts of the documents in the corpus should be included in the analysis.Generally, DFMs are often sparse, meaning that many entries in the matrix are zero, making the DFM more memory- and computationally efficient.
 
-#TO DO: Explain better what 'features' entails --> Luca
-
 **How does the DFM relate to tokens?**
 When you create DFM, the list of tokens is transformed into a structure matrix that functions as foundation for subsequent analysis. Tokens constitute individual elements of text data, while a DFM constitutes a structural and numerical representation of text data. As opposed to tokens, the DFM does not store information on the position of words within a given document. A DFM is therefore used to perform non-positional (bag-of-words) analysis, for example word frequency analysis,sentiment analysis, text classification, and more. 
+
 =======
 
 In quanteda, tokens represent the basic units of text data, that are used for any further analysis. They comprise usually of words that have been extracted and grouped as semantic units. However, phrases or even entire sentences can be tokenized as well. Tokenizing describes the process of splitting the input text into individual tokens. Once a text is tokenized, various operations for preprocessing and cleaning and feature extraction can be performed on those tokens. **How do tokens relate to the Corpus?** When you tokenize text, you create a list of tokens for each document, and each document in the corpus is represented as a sequence of tokens. \## Document Feature Matrix

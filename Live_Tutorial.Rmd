@@ -31,12 +31,10 @@ Why do we want to analyze textual data? Text is everywhere, grows in volume and 
 Natural Language Processing (NLP) is concerned with enabling computers/machines to process, understand, interpret and even generate natural language, for example in the form of text or speech. Some examples of applications using NLP are chatbots, tools for speech recognition, automatic text summarization or translation, such as Google Translate.
 
 ### Quantitative Text Analysis
-<<<<<<< HEAD
 Quantitative text analysis is a subfield of NLP and refers to the process of analyzing
 text data using statistical and computational methods to derive quantitative information
 from the input text. Some examples of quantitative text analysis include word frequency
 analysis, keyword extraction, sentiment analysis, text visualization, and more. All of this can be done using the R package quanteda!
-=======
 
 ### Use Cases
 
@@ -75,14 +73,9 @@ Since Version 3.0, quanteda has been split into modular packages. These consist 
 
 **quanteda.textplots:** - Plots for textual data - textplot\_\*() functions
 
-<<<<<<< HEAD
 Additionally available via GitHub:
 
-**quanteda.sentiment:**
--   Sentiment analysis using dictionaries
-=======
-Additionally available via GitHub: **quanteda.sentiment:** - Sentiment analysis using dictionaries
->>>>>>> 32964ae60c83dacc415cc180b667c01accaf08cd
+**quanteda.sentiment:** - Sentiment analysis using dictionaries
 
 **quanteda.tidy:** - Extensions for manipulating document variables in core quanteda objects using tidyverse functions
 
@@ -95,10 +88,6 @@ The quanteda workflow is structured around three main objects, these are
 2. Tokens
 3. The Document-Feature Matrix (dfm)
 =======
-1.  the corpus
-2.  tokens
-3.  the document-feature matrix (dfm)
->>>>>>> 32964ae60c83dacc415cc180b667c01accaf08cd
 
 ## Corpus
 In quanteda, a corpus functions as the primary data structure for storing and organizing text data. The corpus stores 
@@ -122,30 +111,6 @@ The document feature matrix puts documents into matrix format and constitutes th
 
 **How does the DFM relate to tokens?**
 When you create DFM, the list of tokens is transformed into a structure matrix that functions as foundation for subsequent analysis. Tokens constitute individual elements of text data, while a DFM constitutes a structural and numerical representation of text data. As opposed to tokens, the DFM does not store information on the position of words within a given document. A DFM is therefore used to perform non-positional (bag-of-words) analysis, for example word frequency analysis,sentiment analysis, text classification, and more. 
-
-=======
-
-# Workflow 💪
-
-## Getting started
-
-First we load the core quanteda package.
-
-```{r}
-#install.packages('quanteda')
-#library(quanteda)
-```
-
-Additionally, we load the [readtext package](https://readtext.quanteda.io)
-
-```{r}
-#install.packages('readtext')
-#library(readtext)
-```
-
-The readtext package provides an easy way to read text data into R, from almost any input format. Compatible input formats include .txt, .csv, .tab, .json, .pdf, .doc and .docx files
-
-## Read Data into R
 
 # Webscraping example 
 
@@ -295,85 +260,6 @@ Let's see the Word Cloud from this speech
 textplot_wordcloud(honest_gov_speech_dfm, max_words = 40)
 ```
 
-The following functions will be relevant for the live coding session:
-
-construct a corpus from a character vector: `{r}corpus()`
-
-It is also possible to explore the corpus: `{r}summary(corpus_name)`
-
-Extract or add document-level variables: `{r}docvars()`
-
-Other relevant corpus functions include: #Discuss: Do we want to taylor the example functions to our use case or would that take too much time now?
-
-Subset corpora: `{r}corpus_subset()` `{r}corpus_subset(x, Year > 1990)`
-
-Change units of a corpus: `{r}corpus_reshape()` `{r}corpus_reshape(x, to = c("sentences", "paragraphs"))`
-
-Segment texts on a pattern match: `{r}corpus_segment()` `{r}corpus_segment(x, pattern, valuetype, extract_pattern = TRUE)`
-
-Take a random sample of the corpus texts: `{r}corpus_sample` `{r}corpus_sample(x, size = 10, replace = FALSE)`
-
-## Preprocessing
-
-### Cleaning and Creating Tokens
-
-#TO DO: Add short explanations what these functions do --\> Luca #TO DO: Add short explanation based on our use case how we clean + tokenize the data --\> Aranxa
-
-**Main Token functions**
-
-`{r}Tokens()`
-
-`{r}Tokens_tolower()/tokens_toupper()`
-
-`{r}Tokens_wordstem()`
-
-`{r}Tokens_compound()`
-
-`{r}Tokens_lookup()`
-
-`{r}Tokens_ngrams()`
-
-`{r}Tokens_skipgrams()`
-
-`{r}Tokens_select()/tokens_remove()/tokens_keep()/tokens_replace()`
-
-`{r}Tokens_sample()`
-
-`{r}Tokens_subset()`
-
-#TO DO: Should we add other cleaning functions here?
-
-## Document Feature Matrix
-
-#add our use case
-
-`dfm()`
-
-`dictionary()`
-
-`dfm_lookup()`
-
-`dfm_select()`
-
-`dfm_compress()`
-
-`dfm_sample()`
-
-`dfm_weight()`
-
-`dfm_sort()`
-
-`dfm_group()`
-
-## Analyis
-
-### Statistics
-
-### Models
-
-### Plots
-
->>>>>>> 32964ae60c83dacc415cc180b667c01accaf08cd
 # Why quanteda? ✅
 
 There are several advantages to using quanteda for quantitative text analysis!
@@ -385,16 +271,10 @@ There are several advantages to using quanteda for quantitative text analysis!
 
 ...And now it's time to try it yourself!
 
-<<<<<<< HEAD
 ---
 # Workflow 💪
 =======
 ------------------------------------------------------------------------
-
-# Loading the package
-
-If
->>>>>>> 32964ae60c83dacc415cc180b667c01accaf08cd
 
 # Loading the package
 First we load the core of the quanteda package.

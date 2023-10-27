@@ -69,9 +69,9 @@ Initiative](https://quanteda.org).
 
 Quanteda is an R packagae for managing and analysing textual data. It was created by [Ken Benoit](https://kenbenoit.net) and is available via [CRAN](https://cran.r-%20project.org/web/packages/quanteda/index.html). The latest update of quanteda is version 4.0 and the package is maintained by the UK-based non-profit company [Quanteda Initiative](https://quanteda.org).
 
-Since Version 3.0, quanteda has been split into modular packages. These consist of: **quanteda:**
+Since Version 3.0, quanteda has been split into modular packages. These consist of: 
 
-Contains all core natural language processing and textual data management functions
+**quanteda:** - Contains all core natural language processing and textual data management functions
 
 **quanteda.textmodels:** - Contains all text models and supporting functions - Textmodel\_\* functions
 
@@ -105,39 +105,30 @@ The quanteda workflow is structured around three main objects, these are
 >>>>>>> 32964ae60c83dacc415cc180b667c01accaf08cd
 
 ## Corpus
+In quanteda, a corpus functions as the primary data structure for storing and organizing text data. The corpus stores 
 
-In quanteda, a corpus functions as the primary data structure for storing and organizing text data. The corpus can be thought of as "library" that holds the textual data we want to analyse alongside specific document-level or metadata attributes, called docvars. Only by transforming our input text into a corpus format, quanteda is able to process it, therefore the corpus functions as starting point to our analysis. In general, the corpus functions as relatively static library, meaning that text data in the corpus should not be changed through cleaning and preprocessing steps. Rather, texts can be extracted from the corpus for any manipulation and should be assigned to new objects. This way, the corpus functions as a copy of the original input data. Within the corpus, each document is typically represented as a separate element. Documents within a corpus can be accessed by their index or via docvars.
+The corpus can be thought of as "library" or data frame that holds the textual data we want to analyse alongside specific document-level or metadata attributes, called docvars. Only by transforming our input text into a corpus format, quanteda is able to process it, therefore the corpus functions as starting point to our analysis. 
+
+In general, the corpus functions as relatively static library, meaning that text data in the corpus should not be changed through cleaning and preprocessing steps. Rather, texts can be extracted from the corpus for any manipulation and should be assigned to new objects. This way, the corpus functions as a copy of the original input data. Within the corpus, each document is typically represented as a separate element. Documents within a corpus can be accessed by their index or via docvars.
+
 
 ## Tokens
 <<<<<<< HEAD
 In quanteda, tokens represent the basic units of text data, that are used for any
-further analysis. They comprise usually of words that have been extracted and grouped as
-semantic units. However, phrases or even entire sentences can be tokenized as well.
-Tokenizing describes the process of splitting the input text into individual tokens.
-Once a text is tokenized, various operations for preprocessing and cleaning and feature
-extraction can be performed on those tokens.
+further analysis. They comprise usually of words that have been extracted and grouped as semantic units. Nonetheless, phrases or even entire sentences can be tokenized as well.
+
+Tokenizing describes the process of splitting the input text into individual tokens. Once a text is tokenized, various operations for preprocessing, cleaning and feature extraction can be performed on those tokens.
+
 **How do tokens relate to the Corpus?**
-When you tokenize text, you create a list of tokens for each document, and each document
-in the corpus is represented as a sequence of tokens.
+When you tokenize text, you create a list of tokens for each document, and each document in the corpus is represented as a sequence of tokens. Thereby, tokens can be used for positional (string-of-words) analysis, which is used to examine, eg.: the position and relation of tokens within a corpus.
 
 ## Document Feature Matrix
-The document feature matrix puts documents into matrix format and constitutes the unit
-on which analyses will be performed. In the DFM, each row corresponds to a document and
-each column corresponds to a feature of that text, these are often tokens. The matrix
-stores the frequency of each feature (column) within each document (row). DFMs are
-particularly useful if not all parts of the documents in the corpus should be included
-in the analysis.
+The document feature matrix puts documents into matrix format and constitutes the unit on which analyses will be performed. In the DFM, each row corresponds to a document and each column corresponds to a feature of that text, which are often tokens. The matrix stores the frequency of each feature (column) within each document (row). DFMs are particularly useful if not all parts of the documents in the corpus should be included in the analysis.Generally, DFMs are often sparse, meaning that many entries in the matrix are zero, making the DFM more memory- and computationally efficient.
 
-DFMs are often sparse, meaning that many entries in the matrix are zero, making the DFM
-more memory- and computationally efficient.
 #TO DO: Explain better what 'features' entails --> Luca
-**How does the DFM relate to tokens?**
-When you create DFM, the list of tokens is transformed into a structure matrix that
-functions as foundation for subsequent analysis, such as word frequency analysis,
-sentiment analysis, text classification, etc. Tokens constitute individual elements of
-text data, while a DFM constitutes a structural and numerical representation of text
-data.
 
+**How does the DFM relate to tokens?**
+When you create DFM, the list of tokens is transformed into a structure matrix that functions as foundation for subsequent analysis. Tokens constitute individual elements of text data, while a DFM constitutes a structural and numerical representation of text data. As opposed to tokens, the DFM does not store information on the position of words within a given document. A DFM is therefore used to perform non-positional (bag-of-words) analysis, for example word frequency analysis,sentiment analysis, text classification, and more. 
 =======
 
 In quanteda, tokens represent the basic units of text data, that are used for any further analysis. They comprise usually of words that have been extracted and grouped as semantic units. However, phrases or even entire sentences can be tokenized as well. Tokenizing describes the process of splitting the input text into individual tokens. Once a text is tokenized, various operations for preprocessing and cleaning and feature extraction can be performed on those tokens. **How do tokens relate to the Corpus?** When you tokenize text, you create a list of tokens for each document, and each document in the corpus is represented as a sequence of tokens. \## Document Feature Matrix

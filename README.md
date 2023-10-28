@@ -21,8 +21,8 @@ The goals of this session are to (1) equip you with conceptual knowledge about t
 
 ## Instructors
 
-- Killian Conyngham (contact details)
-- Aranxa Marquez Ampudia (contatc details)
+- Killian Conyngham [E-Mail](killianconyngham@gmail.com)
+- Aranxa Marquez Ampudia [E-Mail](231357@students.hertie-school.org)
 - Luca Vellage [E-Mail](l.v.vellage@gmail.com)
 
 

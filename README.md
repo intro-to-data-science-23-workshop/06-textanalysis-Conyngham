@@ -54,6 +54,6 @@ The material in this repository is made available under the [MIT license](http:/
 
 ## Statement of contributions
 
-**Simon Munzert** prepared the practice material and post-processed the recording.
-
-**Kermit the Frog** prepared the presentation slides and recording. He also provided an example to the practice material.
+**Killian Conyngham** Prepared the content of the live coding tutorial, set up the Rmarkdown and post-processed the recording.
+**Aranxa Marquez Ampudia** Prepared the use case example for the presentation and contributed to the presentation and Rmarkdown.
+**Luca Vellage** Prepared the presentation and contributed to the Rmarkdown.

@@ -12,7 +12,7 @@ This session will introduce you to quanteda! Quanteda is an R package for quanti
 
 ## Live Tutorial
 In the live tutorial you will be able to apply basic quanteda functions yourself and will ultimately analyze content from our Introduction to Data Science lectures. 
-Follow [this link for the html](https://cdn.githubraw.com/intro-to-data-science-23-workshop/06-textanalysis-Conyngham-Vellage-Marquez/main/Live_Tutorial.html) which contains some background information on quanteda and all instructions you need to follow along with our tutorial or teach yourself quanteda in your own time.
+Follow [this link for the html](https://rawcdn.githack.com/intro-to-data-science-23-workshop/06-textanalysis-Conyngham-Vellage-Marquez/29fc62545259597f3f0974270d6e734661d5634b/Live_Tutorial.html) which contains some background information on quanteda and all instructions you need to follow along with our tutorial or teach yourself quanteda in your own time.
 
 ### Main learning objectives
 
